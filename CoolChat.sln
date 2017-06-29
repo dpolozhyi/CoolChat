@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.WebApi", "CoolChat.WebApi\CoolChat.WebApi.csproj", "{EC0E632E-912A-44E6-AC14-CA1B4573AD88}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.DataAccess", "CoolChat.DataAccess\CoolChat.DataAccess.csproj", "{0B10C402-BC76-4590-89EA-94ACDDA525D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.Entities", "CoolChat.Entities\CoolChat.Entities.csproj", "{32648724-D791-4A15-953B-D699C44B8A03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.ConsoleTest", "CoolChat.ConsoleTest\CoolChat.ConsoleTest.csproj", "{B1E40AAE-0A15-4E7F-AED4-ADDB1E3EBEF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.Business", "CoolChat.Business\CoolChat.Business.csproj", "{45BCB5FA-6112-422A-B336-107E670A5851}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.Web", "CoolChat.Web\CoolChat.Web.csproj", "{5F49E5CA-1B06-4F6D-8F49-5FC23FF38C92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EC0E632E-912A-44E6-AC14-CA1B4573AD88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC0E632E-912A-44E6-AC14-CA1B4573AD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC0E632E-912A-44E6-AC14-CA1B4573AD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC0E632E-912A-44E6-AC14-CA1B4573AD88}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B10C402-BC76-4590-89EA-94ACDDA525D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B10C402-BC76-4590-89EA-94ACDDA525D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B10C402-BC76-4590-89EA-94ACDDA525D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +31,14 @@ Global
 		{B1E40AAE-0A15-4E7F-AED4-ADDB1E3EBEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1E40AAE-0A15-4E7F-AED4-ADDB1E3EBEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1E40AAE-0A15-4E7F-AED4-ADDB1E3EBEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45BCB5FA-6112-422A-B336-107E670A5851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45BCB5FA-6112-422A-B336-107E670A5851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45BCB5FA-6112-422A-B336-107E670A5851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45BCB5FA-6112-422A-B336-107E670A5851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F49E5CA-1B06-4F6D-8F49-5FC23FF38C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F49E5CA-1B06-4F6D-8F49-5FC23FF38C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F49E5CA-1B06-4F6D-8F49-5FC23FF38C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F49E5CA-1B06-4F6D-8F49-5FC23FF38C92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

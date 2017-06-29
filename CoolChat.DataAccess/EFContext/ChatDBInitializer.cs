@@ -19,17 +19,17 @@ namespace CoolChat.DataAccess.EFContext
             User user2 = new User() { Name = "Sarah", Gender = Gender.Female };
             User user3 = new User() { Name = "John", Gender = Gender.Male };
 
-            Message msg1 = new Message() { PostedTime = DateTime.Now, User = user1, ChatRoom = chat1, Body = "Hi all" };
-            Message msg2 = new Message() { PostedTime = DateTime.Now, User = user2, ChatRoom = chat1, Body = "Who r u?" };
-            Message msg3 = new Message() { PostedTime = DateTime.Now, User = user3, ChatRoom = chat1, Body = "qq" };
-            Message msg4 = new Message() { PostedTime = DateTime.Now, User = user1, ChatRoom = chat1, Body = "I am the danger" };
-            Message msg5 = new Message() { PostedTime = DateTime.Now, User = user2, ChatRoom = chat1, Body = "Ok then" };
+            Message msg1 = new Message() { PostedTime = DateTime.Now, UserName = "Mike", ChatRoom = chat1, Body = "Hi all" };
+            Message msg2 = new Message() { PostedTime = DateTime.Now, UserName = "John", ChatRoom = chat1, Body = "Who r u?" };
+            Message msg3 = new Message() { PostedTime = DateTime.Now, UserName = "Julia", ChatRoom = chat1, Body = "qq" };
+            Message msg4 = new Message() { PostedTime = DateTime.Now, UserName = "Mike", ChatRoom = chat1, Body = "I am the danger" };
+            Message msg5 = new Message() { PostedTime = DateTime.Now, UserName = "Dave", ChatRoom = chat1, Body = "Ok then" };
 
             context.ChatRooms.Add(chat1);
 
-            context.Users.Add(user1);
-            context.Users.Add(user2);
-            context.Users.Add(user3);
+            //context.Users.Add(user1);
+            //context.Users.Add(user2);
+            //context.Users.Add(user3);
 
             context.Messages.Add(msg1);
             context.Messages.Add(msg2);

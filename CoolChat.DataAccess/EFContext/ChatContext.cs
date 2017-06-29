@@ -14,14 +14,14 @@ namespace CoolChat.DataAccess.EFContext
 
         public DbSet<ChatRoom> ChatRooms { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().Property(p => p.Name).HasMaxLength(30);
+            //modelBuilder.Entity<User>().Property(p => p.Name).HasMaxLength(30);
 
             modelBuilder.Entity<Message>().Property(p => p.Body).HasMaxLength(1000);
-            modelBuilder.Entity<Message>().HasRequired(m => m.User).WithMany(m => m.Messages);
+            modelBuilder.Entity<Message>().Property(p => p.UserName).HasMaxLength(30);
 
             modelBuilder.Entity<ChatRoom>().Property(p => p.Name).HasMaxLength(20);
 
