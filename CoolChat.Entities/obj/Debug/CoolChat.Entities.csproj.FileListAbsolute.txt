@@ -1,0 +1,5 @@
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Entities\bin\Debug\CoolChat.Entities.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Entities\bin\Debug\CoolChat.Entities.pdb
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Entities\obj\Debug\CoolChat.Entities.csprojResolveAssemblyReference.cache
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Entities\obj\Debug\CoolChat.Entities.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Entities\obj\Debug\CoolChat.Entities.pdb
