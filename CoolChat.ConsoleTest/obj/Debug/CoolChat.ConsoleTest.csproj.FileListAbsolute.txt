@@ -1,0 +1,14 @@
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\CoolChat.ConsoleTest.exe.config
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\CoolChat.ConsoleTest.exe
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\CoolChat.ConsoleTest.pdb
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\CoolChat.DataAccess.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\CoolChat.Entities.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\EntityFramework.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\CoolChat.DataAccess.pdb
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\CoolChat.Entities.pdb
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\EntityFramework.xml
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\obj\Debug\CoolChat.ConsoleTest.csprojResolveAssemblyReference.cache
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\obj\Debug\CoolChat.ConsoleTest.exe
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.ConsoleTest\obj\Debug\CoolChat.ConsoleTest.pdb
