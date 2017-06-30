@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="EFContext\ChatContext.cs" />
     <Compile Include="EFContext\ChatDBInitializer.cs" />
+    <Compile Include="Extensions\DataAccessExtensions.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

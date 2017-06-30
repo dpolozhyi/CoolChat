@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CoolChat.Entities;
 using CoolChat.DataAccess.Interfaces;
+using CoolChat.DataAccess.Extensions;
 using CoolChat.Business.ViewModels;
 using AutoMapper;
 
@@ -45,12 +46,14 @@ namespace CoolChat.Business.Services
 
         private ChatRoom GetChatRoomById(int id)
         {
-            return this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Id == id, includeProperties: "Messages").FirstOrDefault();
+            var include = typeof(ChatRoom).GetReferencePropertiesString();
+            return this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Id == id, includeProperties: include).FirstOrDefault();
         }
 
         private ChatRoom GetChatRoomByName(string name)
         {
-            return this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Name == name, includeProperties: "Messages").FirstOrDefault();
+            var include = typeof(ChatRoom).GetReferencePropertiesString();
+            return this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Name == name, includeProperties: include).FirstOrDefault();
         }
     }
 }
