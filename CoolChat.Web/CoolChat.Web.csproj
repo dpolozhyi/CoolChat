@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -169,6 +173,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -238,11 +243,11 @@
       <Name>CoolChat.Business</Name>
     </ProjectReference>
     <ProjectReference Include="..\CoolChat.DataAccess\CoolChat.DataAccess.csproj">
-      <Project>{0B10C402-BC76-4590-89EA-94ACDDA525D6}</Project>
+      <Project>{0b10c402-bc76-4590-89ea-94acdda525d6}</Project>
       <Name>CoolChat.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CoolChat.Entities\CoolChat.Entities.csproj">
-      <Project>{32648724-D791-4A15-953B-D699C44B8A03}</Project>
+      <Project>{32648724-d791-4a15-953b-d699c44b8a03}</Project>
       <Name>CoolChat.Entities</Name>
     </ProjectReference>
   </ItemGroup>

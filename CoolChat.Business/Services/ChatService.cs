@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CoolChat.Entities;
 using CoolChat.DataAccess.Interfaces;
+using CoolChat.Business.ViewModels;
+using AutoMapper;
 
 namespace CoolChat.Business.Services
 {
@@ -18,29 +20,32 @@ namespace CoolChat.Business.Services
             this.unitOfWork = uow;
         }
 
-        public IEnumerable<ChatRoom> GetChatRoomList()
+        public IEnumerable<string> GetChatRoomList()
         {
-            return this.unitOfWork.Get<ChatRoom>().Get();
+            return this.unitOfWork.Get<ChatRoom>().Get().Select(n => n.Name);
         }
 
-        public IEnumerable<Message> GetMessagesForChatRoom(string chatRoomName)
+        public ChatRoomViewModel GetChatRoom(string chatRoomName)
         {
             ChatRoom chatRoom = this.GetChatRoomByName(chatRoomName);
-            if(chatRoom != null)
-            {
-                return chatRoom.Messages;
-            }
-            return null;
+            return Mapper.Map<ChatRoom, ChatRoomViewModel>(chatRoom);
         }
 
-        public void PostMessage(Message message, string chatRoomName)
+        public void PostMessage(MessageViewModel message)
         {
-            ChatRoom chatRoom = this.GetChatRoomByName(chatRoomName);
-            if (chatRoomName != null)
+            ChatRoom chatRoom = this.GetChatRoomById(message.ChatRoomId);
+            Message newMessage = Mapper.Map<MessageViewModel, Message>(message);
+            if (chatRoom != null)
             {
-                message.ChatRoom = chatRoom;
-                this.unitOfWork.Get<Message>().Insert(message);
+                newMessage.ChatRoom = chatRoom;
+                this.unitOfWork.Get<Message>().Insert(newMessage);
+                this.unitOfWork.SaveChanges();
             }
+        }
+
+        private ChatRoom GetChatRoomById(int id)
+        {
+            return this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Id == id, includeProperties: "Messages").FirstOrDefault();
         }
 
         private ChatRoom GetChatRoomByName(string name)

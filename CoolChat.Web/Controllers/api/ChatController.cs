@@ -1,4 +1,5 @@
 ﻿using CoolChat.Business.Interfaces;
+using CoolChat.Business.ViewModels;
 using CoolChat.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,20 +20,21 @@ namespace CoolChat.Web.Controllers.api
         }
 
         // GET: api/Chat
-        public IEnumerable<ChatRoom> Get()
+        public IEnumerable<string> Get()
         {
             return this.chatService.GetChatRoomList();
         }
 
-        // GET: api/Chat/myroomm
-        public IEnumerable<Message> Get(string name)
+        // GET: api/Chat/myroom
+        public ChatRoomViewModel Get(string name)
         {
-            return this.chatService.GetMessagesForChatRoom(name);
+            return this.chatService.GetChatRoom(name);
         }
 
         // POST: api/Chat
-        public void Post([FromBody]string value)
+        public void Post(MessageViewModel message)
         {
+            this.chatService.PostMessage(message);
         }
 
         // PUT: api/Chat/5

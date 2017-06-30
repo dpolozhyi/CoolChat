@@ -9,3 +9,5 @@ C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Business\bin\Debug\EntityFramework.
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Business\obj\Debug\CoolChat.Business.csprojResolveAssemblyReference.cache
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Business\obj\Debug\CoolChat.Business.dll
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Business\obj\Debug\CoolChat.Business.pdb
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Business\bin\Debug\AutoMapper.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Business\bin\Debug\AutoMapper.xml

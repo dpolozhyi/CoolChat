@@ -16,6 +16,7 @@ namespace CoolChat.Web
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            AutoMapperConfig.RegisterMappings();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(NinjectWebCommon.CreateKernel());

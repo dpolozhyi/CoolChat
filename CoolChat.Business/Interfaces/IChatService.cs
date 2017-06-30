@@ -1,4 +1,5 @@
-﻿using CoolChat.Entities;
+﻿using CoolChat.Business.ViewModels;
+using CoolChat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace CoolChat.Business.Interfaces
 {
     public interface IChatService
     {
-        IEnumerable<ChatRoom> GetChatRoomList();
+        IEnumerable<string> GetChatRoomList();
 
-        IEnumerable<Message> GetMessagesForChatRoom(string charRoomName);
+        ChatRoomViewModel GetChatRoom(string chatRoomName);
 
-        void PostMessage(Message message, string chatRoomName);
+        void PostMessage(MessageViewModel message);
     }
 }

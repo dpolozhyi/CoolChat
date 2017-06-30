@@ -69,3 +69,5 @@ C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Ninject.dll
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Ninject.xml
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\EntityFramework.SqlServer.dll
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\EntityFramework.SqlServer.xml
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\AutoMapper.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\AutoMapper.xml
