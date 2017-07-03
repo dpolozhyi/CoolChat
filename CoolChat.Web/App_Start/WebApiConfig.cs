@@ -13,12 +13,12 @@ namespace CoolChat.Web
 
             config.Routes.MapHttpRoute(
                 name: "ChatRoomApi",
-                routeTemplate: "{controller}/{name}"
+                routeTemplate: "api/{controller}/{name}"
             );
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "{controller}/{id}",
+                routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

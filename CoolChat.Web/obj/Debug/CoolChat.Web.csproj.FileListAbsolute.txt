@@ -71,3 +71,14 @@ C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\EntityFramework.SqlServer.d
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\EntityFramework.SqlServer.xml
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\AutoMapper.dll
 C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\AutoMapper.xml
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.Owin.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.Owin.Security.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Owin.dll
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.Owin.xml
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\dpolozhiy\Desktop\CoolChat\CoolChat.Web\bin\Microsoft.Owin.Security.xml

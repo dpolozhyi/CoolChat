@@ -21,9 +21,9 @@ namespace CoolChat.Business.Services
             this.unitOfWork = uow;
         }
 
-        public IEnumerable<string> GetChatRoomList()
+        public IEnumerable<ChatRoomViewModel> GetChatRoomList()
         {
-            return this.unitOfWork.Get<ChatRoom>().Get().Select(n => n.Name);
+            return Mapper.Map<IEnumerable<ChatRoom>, IEnumerable<ChatRoomViewModel>>(this.unitOfWork.Get<ChatRoom>().Get());
         }
 
         public ChatRoomViewModel GetChatRoom(string chatRoomName)

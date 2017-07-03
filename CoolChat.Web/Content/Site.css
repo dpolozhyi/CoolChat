@@ -1,24 +1,126 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿@font-face {
+    font-family: Roboto-Light; /* Имя шрифта */
+    src: url(roboto-light.ttf); /* Путь к файлу со шрифтом */
+   }
+
+body, html {
+	margin: 0;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+header{
+	height: 50px;
+	padding: 8px 20px;
+	font-size: 42px;
+	background: #00A3AF;
+	color:white;
+	font-family: Roboto-Light;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+header:hover{
+	cursor: pointer;
+}
+
+div.chat-list{
+	width: 30%;
+	height: 100%;
+	position: fixed;
+	border-right: 4px solid #00A3AF;
+	overflow-y: scroll;
+}
+
+ul.room-list li{
+	padding: 15px 25px;
+	border-bottom: 2px solid #dbe1e5;
+	font-size: 24px;
+}
+
+ul.room-list li:hover{
+	background: rgba(219, 225, 229, 0.8);
+	cursor: pointer;
+}
+
+.selectedRoom{
+	background: rgba(219, 225, 229, 0.8);
+}
+
+::-webkit-scrollbar {
+display: none;
+}
+
+div.chat-window{
+	width: 70%;
+	position: fixed;
+	left: 30%;
+}
+
+div.chat-window div.msg-area{
+	position: fixed;
+	bottom: 0px;
+	width: 70%;
+	padding: 20px 35px;
+	border-top: 2px solid #00A3AF;
+}
+
+div.chat-window div.msg-area textarea{
+	width: 80%;
+	margin-bottom: -6px;
+	height: 60px;
+	resize: none;
+	font-size: 16px;
+}
+
+div.chat-window div.msg-area button.btn-send{
+	margin-left: 5px;
+	background: #00A3AF;
+	border: none;
+	display: inline-block;
+	vertical-align: top;
+	padding: 10px 30px;
+	font-size: 20px;
+	font-family: Roboto-Light;
+	color:white;
+}
+
+div.chat-window div.msg-area button.btn-send:hover{
+	background: #00828c;
+	cursor: pointer;
+}
+
+div.messages{
+	margin: 10px;
+	position: fixed;
+	max-height: 81%;
+	overflow-y: scroll;
+}
+
+div.messages div.message{
+	margin-bottom: 15px;
+}
+
+div.messages div.message div.name, div.messages div.message div.msg-body{
+	display: inline-block;
+}
+
+div.messages div.message div.name{
+	vertical-align: top;
+	padding: 0 30px;
+	font-size: 20px;
+	width: 50px;
+	max-width: 50px;
+	border: 2px solid #dbe1e5;
+	border-right: none;
+}
+
+div.messages div.message div.msg-body{
+	width: 80%;
+	margin-left: -4px;
+	background: rgba(0, 130, 140, 0.65);
+	font-size: 18px;
+	padding: 10px 20px;
 }

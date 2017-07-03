@@ -10,7 +10,7 @@ namespace CoolChat.Business.Interfaces
 {
     public interface IChatService
     {
-        IEnumerable<string> GetChatRoomList();
+        IEnumerable<ChatRoomViewModel> GetChatRoomList();
 
         ChatRoomViewModel GetChatRoom(string chatRoomName);
 
