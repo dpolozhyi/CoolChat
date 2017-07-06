@@ -11,7 +11,7 @@ export class SignalrWindow extends Window {
     $: any;
 }
 
-declare type MessageCallback = (message: string) => void;
+declare type MessageCallback = (message: MessageModel) => void;
 
 
 @Injectable()
@@ -23,6 +23,8 @@ export class ChatService {
     private hubProxy: any;
 
     private msgCallback: MessageCallback;
+
+    private headers = new Headers({ 'Content-Type': 'application/json' });
 
     constructor(
         @Inject(SignalrWindow) private window: SignalrWindow,
@@ -54,14 +56,7 @@ export class ChatService {
     }
 
     addMessageCallback(callback: MessageCallback) {
-        console.log("Received callback for message");
         this.msgCallback = callback;
-        console.log(this.msgCallback);
-    }
-
-    sendMessageToEverybody() {
-        console.log("Sending message from service");
-        this.hubProxy.invoke("NewContosoChatMessage", "HI ALL")
     }
 
     getChatRoomList(): Promise<ChatRoomModel[]> {
@@ -70,5 +65,21 @@ export class ChatService {
 
     getMessages(chatRoom: ChatRoomModel): Promise<MessageModel[]> {
         return this.http.get('/chat/' + chatRoom.Name).toPromise().then(data => data.json().Messages as MessageModel[]);
+    }
+
+    sendMessage(message: MessageModel): Promise<MessageModel> {
+        console.log("Message sent from service");
+        return this.http
+            .post('/chat', JSON.stringify(message), { headers: this.headers })
+            .toPromise()
+            .then(res => res.json() as MessageModel);
+    }
+
+    subscribe(chatId: string): Promise<void> {
+        return this.hubProxy.invoke("JoinGroup", chatId);
+    }
+
+    unsubscribe(chatId: string): Promise<void> {
+        return this.hubProxy.invoke("LeaveGroup", chatId);
     }
 }

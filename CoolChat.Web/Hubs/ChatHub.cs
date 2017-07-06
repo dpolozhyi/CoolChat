@@ -14,14 +14,14 @@ namespace CoolChat.Web.Hubs
             Clients.All.AddNewMessageToPage(message);
         }
 
-        public Task JoinGroup(string groupName)
+        public void JoinGroup(string groupName)
         {
-            return Groups.Add(Context.ConnectionId, groupName);
+            Groups.Add(Context.ConnectionId, groupName);
         }
 
-        public Task LeaveGroup(string groupName)
+        public void LeaveGroup(string groupName)
         {
-            return Groups.Remove(Context.ConnectionId, groupName);
+            Groups.Remove(Context.ConnectionId, groupName);
         }
     }
 }

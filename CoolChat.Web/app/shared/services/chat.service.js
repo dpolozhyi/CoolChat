@@ -21,6 +21,7 @@ let ChatService = class ChatService {
     constructor(window, http) {
         this.window = window;
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
         }
@@ -44,19 +45,26 @@ let ChatService = class ChatService {
         });
     }
     addMessageCallback(callback) {
-        console.log("Received callback for message");
         this.msgCallback = callback;
-        console.log(this.msgCallback);
-    }
-    sendMessageToEverybody() {
-        console.log("Sending message from service");
-        this.hubProxy.invoke("NewContosoChatMessage", "HI ALL");
     }
     getChatRoomList() {
         return this.http.get('/chat/list').toPromise().then(data => data.json());
     }
     getMessages(chatRoom) {
         return this.http.get('/chat/' + chatRoom.Name).toPromise().then(data => data.json().Messages);
+    }
+    sendMessage(message) {
+        console.log("Message sent from service");
+        return this.http
+            .post('/chat', JSON.stringify(message), { headers: this.headers })
+            .toPromise()
+            .then(res => res.json());
+    }
+    subscribe(chatId) {
+        return this.hubProxy.invoke("JoinGroup", chatId);
+    }
+    unsubscribe(chatId) {
+        return this.hubProxy.invoke("LeaveGroup", chatId);
     }
 };
 ChatService = __decorate([

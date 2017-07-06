@@ -32,16 +32,18 @@ namespace CoolChat.Business.Services
             return Mapper.Map<ChatRoom, ChatRoomViewModel>(chatRoom);
         }
 
-        public void PostMessage(MessageViewModel message)
+        public MessageViewModel PostMessage(MessageViewModel message)
         {
             ChatRoom chatRoom = this.GetChatRoomById(message.ChatRoomId);
             Message newMessage = Mapper.Map<MessageViewModel, Message>(message);
+            Message insertedMessage = null;
             if (chatRoom != null)
             {
                 newMessage.ChatRoom = chatRoom;
-                this.unitOfWork.Get<Message>().Insert(newMessage);
+                insertedMessage = this.unitOfWork.Get<Message>().Insert(newMessage);
                 this.unitOfWork.SaveChanges();
             }
+            return Mapper.Map<Message, MessageViewModel>(insertedMessage);
         }
 
         private ChatRoom GetChatRoomById(int id)

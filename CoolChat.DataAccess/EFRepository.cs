@@ -53,9 +53,9 @@ namespace CoolChat.DataAccess
             }
         }
 
-        public void Insert(T item)
+        public T Insert(T item)
         {
-            this.context.Set<T>().Add(item);
+            return this.context.Set<T>().Add(item);
         }
 
         public void Update(T item)

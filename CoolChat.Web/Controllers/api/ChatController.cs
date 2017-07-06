@@ -41,11 +41,14 @@ namespace CoolChat.Web.Controllers.api
             return this.chatService.GetChatRoom(name);
         }
 
+        [Route("")]
         [HttpPost]
         // POST: api/Chat
-        public void Post(MessageViewModel message)
+        public MessageViewModel Post(MessageViewModel message)
         {
-            this.chatService.PostMessage(message);
+            var returned = this.chatService.PostMessage(message);
+            hubContext.Clients.Group(returned.ChatRoomId.ToString()).AddNewMessageToPage(returned);
+            return returned;
         }
 
         // PUT: api/Chat/5

@@ -11,24 +11,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require('@angular/core');
 const chat_service_1 = require('../shared/services/chat.service');
 const chatroom_model_1 = require('../shared/models/chatroom.model');
+const message_model_1 = require('../shared/models/message.model');
 let ChatComponent = class ChatComponent {
     constructor(chatService) {
         this.chatService = chatService;
-        this.message = "Hi";
     }
     ngOnInit() {
         this.chatService.addMessageCallback((message) => {
-            console.log("Message printing in chat component");
-            this.message = message;
-            console.log(this.message);
+            this.messages.push(message);
         });
-        console.log("Callback for msg was added");
-        this.chatService.getMessages(this.chatRoom).then((messages) => { this.messages = messages; console.log(messages); });
+        this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
+        this.prevChatRoom = this.chatRoom;
+        console.log("ONInit ChatRoom");
+        console.log(this.prevChatRoom);
     }
-    sendMessage() {
-        console.log("Callback for msg was added");
-        this.chatService.sendMessageToEverybody();
-        console.log("Message was sent");
+    ngOnChanges(changes) {
+        this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
+        if (!this.prevChatRoom) {
+            this.prevChatRoom = this.chatRoom;
+        }
+        console.log("ChatRoom: " + this.chatRoom);
+        console.log("PrevChatRoom: " + this.prevChatRoom);
+        this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => this.chatService.subscribe(String(this.chatRoom.Id)));
+        this.prevChatRoom = this.chatRoom;
+    }
+    sendMessage(msgText) {
+        if (!msgText.trim()) {
+            return;
+        }
+        var newMessage = new message_model_1.MessageModel();
+        newMessage.Body = msgText;
+        newMessage.PostedTime = new Date();
+        newMessage.UserName = this.name;
+        newMessage.ChatRoomId = this.chatRoom.Id;
+        this.chatService.sendMessage(newMessage);
+    }
+    onNameSubmit(name) {
+        if (name.trim()) {
+            this.name = name.trim();
+            this.chatService.subscribe(String(this.chatRoom.Id));
+        }
     }
 };
 __decorate([
@@ -39,8 +61,8 @@ ChatComponent = __decorate([
     core_1.Component({
         selector: 'chat',
         template: `
-        <div class="chat-window">
-	        <div class="messages" *ngIf="messages">
+        <div class="chat-window" *ngIf="name">
+	        <div class="messages" *ngIf="messages" #chat [scrollTop]="chat.scrollHeight">
 		        <div class="message" *ngFor="let message of messages">
 			        <div class="name">
 				        {{message.UserName}}
@@ -51,8 +73,17 @@ ChatComponent = __decorate([
 		        </div>
 	        </div>
 	        <div class="msg-area">
-		        <textarea></textarea>
-		        <button class="btn-send">Send</button>
+		        <textarea #messageInput  (keyup.enter)="sendMessage(messageInput.value); messageInput.value=''"></textarea>
+		        <button class="btn-send" (click)="sendMessage(messageInput.value); messageInput.value=''">Send</button>
+	        </div>
+        </div>
+        <div class="enter-form" *ngIf="!name">
+	        <div class="enter-text">
+		        To join <strong>{{chatRoom.Name}}</strong> please, enter your name below.
+	        </div>
+	        <input type="text" (keyup.enter)="onNameSubmit(nameInput.value)" #nameInput>
+	        <div>
+		        <button class="btn-send" (click)="onNameSubmit(nameInput.value)">Enter</button>
 	        </div>
         </div>
     `

@@ -13,7 +13,7 @@ namespace CoolChat.DataAccess.Interfaces
 
         IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "");
 
-        void Insert(T item);
+        T Insert(T item);
 
         void Update(T item);
 

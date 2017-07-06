@@ -20,6 +20,13 @@ namespace CoolChat.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        // GET: api/Chat
+        public ActionResult Get()
+        {
+            return Json("");
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

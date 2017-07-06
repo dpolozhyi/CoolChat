@@ -1,6 +1,6 @@
 ﻿@font-face {
-    font-family: Roboto-Light; /* Имя шрифта */
-    src: url(roboto-light.ttf); /* Путь к файлу со шрифтом */
+    font-family: Roboto-Light;
+    src: url(../fonts/roboto-light.ttf);
    }
 
 body, html {
@@ -75,7 +75,7 @@ div.chat-window div.msg-area textarea{
 	font-size: 16px;
 }
 
-div.chat-window div.msg-area button.btn-send{
+div.chat-window div.msg-area button.btn-send, div.enter-form button{
 	margin-left: 5px;
 	background: #00A3AF;
 	border: none;
@@ -87,7 +87,7 @@ div.chat-window div.msg-area button.btn-send{
 	color:white;
 }
 
-div.chat-window div.msg-area button.btn-send:hover{
+div.chat-window div.msg-area button.btn-send:hover, div.enter-form button:hover{
 	background: #00828c;
 	cursor: pointer;
 }
@@ -123,4 +123,28 @@ div.messages div.message div.msg-body{
 	background: rgba(0, 130, 140, 0.65);
 	font-size: 18px;
 	padding: 10px 20px;
+}
+
+div.enter-form{
+	width: 300px;
+	position: fixed;
+	left: 30%;
+	margin: 15% 20%;
+	text-align: center;
+}
+
+div.enter-form input{
+	font-size: 20px;
+	font-family: Roboto-Light;
+	margin-bottom: 10px;
+}
+
+div.enter-form button{
+	margin: 5px 0;
+}
+
+div.enter-form div.enter-text{
+	font-size: 24px;
+	font-family: Roboto-Light;
+	margin-bottom: 10px;
 }

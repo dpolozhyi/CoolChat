@@ -14,6 +14,6 @@ namespace CoolChat.Business.Interfaces
 
         ChatRoomViewModel GetChatRoom(string chatRoomName);
 
-        void PostMessage(MessageViewModel message);
+        MessageViewModel PostMessage(MessageViewModel message);
     }
 }
