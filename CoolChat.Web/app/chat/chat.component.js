@@ -22,16 +22,12 @@ let ChatComponent = class ChatComponent {
         });
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
         this.prevChatRoom = this.chatRoom;
-        console.log("ONInit ChatRoom");
-        console.log(this.prevChatRoom);
     }
     ngOnChanges(changes) {
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
         if (!this.prevChatRoom) {
             this.prevChatRoom = this.chatRoom;
         }
-        console.log("ChatRoom: " + this.chatRoom);
-        console.log("PrevChatRoom: " + this.prevChatRoom);
         this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => this.chatService.subscribe(String(this.chatRoom.Id)));
         this.prevChatRoom = this.chatRoom;
     }

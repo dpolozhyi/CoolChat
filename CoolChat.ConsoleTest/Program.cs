@@ -25,11 +25,11 @@ namespace CoolChat.ConsoleTest
             IUnitOfWork uow = new EFUnitOfWork(new ChatContext());
             User user = new User() { Name = "John", Gender = Gender.Male };
 
-            Message msg1 = new Message() { PostedTime = DateTime.Now, User = user, Body = "WTFF???" };
+            Message msg1 = new Message() { PostedTime = DateTime.Now, UserName = user, Body = "WTFF???" };
             var messages = uow.Get<Message>().Get(includeProperties: "User");
             foreach (var msg in messages)
             {
-                Console.WriteLine("{0} {1}:\t{2}", msg.PostedTime.ToLongTimeString(), msg.User.Name, msg.Body);
+                Console.WriteLine("{0} {1}:\t{2}", msg.PostedTime.ToLongTimeString(), msg.UserName, msg.Body);
             }
         }
     }

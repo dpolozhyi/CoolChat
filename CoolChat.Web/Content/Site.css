@@ -49,10 +49,6 @@ ul.room-list li:hover{
 	background: rgba(219, 225, 229, 0.8);
 }
 
-::-webkit-scrollbar {
-display: none;
-}
-
 div.chat-window{
 	width: 70%;
 	position: fixed;
@@ -96,6 +92,7 @@ div.messages{
 	margin: 10px;
 	position: fixed;
 	max-height: 81%;
+    width: 69%;
 	overflow-y: scroll;
 }
 
