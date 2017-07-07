@@ -10,8 +10,8 @@ import { MessageModel } from '../shared/models/message.model';
         <div class="chat-window" *ngIf="name">
 	        <div class="messages" *ngIf="messages" #chat [scrollTop]="chat.scrollHeight">
 		        <div class="message" *ngFor="let message of messages">
-			        <div class="name">
-				        {{message.UserName}}
+                    <div class="sender">
+				        <span class="name">{{message.UserName}}</span>&ensp;<span class="time">{{message.PostedTime | date:'medium'}}</span>
 			        </div>
 			        <div class="msg-body">
 				        {{message.Body}}
