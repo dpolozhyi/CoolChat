@@ -9,7 +9,7 @@ namespace CoolChat.Web.Hubs
 {
     public class ChatHub : Hub
     {
-        public void NewContosoChatMessage(string message)
+        public void NewChatMessage(string message)
         {
             Clients.All.AddNewMessageToPage(message);
         }

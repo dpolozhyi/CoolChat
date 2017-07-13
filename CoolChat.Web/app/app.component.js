@@ -10,13 +10,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 let AppComponent = class AppComponent {
+    constructor() {
+        this.minModeHiddenChatList = false;
+    }
+    onChatListStateChanged(state) {
+        this.minModeHiddenChatList = state;
+    }
+    onResize(event) {
+        const target = event.target;
+        if (target.innerWidth > 767) {
+            this.minModeHiddenChatList = true;
+        }
+    }
 };
+__decorate([
+    core_1.HostListener('window:resize', ['$event']), 
+    __metadata('design:type', Function), 
+    __metadata('design:paramtypes', [Object]), 
+    __metadata('design:returntype', void 0)
+], AppComponent.prototype, "onResize", null);
 AppComponent = __decorate([
     core_1.Component({
-        selector: 'app',
+        selector: 'div[app]',
         template: `
-        <header>CoolChat</header>
-        <chat-list></chat-list>
+        <div class="header">
+	        <span class="logo">CoolChat</span>
+	        <span class="chat-list-ico" id="showChatList" (click)="minModeHiddenChatList = !minModeHiddenChatList"><i class="fa fa-bars" aria-hidden="true"></i></span>
+        </div>
+        <div class="main" chat-list (notifyChatListState)="onChatListStateChanged($event)" [minModeHiddenChatList]="minModeHiddenChatList"></div>    
     `
     }), 
     __metadata('design:paramtypes', [])

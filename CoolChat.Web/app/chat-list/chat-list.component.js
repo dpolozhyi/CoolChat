@@ -13,24 +13,42 @@ const chat_service_1 = require('../shared/services/chat.service');
 let ChatListComponent = class ChatListComponent {
     constructor(chatService) {
         this.chatService = chatService;
+        this.notifyChatListState = new core_1.EventEmitter();
     }
     ngOnInit() {
         this.chatService.getChatRoomList().then(data => this.roomList = data);
     }
     selectRoom(room) {
         this.selectedRoom = room;
+        this.notifyChatListState.emit(true);
     }
 };
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', Boolean)
+], ChatListComponent.prototype, "hiddenChatList", void 0);
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', Boolean)
+], ChatListComponent.prototype, "minModeHiddenChatList", void 0);
+__decorate([
+    core_1.Output(), 
+    __metadata('design:type', core_1.EventEmitter)
+], ChatListComponent.prototype, "notifyChatListState", void 0);
 ChatListComponent = __decorate([
     core_1.Component({
-        selector: 'chat-list',
+        selector: 'div[chat-list]',
         template: `
-        <div class="chat-list">
-	        <ul class="room-list">
-                <li *ngFor="let room of roomList" [class.selectedRoom] = "room == selectedRoom" (click)="selectRoom(room)">{{room.Name}}</li>
-	        </ul>
-        </div>
-        <chat [chatRoom]="selectedRoom" *ngIf="selectedRoom"></chat>
+            <div class="chat-list" [class.hiddenChatList]="hiddenChatList" [class.fullWidth]="!minModeHiddenChatList" [class.zeroMarginLeft]="!minModeHiddenChatList">
+		        <ul>
+			        <li class="room-list" *ngFor="let room of roomList" [class.selectedRoom] = "room == selectedRoom" (click)="selectRoom(room)">{{room.Name}}</li>
+		        </ul>
+		        <div class="hide" id="hide-button" [class.hiddenHideButton]="hiddenChatList" (click)="hiddenChatList = !hiddenChatList">
+			        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+		        </div>
+	        </div>
+
+            <div chat class="chat-area" [minModeHiddenChatList]="minModeHiddenChatList" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList" [chatRoom]="selectedRoom" [hiddenChatList]="hiddenChatList" *ngIf="selectedRoom"></div>
     `
     }), 
     __metadata('design:paramtypes', [chat_service_1.ChatService])

@@ -1,157 +1,443 @@
 ﻿@font-face {
-    font-family: Roboto-Light; /* Имя шрифта */
-    src: url(../fonts/roboto-light.ttf); /* Путь к файлу со шрифтом */
-   }
-
-body, html {
-	margin: 0;
+  font-family: Roboto-Light;
+  src: url(../fonts/roboto-light.ttf);
 }
-
-ul{
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
+body,
+html,
+.wrapper {
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
-
-header{
-	height: 50px;
-	padding: 8px 20px;
-	font-size: 42px;
-	background: #00BCD4;
-	color:white;
-	font-family: Roboto-Light;
-}
-
-header:hover{
-	cursor: pointer;
-}
-
-div.chat-list{
-	width: 30%;
-	height: 100%;
-	position: fixed;
-	border-right: 4px solid #00BCD4;
-	overflow-y: scroll;
-}
-
-ul.room-list li{
-	padding: 15px 25px;
-	border-bottom: 2px solid #dbe1e5;
-	font-size: 24px;
-}
-
-ul.room-list li:hover{
-	background: rgba(219, 225, 229, 0.8);
-	cursor: pointer;
-}
-
-.selectedRoom{
-	background: rgba(219, 225, 229, 0.8);
-}
-
 ::-webkit-scrollbar {
-display: none;
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+div.header {
+  background: #3498db;
+  height: 8%;
+  min-height: 40px;
+  width: 100%;
+  position: fixed;
+  font-size: 38px;
+  font-family: Roboto-Light;
+  color: white;
+  z-index: 999;
+  padding: 0 22px;
+  box-sizing: border-box;
+}
+div.header span.logo:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+div.header span.chat-list-ico {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  display: none;
+}
+@media (max-width: 768px) {
+  div.header span.chat-list-ico {
+    display: inline-block;
+  }
+}
+@media (max-height: 600px) {
+  div.header span.chat-list-ico {
+    top: 0;
+  }
+}
+@media (min-height: 600px) and (max-height: 820px) {
+  div.header span.chat-list-ico {
+    top: 5px;
+  }
+}
+div.header span.chat-list-ico:hover {
+  cursor: pointer;
+}
+div.header span.chat-list-ico:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.main {
+  height: 92%;
+  min-height: 290px;
+  width: 100%;
+  position: relative;
+  top: 8%;
+  left: 0;
+  overflow: hidden;
+}
+@media (max-heigt: 500px) {
+  .main {
+    top: 40px;
+  }
+}
+.main div.chat-list {
+  border-right: 4px solid #3498db;
+  display: inline-block;
+  width: 25%;
+  height: 100%;
+  z-index: 999;
+  top: 8%;
+  left: 0;
+  overflow-x: hidden;
+  transition: 0.4s;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+@media (max-heigt: 500px) {
+  .main div.chat-list {
+    top: 40px;
+  }
+}
+@media (max-width: 768px) {
+  .main div.chat-list {
+    margin-left: -25%;
+  }
+}
+.main div.chat-list ul {
+  margin: 0;
+  padding: 0;
+}
+.main div.chat-list ul li {
+  padding: 10px 25px;
+  font-size: 22px;
+  font-family: Roboto-Light;
+  border-bottom: 1px solid #ccc;
+  transition: 0.15s;
+}
+.main div.chat-list ul li:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.4);
+}
+.main div.chat-list div.hide {
+  z-index: 999;
+  display: inline-block;
+  left: 25%;
+  margin-left: -52px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  padding: 5px 10px;
+  border: 4px solid #3498db;
+  border-right: none;
+  border-radius: 50px 0 0 50px;
+  transition: 0.4s;
+  background: white;
+  opacity: 0.5;
+}
+@media (max-width: 768px) {
+  .main div.chat-list div.hide {
+    display: none;
+  }
+}
+.main div.chat-list div.hide:hover {
+  cursor: pointer;
+  transform: translateY(-50%);
+  opacity: 1 !important;
+}
+.main .chat-area {
+  transition: 0.4s;
+  right: 0;
+  width: 75%;
+  height: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  float: right;
+  margin-left: -4px;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  .main .chat-area {
+    width: 100%;
+  }
+}
+.main .chat-area div.conversation {
+  background: #ecf0f1;
+  width: 75%;
+  height: 85%;
+  position: absolute;
+  top: 0;
+  transition: 0.4s;
+  overflow-y: scroll;
+}
+@media (max-width: 768px) {
+  .main .chat-area div.conversation {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  .main .chat-area div.conversation {
+    height: 90%;
+  }
+}
+.main .chat-area div.conversation div.message-list {
+  max-width: 768px;
+  min-width: 308px;
+  margin: auto;
+}
+.main .chat-area div.conversation div.message-list div.message {
+  background: #00BCD4;
+  color: #333;
+  margin: 10px 10px 25px;
+  margin-left: 60px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-family: Roboto-Light;
+  position: relative;
+}
+.main .chat-area div.conversation div.message-list div.message span {
+  display: block;
+}
+.main .chat-area div.conversation div.message-list div.message span.message-name {
+  margin-bottom: 5px;
+  color: #34495e;
+  display: inline-block;
+}
+.main .chat-area div.conversation div.message-list div.message span.message-body {
+  color: #0d3d56;
+}
+.main .chat-area div.conversation div.message-list div.message span.message-time {
+  color: #34495e;
+  line-height: 27px;
+  text-align: right;
+  font-size: 16px;
+  display: inline-block;
+  float: right;
+}
+.main .chat-area div.conversation div.message-list div.message:before {
+  position: absolute;
+  content: "";
+  bottom: -20px;
+  right: 25px;
+  left: 0;
+  border: 0;
+  border-style: solid;
+  border-color: black;
+  border-right-width: 30px;
+  border-bottom-width: 20px;
+  border-color: transparent #00BCD4;
+}
+.main .chat-area div.conversation div.message-list div.message:after {
+  position: absolute;
+  content: "";
+  bottom: -20px;
+  right: 25px;
+  border: 0;
+  border-style: solid;
+  border-color: black;
+  border-right-width: 10px;
+  border-bottom-width: 20px;
+  border-color: transparent #ecf0f1;
+}
+.main .chat-area div.conversation div.message-list div.message.my-message {
+  background: #b5c689;
+  margin-left: 10px;
+  margin-right: 60px;
+}
+.main .chat-area div.conversation div.message-list div.message.my-message:before {
+  position: absolute;
+  content: "";
+  bottom: -20px;
+  left: 25px;
+  right: 0;
+  border: 0;
+  border-style: solid;
+  border-color: black;
+  border-left-width: 30px;
+  border-bottom-width: 20px;
+  border-color: transparent #b5c689;
+}
+.main .chat-area div.conversation div.message-list div.message.my-message:after {
+  position: absolute;
+  content: "";
+  bottom: -20px;
+  left: 25px;
+  border: 0;
+  border-style: solid;
+  border-color: black;
+  border-left-width: 10px;
+  border-bottom-width: 20px;
+  border-color: transparent #ecf0f1;
+}
+.main .chat-area div.new-message {
+  background: #ecf0f1;
+  border-top: 1px solid #bdc3c7;
+  box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.5);
+  height: 15%;
+  width: 75%;
+  position: absolute;
+  bottom: 0;
+  vertical-align: middle;
+  transition: 0.4s;
+  padding-right: 12px;
+  box-sizing: border-box;
+}
+@media (max-width: 768px) {
+  .main .chat-area div.new-message {
+    width: 100%;
+    padding: 0;
+  }
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  .main .chat-area div.new-message {
+    height: 10%;
+    padding: 0;
+  }
+}
+.main .chat-area div.new-message div.message-panel {
+  max-width: 748px;
+  min-width: 320px;
+  height: 52px;
+  margin: auto;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+@media (max-width: 768px) {
+  .main .chat-area div.new-message div.message-panel {
+    height: 100%;
+  }
+}
+.main .chat-area div.new-message div.message-panel div.message-input {
+  display: inline-block;
+  height: 50px;
+  width: 85%;
+}
+@media (max-width: 480px) {
+  .main .chat-area div.new-message div.message-panel div.message-input {
+    width: 75%;
+  }
+}
+@media (max-width: 768px) {
+  .main .chat-area div.new-message div.message-panel div.message-input {
+    height: 100%;
+  }
+}
+.main .chat-area div.new-message div.message-panel div.message-input textarea {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid transparent;
+  resize: none;
+  outline: 0px !important;
+  font-size: 18px;
+  transition: 0.1s;
+}
+.main .chat-area div.new-message div.message-panel div.message-input textarea:focus {
+  border-color: #3498db;
+}
+.main .chat-area div.new-message div.message-panel div.message-send {
+  display: inline-block;
+  vertical-align: top;
+  width: 15%;
+  float: right;
+  height: 50px;
+  border-left: 1px solid #ccc;
+  box-sizing: border-box;
+}
+@media (max-width: 480px) {
+  .main .chat-area div.new-message div.message-panel div.message-send {
+    width: 25%;
+  }
+}
+@media (max-width: 768px) {
+  .main .chat-area div.new-message div.message-panel div.message-send {
+    height: 100%;
+  }
+}
+.main .chat-area div.new-message div.message-panel div.message-send button.send-btn {
+  background: white;
+  border: none;
+  font-size: 18px;
+  display: block;
+  vertical-align: middle;
+  height: 100%;
+  width: 100%;
+  transition: 0.1s;
+}
+.main .chat-area div.new-message div.message-panel div.message-send button.send-btn:hover {
+  background: rgba(212, 216, 216, 0.8);
+  cursor: pointer;
 }
 
-div.chat-window{
-	width: 70%;
-	position: fixed;
-	left: 30%;
-}
-
-div.chat-window div.msg-area{
-	position: fixed;
-	bottom: 0px;
-	width: 70%;
-	padding: 20px 35px;
-	border-top: 2px solid #00BCD4;
-}
-
-div.chat-window div.msg-area textarea{
-	width: 80%;
-	margin-bottom: -6px;
-	height: 60px;
-	resize: none;
-	font-size: 16px;
-}
-
-div.chat-window div.msg-area button.btn-send, div.enter-form button{
-	margin-left: 5px;
-	background: #00BCD4;
-	border: none;
-	display: inline-block;
-	vertical-align: top;
-	padding: 10px 30px;
-	font-size: 20px;
-	font-family: Roboto-Light;
-	color:white;
-}
-
-div.chat-window div.msg-area button.btn-send:hover, div.enter-form button:hover{
-	background: #00a9be;
-	cursor: pointer;
-}
-
-div.messages{
-	margin: 10px 30px;
-	position: fixed;
-	max-height: 81%;
-	overflow-y: scroll;
-    width: 65%
-}
-
-div.messages div.message{
-	margin-bottom: 15px;
-}
-
-div.messages div.message div.sender{
-	vertical-align: top;
-	font-family: Roboto-Light;
-	width: 100%;
-	border-top: 2px solid #dbe1e5;
-	padding: 0 18px;
-	box-sizing: border-box;
-}
-
-div.messages div.message div.sender span.name{
-	color: #2196F3;
-	font-size: 20px;
-}
-
-div.messages div.message div.sender span.time{
-	color: #555;
-	font-size: 15px;
-}
-
-div.messages div.message div.msg-body{
-	width: 100%;
-	font-size: 18px;
-	font-family: Roboto-Light;
-	padding: 10px 20px;
-	box-sizing: border-box;
-    word-wrap: break-word;
-}
 
 div.enter-form{
 	width: 300px;
-	position: fixed;
-	left: 30%;
-	margin: 15% 20%;
+    margin: auto;
+    position: relative;
+    top: 45%;
+    transform: translateY(-50%);
 	text-align: center;
+    vertical-align: middle;
 }
 
 div.enter-form input{
 	font-size: 20px;
 	font-family: Roboto-Light;
 	margin-bottom: 10px;
+    border: none;
+    outline: 0 !important;
+    border-bottom: 2px solid #ccc;
+    transition: 0.2s;
+}
+
+div.enter-form input:focus{
+	border-color: #3498db;
 }
 
 div.enter-form button{
 	margin: 5px 0;
+    padding: 10px 25px;
+    background: white;
+	border: 1px solid rgba(212, 216, 216, 1);
+	font-size: 18px;
+	vertical-align: middle;
+	transition: 0.1s;
+}
+
+div.enter-form button:hover{
+    background: rgba(212, 216, 216, 0.8);
+	cursor: pointer;
 }
 
 div.enter-form div.enter-text{
 	font-size: 24px;
 	font-family: Roboto-Light;
 	margin-bottom: 10px;
+}
+
+.hiddenChatList{
+    margin-left: -25% !important;
+}
+
+.hiddenHideButton{
+    margin-left: -25% !important;
+    transform: translateY(-50%) rotate(180deg) !important;
+    opacity: 0.5 !important;
+}
+
+.fullWidth{
+    width: 100% !important;
+}
+
+.zeroMarginLeft{
+    margin-left: 0 !important;
+}
+
+.oneHunMarginLeft{
+    margin-left: 100% !important;
 }
