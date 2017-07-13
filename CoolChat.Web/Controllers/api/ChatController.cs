@@ -45,15 +45,5 @@ namespace CoolChat.Web.Controllers.api
             hubContext.Clients.Group(returned.ChatRoomId.ToString()).AddNewMessageToPage(returned);
             return returned;
         }
-
-        // PUT: api/Chat/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Chat/5
-        public void Delete(int id)
-        {
-        }
     }
 }
