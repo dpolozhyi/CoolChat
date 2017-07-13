@@ -38,7 +38,8 @@ __decorate([
 ChatListComponent = __decorate([
     core_1.Component({
         selector: 'div[chat-list]',
-        templateUrl: 'app/chat-list/chat-list.component.html'
+        templateUrl: 'app/chat-list/chat-list.component.html',
+        styleUrls: ['app/chat-list/chat-list.component.css']
     }), 
     __metadata('design:paramtypes', [chat_service_1.ChatService])
 ], ChatListComponent);

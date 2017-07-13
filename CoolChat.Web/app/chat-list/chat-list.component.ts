@@ -5,7 +5,8 @@ import { ChatRoomModel } from '../shared/models/chatroom.model';
 
 @Component({
     selector: 'div[chat-list]',
-    templateUrl: 'app/chat-list/chat-list.component.html'
+    templateUrl: 'app/chat-list/chat-list.component.html',
+    styleUrls: ['app/chat-list/chat-list.component.css']
 })
 export class ChatListComponent implements OnInit{
 

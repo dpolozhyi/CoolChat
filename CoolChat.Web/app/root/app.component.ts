@@ -2,7 +2,8 @@
 
 @Component({
     selector: 'div[app]',
-    templateUrl: 'app/root/app.component.html'
+    templateUrl: 'app/root/app.component.html',
+    styleUrls: ['app/root/app.component.css']
 })
 export class AppComponent implements OnInit{
     private minModeHiddenChatList: boolean = false;

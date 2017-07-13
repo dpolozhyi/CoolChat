@@ -6,7 +6,8 @@ import { MessageModel } from '../shared/models/message.model';
 
 @Component({
     selector: 'div[chat]',
-    templateUrl: 'app/chat/chat.component.html'
+    templateUrl: 'app/chat/chat.component.html',
+    styleUrls: ['app/chat/chat.component.css']
 })
 export class ChatComponent implements OnInit, OnChanges {
 
