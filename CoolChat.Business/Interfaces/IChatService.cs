@@ -7,7 +7,13 @@ namespace CoolChat.Business.Interfaces
     {
         IEnumerable<ChatRoomViewModel> GetChatRoomList();
 
-        ChatRoomViewModel GetChatRoom(string chatRoomName);
+        ChatRoomViewModel GetChatRoomById(int chatRoomId);
+
+        ChatRoomViewModel GetChatRoomByName(string chatRoomName);
+
+        IEnumerable<MessageViewModel> GetMessages(int chatRoomId);
+
+        IEnumerable<MessageViewModel> GetMessages(int chatRoomId, int offset, int limit);
 
         MessageViewModel PostMessage(MessageViewModel message);
     }

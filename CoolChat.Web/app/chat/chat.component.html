@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<div class="conversation" *ngIf="messages && name" #chat [scrollTop]="chat.scrollHeight" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">
+<div class="conversation" *ngIf="messages && name" (scroll)="onMessageScroll($event)" #chat [scrollTop]="chat.scrollHeight - scrollOffset" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">
     <div class="message-list">
         <div class="message" [class.my-message]="name == message.UserName" *ngFor="let message of messages">
             <span class="message-name">{{message.UserName}}</span><span class="message-time">{{message.PostedTime | date:'medium'}}</span>

@@ -51,7 +51,10 @@ let ChatService = class ChatService {
         return this.http.get('/chat/list').toPromise().then(data => data.json());
     }
     getMessages(chatRoom) {
-        return this.http.get('/chat/' + chatRoom.Name).toPromise().then(data => data.json().Messages);
+        return this.http.get('/messages/' + chatRoom.Id + '?offset=0&limit=20').toPromise().then(data => data.json());
+    }
+    getEarlyMessages(chatRoomId, offset) {
+        return this.http.get('/messages/' + chatRoomId + '?offset=' + offset + '&limit=10').toPromise().then(data => data.json());
     }
     sendMessage(message) {
         console.log("Message sent from service");

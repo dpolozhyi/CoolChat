@@ -30,4 +30,11 @@ export class ChatListComponent implements OnInit{
         this.selectedRoom = room;
         this.notifyChatListState.emit(true);
     }
+
+    @HostListener('mousemove', ['$event'])
+    onMouseMove(event) {
+        if (event.clientX < 2) {
+            this.hiddenChatList = false;
+        }
+    }
 }

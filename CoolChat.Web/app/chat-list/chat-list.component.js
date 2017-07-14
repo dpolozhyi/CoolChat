@@ -22,6 +22,11 @@ let ChatListComponent = class ChatListComponent {
         this.selectedRoom = room;
         this.notifyChatListState.emit(true);
     }
+    onMouseMove(event) {
+        if (event.clientX < 2) {
+            this.hiddenChatList = false;
+        }
+    }
 };
 __decorate([
     core_1.Input(), 
@@ -35,6 +40,12 @@ __decorate([
     core_1.Output(), 
     __metadata('design:type', core_1.EventEmitter)
 ], ChatListComponent.prototype, "notifyChatListState", void 0);
+__decorate([
+    core_1.HostListener('mousemove', ['$event']), 
+    __metadata('design:type', Function), 
+    __metadata('design:paramtypes', [Object]), 
+    __metadata('design:returntype', void 0)
+], ChatListComponent.prototype, "onMouseMove", null);
 ChatListComponent = __decorate([
     core_1.Component({
         selector: 'div[chat-list]',

@@ -64,7 +64,11 @@ export class ChatService {
     }
 
     getMessages(chatRoom: ChatRoomModel): Promise<MessageModel[]> {
-        return this.http.get('/chat/' + chatRoom.Name).toPromise().then(data => data.json().Messages as MessageModel[]);
+        return this.http.get('/messages/' + chatRoom.Id + '?offset=0&limit=20').toPromise().then(data => data.json() as MessageModel[]);
+    }
+
+    getEarlyMessages(chatRoomId: number, offset: number): Promise<MessageModel[]> {
+        return this.http.get('/messages/' + chatRoomId + '?offset=' + offset + '&limit=10').toPromise().then(data => data.json() as MessageModel[]);
     }
 
     sendMessage(message: MessageModel): Promise<MessageModel> {

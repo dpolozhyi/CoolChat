@@ -33,7 +33,7 @@ namespace CoolChat.Web.Controllers.api
         // GET: api/Chat/myroom
         public ChatRoomViewModel Get(string name)
         {
-            return this.chatService.GetChatRoom(name);
+            return this.chatService.GetChatRoomByName(name);
         }
 
         [Route("")]

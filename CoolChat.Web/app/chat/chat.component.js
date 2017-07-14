@@ -15,9 +15,12 @@ const message_model_1 = require('../shared/models/message.model');
 let ChatComponent = class ChatComponent {
     constructor(chatService) {
         this.chatService = chatService;
+        this.scrollOffset = 0;
+        this.messagesLoading = false;
     }
     ngOnInit() {
         this.chatService.addMessageCallback((message) => {
+            this.scrollOffset = 0;
             this.messages.push(message);
         });
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
@@ -33,6 +36,7 @@ let ChatComponent = class ChatComponent {
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
         this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => this.chatService.subscribe(String(this.chatRoom.Id)));
         this.prevChatRoom = this.chatRoom;
+        this.scrollOffset = 0;
     }
     sendMessage(msgText) {
         if (!msgText.trim()) {
@@ -49,6 +53,25 @@ let ChatComponent = class ChatComponent {
         if (name.trim()) {
             this.name = name.trim();
             this.chatService.subscribe(String(this.chatRoom.Id));
+        }
+    }
+    onMessageScroll(event) {
+        const target = event.target;
+        if (target.scrollTop < 1 && !this.messagesLoading) {
+            var currentPosition = target.scrollHeight - target.scrollTop;
+            console.log("Trigerred");
+            console.log("Before loading scroll height:" + target.scrollHeight);
+            this.messagesLoading = true;
+            this.chatService
+                .getEarlyMessages(this.chatRoom.Id, this.messages.length)
+                .then((messages) => {
+                console.log("Offset after loading:" + currentPosition);
+                messages.reverse().forEach((value) => this.messages.unshift(value));
+                this.scrollOffset = currentPosition;
+                console.log("Scroll height after loading:" + target.scrollHeight);
+                console.log("Scroll top after loading:" + target.scrollTop);
+                this.messagesLoading = false;
+            });
         }
     }
 };

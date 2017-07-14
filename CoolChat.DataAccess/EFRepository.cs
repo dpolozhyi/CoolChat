@@ -25,7 +25,10 @@ namespace CoolChat.DataAccess
         public IEnumerable<T> Get(
             Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeProperties = ""
+            string includeProperties = "",
+            int offset = -1,
+            int limit = 0,
+            Func<IQueryable<T>, IOrderedQueryable<T>> postOrderBy = null
             )
         {
             IQueryable<T> query = this.context.Set<T>(); ;
@@ -43,7 +46,17 @@ namespace CoolChat.DataAccess
 
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                query = orderBy(query);
+            }
+
+            if (offset != -1)
+            {
+                query = query.Skip(offset).Take(limit);
+            }
+
+            if(postOrderBy != null)
+            {
+                return postOrderBy(query).ToList();
             }
             else
             {

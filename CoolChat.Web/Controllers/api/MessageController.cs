@@ -24,19 +24,18 @@ namespace CoolChat.Web.Controllers.api
             this.hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
         }
 
-        [Route("{chatRoomId}")]
-        // GET: api/Message
-        public IEnumerable<MessageViewModel> Get(int chatRoomId)
-        {
-            return this.chatService.GetChatRoomMessages(chatRoomId);
-        }
-
-
         // GET: api/Message/5
         [Route("{chatRoomId}")]
-        public IEnumerable<MessageViewModel> Get(int chatRoomId, int offset, int limit)
+        public IEnumerable<MessageViewModel> Get(int chatRoomId, int offset = -1, int limit = 0)
         {
-            return this.chatService.GetChatRoomMessages(chatRoomId, offset, limit);
+            if(offset != -1)
+            {
+                return this.chatService.GetMessages(chatRoomId, offset, limit);
+            }
+            else
+            {
+                return this.chatService.GetMessages(chatRoomId);
+            }
         }
 
         [Route("")]
