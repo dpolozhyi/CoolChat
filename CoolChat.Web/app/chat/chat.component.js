@@ -37,6 +37,7 @@ let ChatComponent = class ChatComponent {
         this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => this.chatService.subscribe(String(this.chatRoom.Id)));
         this.prevChatRoom = this.chatRoom;
         this.scrollOffset = 0;
+        console.log("ngOnChanges: scroll ofset 0");
     }
     sendMessage(msgText) {
         if (!msgText.trim()) {
@@ -57,17 +58,34 @@ let ChatComponent = class ChatComponent {
     }
     onMessageScroll(event) {
         const target = event.target;
-        if (target.scrollTop < 1 && !this.messagesLoading) {
-            var currentPosition = target.scrollHeight - target.scrollTop;
+        this.scrollOffset = event.target.scrollHeight - event.target.scrollTop;
+        if (target.scrollTop < 10 && !this.messagesLoading) {
             this.messagesLoading = true;
             this.chatService
                 .getEarlyMessages(this.chatRoom.Id, this.messages.length)
                 .then((messages) => {
                 messages.reverse().forEach((value) => this.messages.unshift(value));
-                this.scrollOffset = currentPosition;
                 this.messagesLoading = false;
             });
         }
+        /* Why this isn't working? */
+        /*const target = event.target;
+        console.log(event.srcElement.scrollTop);
+        if (target.scrollTop < 1 && !this.messagesLoading) {
+            console.log("Scroll Height: " + target.scrollHeight);
+            console.log("Scroll Top: " + target.scrollTop);
+            var currentPosition = target.scrollHeight - target.scrollTop;
+            console.log("Triggered, scroll offset " + currentPosition)
+            this.messagesLoading = true;
+            this.chatService
+                .getEarlyMessages(this.chatRoom.Id, this.messages.length)
+                .then((messages) => {
+                    this.scrollOffset = currentPosition;
+                    console.log("Scroll offset is set: " + this.scrollOffset);
+                    messages.reverse().forEach((value) => this.messages.unshift(value));
+                    this.messagesLoading = false;
+                });
+        }*/
     }
 };
 __decorate([
