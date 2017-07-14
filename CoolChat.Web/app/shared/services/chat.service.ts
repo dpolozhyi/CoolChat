@@ -35,23 +35,16 @@ export class ChatService {
         }
 
         this.hubConnection = this.window.$.hubConnection();
-        console.log("GOT HUB CONNECTION");
-        console.log(this.hubConnection);
         this.hubConnection.url = 'http://localhost:38313/signalr';
         this.hubProxy = this.hubConnection.createHubProxy('chatHub');
         this.hubProxy.on("AddNewMessageToPage", (message) => {
-            console.log('New message came to service');
             console.log(this.msgCallback);
             if (this.msgCallback) {
                 this.msgCallback(message);
             }
         });
         this.hubConnection.start()
-            .done(function () {
-                console.log("GOT HUB CONNECTION");
-                console.log(this.hubConnection);
-                console.log('Now connected, connection ID=' + this.hubConnection.id);
-            })
+            .done(function () {})
 
     }
 
@@ -72,7 +65,6 @@ export class ChatService {
     }
 
     sendMessage(message: MessageModel): Promise<MessageModel> {
-        console.log("Message sent from service");
         return this.http
             .post('/chat', JSON.stringify(message), { headers: this.headers })
             .toPromise()

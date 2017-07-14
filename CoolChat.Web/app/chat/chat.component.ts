@@ -77,17 +77,12 @@ export class ChatComponent implements OnInit, OnChanges {
         const target = event.target;
         if (target.scrollTop < 1 && !this.messagesLoading) {
             var currentPosition = target.scrollHeight - target.scrollTop;
-            console.log("Trigerred");
-            console.log("Before loading scroll height:" + target.scrollHeight);
             this.messagesLoading = true;
             this.chatService
                 .getEarlyMessages(this.chatRoom.Id, this.messages.length)
                 .then((messages) => {
-                    console.log("Offset after loading:" + currentPosition);
                     messages.reverse().forEach((value) => this.messages.unshift(value));
                     this.scrollOffset = currentPosition;
-                    console.log("Scroll height after loading:" + target.scrollHeight);
-                    console.log("Scroll top after loading:" + target.scrollTop);
                     this.messagesLoading = false;
                 });
         }
