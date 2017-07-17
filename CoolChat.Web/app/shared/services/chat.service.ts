@@ -35,7 +35,7 @@ export class ChatService {
         }
 
         this.hubConnection = this.window.$.hubConnection();
-        this.hubConnection.url = 'http://localhost:38313/signalr';
+        this.hubConnection.url = 'http://coolchat.local:808/signalr';
         this.hubProxy = this.hubConnection.createHubProxy('chatHub');
         this.hubProxy.on("AddNewMessageToPage", (message) => {
             console.log(this.msgCallback);

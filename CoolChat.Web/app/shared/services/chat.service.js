@@ -26,7 +26,7 @@ let ChatService = class ChatService {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
         }
         this.hubConnection = this.window.$.hubConnection();
-        this.hubConnection.url = 'http://localhost:38313/signalr';
+        this.hubConnection.url = 'http://coolchat.local:808/signalr';
         this.hubProxy = this.hubConnection.createHubProxy('chatHub');
         this.hubProxy.on("AddNewMessageToPage", (message) => {
             console.log(this.msgCallback);

@@ -5,7 +5,7 @@ using System.Data.Entity;
 namespace CoolChat.DataAccess.EFContext
 {
 
-    public class ChatDBInitializer : CreateDatabaseIfNotExists<ChatContext>
+    public class ChatDBInitializer : DropCreateDatabaseAlways<ChatContext>
     {
         protected static string[] Names = new string[]
         {

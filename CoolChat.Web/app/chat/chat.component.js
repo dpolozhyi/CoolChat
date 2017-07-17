@@ -58,12 +58,12 @@ let ChatComponent = class ChatComponent {
     }
     onMessageScroll(event) {
         const target = event.target;
-        this.scrollOffset = event.target.scrollHeight - event.target.scrollTop;
-        if (target.scrollTop < 10 && !this.messagesLoading) {
+        if (target.scrollTop < 100 && !this.messagesLoading) {
             this.messagesLoading = true;
             this.chatService
                 .getEarlyMessages(this.chatRoom.Id, this.messages.length)
                 .then((messages) => {
+                this.scrollOffset = target.scrollHeight - target.scrollTop;
                 messages.reverse().forEach((value) => this.messages.unshift(value));
                 this.messagesLoading = false;
             });
