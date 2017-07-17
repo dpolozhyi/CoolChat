@@ -23,6 +23,7 @@ export class ChatListComponent implements OnInit{
     constructor(private chatService: ChatService) { }
 
     ngOnInit() {
+        this.chatService.connect().then(() => console.log("Connection established"));
         this.chatService.getChatRoomList().then(data => this.roomList = data);
     }
 

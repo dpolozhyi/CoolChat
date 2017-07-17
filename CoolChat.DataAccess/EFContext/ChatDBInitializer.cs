@@ -39,7 +39,7 @@ namespace CoolChat.DataAccess.EFContext
             context.ChatRooms.Add(chat1);
             context.ChatRooms.Add(chat2);
 
-            for (int i = 0; i < 100; i++)
+            /*for (int i = 0; i < 100; i++)
             {
                 context.Messages.Add(new Message()
                 {
@@ -61,7 +61,7 @@ namespace CoolChat.DataAccess.EFContext
                     Body = Messages[rand.Next(Messages.Length)]
                 });
                 today += new TimeSpan(0, 0, rand.Next(5, 60));
-            }
+            }*/
 
             base.Seed(context);
         }

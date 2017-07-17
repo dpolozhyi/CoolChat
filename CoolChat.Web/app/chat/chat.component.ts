@@ -48,7 +48,11 @@ export class ChatComponent implements OnInit, OnChanges {
             this.prevChatRoom = this.chatRoom;
         }
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
-        this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => this.chatService.subscribe(String(this.chatRoom.Id)));
+        this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => { 
+            console.log("Unsubscribed to " + this.prevChatRoom.Id);
+            this.chatService.subscribe(String(this.chatRoom.Id));
+            console.log("Subscribed to " + this.chatRoom.Id);
+        });
         this.prevChatRoom = this.chatRoom;
         this.scrollOffset = 0;
         console.log("ngOnChanges: scroll ofset 0");

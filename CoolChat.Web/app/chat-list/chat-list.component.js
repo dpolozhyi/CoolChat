@@ -16,6 +16,7 @@ let ChatListComponent = class ChatListComponent {
         this.notifyChatListState = new core_1.EventEmitter();
     }
     ngOnInit() {
+        this.chatService.connect().then(() => console.log("Connection established"));
         this.chatService.getChatRoomList().then(data => this.roomList = data);
     }
     selectRoom(room) {

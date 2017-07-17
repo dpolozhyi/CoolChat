@@ -7,6 +7,15 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <!-- Connection for SignalR -->
+    <script>
+        var hubConfig = {
+            url: 'http://coolchat.local:808/signalr',
+            hubName: 'chatHub'
+        };
+        window.hubConfig = hubConfig;
+    </script>
+
     <!-- SignalR -->
     <script src="Scripts/jquery-1.10.2.min.js"></script>
     <script src="Scripts/jquery.signalR-2.2.2.min.js"></script>

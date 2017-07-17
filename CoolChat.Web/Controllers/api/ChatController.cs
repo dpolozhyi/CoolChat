@@ -25,7 +25,8 @@ namespace CoolChat.Web.Controllers.api
         // GET: api/Chat
         public IEnumerable<ChatRoomViewModel> Get()
         {
-            return this.chatService.GetChatRoomList();
+            var returned =  this.chatService.GetChatRoomList();
+            return returned;
         }
 
         [Route("{name}")]

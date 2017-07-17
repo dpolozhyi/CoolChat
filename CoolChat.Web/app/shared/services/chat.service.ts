@@ -22,6 +22,8 @@ export class ChatService {
     private hubConnection: any;
     private hubProxy: any;
 
+    public connected: boolean = false;
+
     private msgCallback: MessageCallback;
 
     private headers = new Headers({ 'Content-Type': 'application/json' });
@@ -35,21 +37,22 @@ export class ChatService {
         }
 
         this.hubConnection = this.window.$.hubConnection();
-        this.hubConnection.url = 'http://coolchat.local:808/signalr';
-        this.hubProxy = this.hubConnection.createHubProxy('chatHub');
+        this.hubConnection.url = this.window['hubConfig'].url;
+        this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
         this.hubProxy.on("AddNewMessageToPage", (message) => {
             console.log(this.msgCallback);
             if (this.msgCallback) {
                 this.msgCallback(message);
             }
         });
-        this.hubConnection.start()
-            .done(function () {})
-
     }
 
     addMessageCallback(callback: MessageCallback) {
         this.msgCallback = callback;
+    }
+
+    connect(): Promise<any> {
+        return this.hubConnection.start();
     }
 
     getChatRoomList(): Promise<ChatRoomModel[]> {

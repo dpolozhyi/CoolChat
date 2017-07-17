@@ -21,24 +21,26 @@ let ChatService = class ChatService {
     constructor(window, http) {
         this.window = window;
         this.http = http;
+        this.connected = false;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
         }
         this.hubConnection = this.window.$.hubConnection();
-        this.hubConnection.url = 'http://coolchat.local:808/signalr';
-        this.hubProxy = this.hubConnection.createHubProxy('chatHub');
+        this.hubConnection.url = this.window['hubConfig'].url;
+        this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
         this.hubProxy.on("AddNewMessageToPage", (message) => {
             console.log(this.msgCallback);
             if (this.msgCallback) {
                 this.msgCallback(message);
             }
         });
-        this.hubConnection.start()
-            .done(function () { });
     }
     addMessageCallback(callback) {
         this.msgCallback = callback;
+    }
+    connect() {
+        return this.hubConnection.start().toPromise();
     }
     getChatRoomList() {
         return this.http.get('/chat/list').toPromise().then(data => data.json());
