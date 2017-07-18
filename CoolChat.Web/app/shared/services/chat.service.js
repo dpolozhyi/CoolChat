@@ -40,7 +40,7 @@ let ChatService = class ChatService {
         this.msgCallback = callback;
     }
     connect() {
-        return this.hubConnection.start().toPromise();
+        return this.hubConnection.start();
     }
     getChatRoomList() {
         return this.http.get('/chat/list').toPromise().then(data => data.json());
