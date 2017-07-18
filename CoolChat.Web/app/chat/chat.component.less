@@ -77,13 +77,19 @@ div.conversation {
             position: relative;
             word-wrap: break-word;
 
+            @media (max-width: 768px) and (orientation: portrait) {
+                padding: 10px 15px;
+            }
+
             span {
                 display: block;
 
                 &.message-name {
                     margin-bottom: 5px;
+                    font-size: 18px;
                     color: #34495e;
                     display: inline-block;
+                    font-weight: bold;
                 }
 
                 &.message-body {
@@ -94,7 +100,7 @@ div.conversation {
                     color: #34495e;
                     line-height: 27px;
                     text-align: right;
-                    font-size: 16px;
+                    font-size: 14px;
                     display: inline-block;
                     float: right;
                 }
