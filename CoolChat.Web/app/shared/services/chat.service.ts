@@ -22,6 +22,8 @@ export class ChatService {
     private hubConnection: any;
     private hubProxy: any;
 
+    public connected: boolean = false;
+
     private msgCallback: MessageCallback;
 
     private headers = new Headers({ 'Content-Type': 'application/json' });
@@ -35,28 +37,22 @@ export class ChatService {
         }
 
         this.hubConnection = this.window.$.hubConnection();
-        console.log("GOT HUB CONNECTION");
-        console.log(this.hubConnection);
-        this.hubConnection.url = 'http://localhost:38313/signalr';
-        this.hubProxy = this.hubConnection.createHubProxy('chatHub');
+        this.hubConnection.url = this.window['hubConfig'].url;
+        this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
         this.hubProxy.on("AddNewMessageToPage", (message) => {
-            console.log('New message came to service');
             console.log(this.msgCallback);
             if (this.msgCallback) {
                 this.msgCallback(message);
             }
         });
-        this.hubConnection.start()
-            .done(function () {
-                console.log("GOT HUB CONNECTION");
-                console.log(this.hubConnection);
-                console.log('Now connected, connection ID=' + this.hubConnection.id);
-            })
-
     }
 
     addMessageCallback(callback: MessageCallback) {
         this.msgCallback = callback;
+    }
+
+    connect(): Promise<any> {
+        return this.hubConnection.start();
     }
 
     getChatRoomList(): Promise<ChatRoomModel[]> {
@@ -64,11 +60,14 @@ export class ChatService {
     }
 
     getMessages(chatRoom: ChatRoomModel): Promise<MessageModel[]> {
-        return this.http.get('/chat/' + chatRoom.Name).toPromise().then(data => data.json().Messages as MessageModel[]);
+        return this.http.get('/messages/' + chatRoom.Id + '?offset=0&limit=20').toPromise().then(data => data.json() as MessageModel[]);
+    }
+
+    getEarlyMessages(chatRoomId: number, offset: number): Promise<MessageModel[]> {
+        return this.http.get('/messages/' + chatRoomId + '?offset=' + offset + '&limit=10').toPromise().then(data => data.json() as MessageModel[]);
     }
 
     sendMessage(message: MessageModel): Promise<MessageModel> {
-        console.log("Message sent from service");
         return this.http
             .post('/chat', JSON.stringify(message), { headers: this.headers })
             .toPromise()

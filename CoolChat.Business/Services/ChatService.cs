@@ -1,9 +1,6 @@
 ﻿using CoolChat.Business.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CoolChat.Entities;
 using CoolChat.DataAccess.Interfaces;
 using CoolChat.DataAccess.Extensions;
@@ -26,15 +23,40 @@ namespace CoolChat.Business.Services
             return Mapper.Map<IEnumerable<ChatRoom>, IEnumerable<ChatRoomViewModel>>(this.unitOfWork.Get<ChatRoom>().Get());
         }
 
-        public ChatRoomViewModel GetChatRoom(string chatRoomName)
+        public ChatRoomViewModel GetChatRoomById(int chatRoomId)
         {
-            ChatRoom chatRoom = this.GetChatRoomByName(chatRoomName);
+            ChatRoom chatRoom = this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Id == chatRoomId, includeProperties: ChatRoomInclude.Messages).FirstOrDefault();
             return Mapper.Map<ChatRoom, ChatRoomViewModel>(chatRoom);
+        }
+
+        public ChatRoomViewModel GetChatRoomByName(string chatRoomName)
+        {
+            var include = typeof(ChatRoom).GetReferencePropertiesString();
+            ChatRoom chatRoom = this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Name == chatRoomName, includeProperties: ChatRoomInclude.Messages).FirstOrDefault();
+            return Mapper.Map<ChatRoom, ChatRoomViewModel>(chatRoom);
+        }
+
+        public IEnumerable<MessageViewModel> GetMessages(int chatRoomId)
+        {
+            var messages = this.unitOfWork.Get<Message>().Get(filter: n => n.ChatRoom.Id == chatRoomId, orderBy: x => x.OrderByDescending(n => n.PostedTime), postOrderBy: x => x.OrderBy(n => n.PostedTime));
+            return Mapper.Map<IEnumerable<Message>, IEnumerable<MessageViewModel>>(messages);
+        }
+
+        public IEnumerable<MessageViewModel> GetMessages(int chatRoomId, int offset, int limit)
+        {
+            var messages = this.unitOfWork.Get<Message>()
+                .Get(
+                    filter: n => n.ChatRoom.Id == chatRoomId, 
+                    orderBy: x => x.OrderByDescending(n => n.PostedTime), 
+                    offset: offset, limit: limit, 
+                    postOrderBy: x => x.OrderBy(n => n.PostedTime)
+                    );
+            return Mapper.Map<IEnumerable<Message>, IEnumerable<MessageViewModel>>(messages);
         }
 
         public MessageViewModel PostMessage(MessageViewModel message)
         {
-            ChatRoom chatRoom = this.GetChatRoomById(message.ChatRoomId);
+            ChatRoom chatRoom = this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Id == message.ChatRoomId).FirstOrDefault();
             Message newMessage = Mapper.Map<MessageViewModel, Message>(message);
             Message insertedMessage = null;
             if (chatRoom != null)
@@ -44,18 +66,6 @@ namespace CoolChat.Business.Services
                 this.unitOfWork.SaveChanges();
             }
             return Mapper.Map<Message, MessageViewModel>(insertedMessage);
-        }
-
-        private ChatRoom GetChatRoomById(int id)
-        {
-            var include = typeof(ChatRoom).GetReferencePropertiesString();
-            return this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Id == id, includeProperties: include).FirstOrDefault();
-        }
-
-        private ChatRoom GetChatRoomByName(string name)
-        {
-            var include = typeof(ChatRoom).GetReferencePropertiesString();
-            return this.unitOfWork.Get<ChatRoom>().Get(filter: n => n.Name == name, includeProperties: include).FirstOrDefault();
         }
     }
 }

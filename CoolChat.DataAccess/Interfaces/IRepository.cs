@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoolChat.DataAccess.Interfaces
 {
@@ -11,7 +9,7 @@ namespace CoolChat.DataAccess.Interfaces
     {
         IEnumerable<T> GetAll();
 
-        IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "");
+        IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "", int offset = -1, int limit = 0, Func<IQueryable<T>, IOrderedQueryable<T>> postOrderBy = null);
 
         T Insert(T item);
 

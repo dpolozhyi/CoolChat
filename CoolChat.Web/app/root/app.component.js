@@ -43,13 +43,8 @@ __decorate([
 AppComponent = __decorate([
     core_1.Component({
         selector: 'div[app]',
-        template: `
-        <div class="header">
-	        <span class="logo">CoolChat</span>
-	        <span class="chat-list-ico" id="showChatList" (click)="minModeHiddenChatList = !minModeHiddenChatList"><i class="fa fa-bars" aria-hidden="true"></i></span>
-        </div>
-        <div class="main" chat-list (notifyChatListState)="onChatListStateChanged($event)" [minModeHiddenChatList]="minModeHiddenChatList"></div>    
-    `
+        templateUrl: 'app/root/app.component.html',
+        styleUrls: ['app/root/app.component.css']
     }), 
     __metadata('design:paramtypes', [])
 ], AppComponent);

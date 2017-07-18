@@ -1,41 +1,67 @@
 ﻿using CoolChat.Entities;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoolChat.DataAccess.EFContext
 {
 
-    public class ChatDBInitializer : CreateDatabaseIfNotExists<ChatContext>
+    public class ChatDBInitializer : DropCreateDatabaseAlways<ChatContext>
     {
+        protected static string[] Names = new string[]
+        {
+            "Mike", "Dave", "John", "Julia", "Peter", "Monica", "Carl", "Donald"
+        };
+
+        protected static string[] Messages = new string[]
+        {
+            "Hi",
+            "How are you?",
+            "I'm fine, you?",
+            "Thx, me too",
+            "Good weather today",
+            "Who is on duty today?",
+            "I know",
+            "I don't know",
+            "I don't giva a",
+            "Call me today",
+            "What's going on?"
+        };
+
         protected override void Seed(ChatContext context)
         {
+            DateTime today = new DateTime(2017, 7, 14);
+
+            Random rand = new Random();
+
             ChatRoom chat1 = new ChatRoom() { CreatedTime = DateTime.Now, IsActive = true, Name = "Funny room" };
-
-            User user1 = new User() { Name = "Mike", Gender = Gender.Male };
-            User user2 = new User() { Name = "Sarah", Gender = Gender.Female };
-            User user3 = new User() { Name = "John", Gender = Gender.Male };
-
-            Message msg1 = new Message() { PostedTime = DateTime.Now, UserName = "Mike", ChatRoom = chat1, Body = "Hi all" };
-            Message msg2 = new Message() { PostedTime = DateTime.Now, UserName = "John", ChatRoom = chat1, Body = "Who r u?" };
-            Message msg3 = new Message() { PostedTime = DateTime.Now, UserName = "Julia", ChatRoom = chat1, Body = "qq" };
-            Message msg4 = new Message() { PostedTime = DateTime.Now, UserName = "Mike", ChatRoom = chat1, Body = "I am the danger" };
-            Message msg5 = new Message() { PostedTime = DateTime.Now, UserName = "Dave", ChatRoom = chat1, Body = "Ok then" };
+            ChatRoom chat2 = new ChatRoom() { CreatedTime = DateTime.Now, IsActive = true, Name = "Spam room" };
 
             context.ChatRooms.Add(chat1);
+            context.ChatRooms.Add(chat2);
 
-            //context.Users.Add(user1);
-            //context.Users.Add(user2);
-            //context.Users.Add(user3);
+            /*for (int i = 0; i < 100; i++)
+            {
+                context.Messages.Add(new Message()
+                {
+                    PostedTime = today,
+                    UserName = Names[rand.Next(Names.Length)],
+                    ChatRoom = chat1,
+                    Body = Messages[rand.Next(Messages.Length)]
+                });
+                today += new TimeSpan(0, 0, rand.Next(5, 60));
+            }
 
-            context.Messages.Add(msg1);
-            context.Messages.Add(msg2);
-            context.Messages.Add(msg3);
-            context.Messages.Add(msg4);
-            context.Messages.Add(msg5);
+            for (int i = 0; i < 300; i++)
+            {
+                context.Messages.Add(new Message()
+                {
+                    PostedTime = today,
+                    UserName = Names[rand.Next(Names.Length)],
+                    ChatRoom = chat2,
+                    Body = Messages[rand.Next(Messages.Length)]
+                });
+                today += new TimeSpan(0, 0, rand.Next(5, 60));
+            }*/
 
             base.Seed(context);
         }

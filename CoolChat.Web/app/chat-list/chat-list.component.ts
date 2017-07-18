@@ -5,18 +5,8 @@ import { ChatRoomModel } from '../shared/models/chatroom.model';
 
 @Component({
     selector: 'div[chat-list]',
-    template: `
-            <div class="chat-list" [class.hiddenChatList]="hiddenChatList" [class.fullWidth]="!minModeHiddenChatList" [class.zeroMarginLeft]="!minModeHiddenChatList">
-		        <ul>
-			        <li class="room-list" *ngFor="let room of roomList" [class.selectedRoom] = "room == selectedRoom" (click)="selectRoom(room)">{{room.Name}}</li>
-		        </ul>
-		        <div class="hide" id="hide-button" [class.hiddenHideButton]="hiddenChatList" (click)="hiddenChatList = !hiddenChatList">
-			        <i class="fa fa-arrow-left" aria-hidden="true"></i>
-		        </div>
-	        </div>
-
-            <div chat class="chat-area" [minModeHiddenChatList]="minModeHiddenChatList" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList" [chatRoom]="selectedRoom" [hiddenChatList]="hiddenChatList" *ngIf="selectedRoom"></div>
-    `
+    templateUrl: 'app/chat-list/chat-list.component.html',
+    styleUrls: ['app/chat-list/chat-list.component.css']
 })
 export class ChatListComponent implements OnInit{
 
@@ -33,11 +23,19 @@ export class ChatListComponent implements OnInit{
     constructor(private chatService: ChatService) { }
 
     ngOnInit() {
+        this.chatService.connect().then(() => console.log("Connection established"));
         this.chatService.getChatRoomList().then(data => this.roomList = data);
     }
 
     selectRoom(room: ChatRoomModel) {
         this.selectedRoom = room;
         this.notifyChatListState.emit(true);
+    }
+
+    @HostListener('mousemove', ['$event'])
+    onMouseMove(event) {
+        if (event.clientX < 2) {
+            this.hiddenChatList = false;
+        }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using CoolChat.Business.ViewModels;
-using CoolChat.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoolChat.Business.Interfaces
 {
@@ -12,7 +7,13 @@ namespace CoolChat.Business.Interfaces
     {
         IEnumerable<ChatRoomViewModel> GetChatRoomList();
 
-        ChatRoomViewModel GetChatRoom(string chatRoomName);
+        ChatRoomViewModel GetChatRoomById(int chatRoomId);
+
+        ChatRoomViewModel GetChatRoomByName(string chatRoomName);
+
+        IEnumerable<MessageViewModel> GetMessages(int chatRoomId);
+
+        IEnumerable<MessageViewModel> GetMessages(int chatRoomId, int offset, int limit);
 
         MessageViewModel PostMessage(MessageViewModel message);
     }

@@ -25,7 +25,8 @@ namespace CoolChat.Web.Controllers.api
         // GET: api/Chat
         public IEnumerable<ChatRoomViewModel> Get()
         {
-            return this.chatService.GetChatRoomList();
+            var returned =  this.chatService.GetChatRoomList();
+            return returned;
         }
 
         [Route("{name}")]
@@ -33,7 +34,7 @@ namespace CoolChat.Web.Controllers.api
         // GET: api/Chat/myroom
         public ChatRoomViewModel Get(string name)
         {
-            return this.chatService.GetChatRoom(name);
+            return this.chatService.GetChatRoomByName(name);
         }
 
         [Route("")]
@@ -44,16 +45,6 @@ namespace CoolChat.Web.Controllers.api
             var returned = this.chatService.PostMessage(message);
             hubContext.Clients.Group(returned.ChatRoomId.ToString()).AddNewMessageToPage(returned);
             return returned;
-        }
-
-        // PUT: api/Chat/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Chat/5
-        public void Delete(int id)
-        {
         }
     }
 }

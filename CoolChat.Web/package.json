@@ -1,12 +1,12 @@
 {
-    "name": "helloapp",
-    "version": "1.0.0",
-    "scripts": {
-        "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
-        "lite": "lite-server",
-        "tsc": "tsc",
-        "tsc:w": "tsc -w"
-    },
+  "name": "helloapp",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
+    "lite": "lite-server",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w"
+  },
   "dependencies": {
     "@angular/common": "~2.1.1",
     "@angular/compiler": "~2.1.1",
@@ -25,11 +25,15 @@
     "systemjs": "0.19.39",
     "zone.js": "^0.6.25"
   },
-    "devDependencies": {
-        "@types/core-js": "^0.9.34",
-        "@types/node": "^6.0.45",
-        "concurrently": "^3.0.0",
-        "lite-server": "^2.2.2",
-        "typescript": "^2.0.3"
-    }
+  "devDependencies": {
+    "@types/core-js": "^0.9.34",
+    "@types/node": "^6.0.45",
+    "concurrently": "^3.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-less": "^1.4.1",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "lite-server": "^2.2.2",
+    "typescript": "^2.0.3"
+  }
 }

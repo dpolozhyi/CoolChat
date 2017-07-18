@@ -5,7 +5,7 @@ namespace CoolChat.DataAccess.EFContext
 {
     public class ChatContext : DbContext
     {
-        public ChatContext(): base()
+        public ChatContext(): base("CoolChat")
         {
             Database.SetInitializer(new ChatDBInitializer());
         }

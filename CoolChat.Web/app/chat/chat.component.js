@@ -15,9 +15,12 @@ const message_model_1 = require('../shared/models/message.model');
 let ChatComponent = class ChatComponent {
     constructor(chatService) {
         this.chatService = chatService;
+        this.scrollOffset = 0;
+        this.messagesLoading = false;
     }
     ngOnInit() {
         this.chatService.addMessageCallback((message) => {
+            this.scrollOffset = 0;
             this.messages.push(message);
         });
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
@@ -31,8 +34,14 @@ let ChatComponent = class ChatComponent {
             this.prevChatRoom = this.chatRoom;
         }
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
-        this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => this.chatService.subscribe(String(this.chatRoom.Id)));
+        this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => {
+            console.log("Unsubscribed to " + this.prevChatRoom.Id);
+            this.chatService.subscribe(String(this.chatRoom.Id));
+            console.log("Subscribed to " + this.chatRoom.Id);
+        });
         this.prevChatRoom = this.chatRoom;
+        this.scrollOffset = 0;
+        console.log("ngOnChanges: scroll ofset 0");
     }
     sendMessage(msgText) {
         if (!msgText.trim()) {
@@ -51,6 +60,37 @@ let ChatComponent = class ChatComponent {
             this.chatService.subscribe(String(this.chatRoom.Id));
         }
     }
+    onMessageScroll(event) {
+        const target = event.target;
+        if (target.scrollTop < 100 && !this.messagesLoading) {
+            this.messagesLoading = true;
+            this.chatService
+                .getEarlyMessages(this.chatRoom.Id, this.messages.length)
+                .then((messages) => {
+                this.scrollOffset = target.scrollHeight - target.scrollTop;
+                messages.reverse().forEach((value) => this.messages.unshift(value));
+                this.messagesLoading = false;
+            });
+        }
+        /* Why this isn't working? */
+        /*const target = event.target;
+        console.log(event.srcElement.scrollTop);
+        if (target.scrollTop < 1 && !this.messagesLoading) {
+            console.log("Scroll Height: " + target.scrollHeight);
+            console.log("Scroll Top: " + target.scrollTop);
+            var currentPosition = target.scrollHeight - target.scrollTop;
+            console.log("Triggered, scroll offset " + currentPosition)
+            this.messagesLoading = true;
+            this.chatService
+                .getEarlyMessages(this.chatRoom.Id, this.messages.length)
+                .then((messages) => {
+                    this.scrollOffset = currentPosition;
+                    console.log("Scroll offset is set: " + this.scrollOffset);
+                    messages.reverse().forEach((value) => this.messages.unshift(value));
+                    this.messagesLoading = false;
+                });
+        }*/
+    }
 };
 __decorate([
     core_1.Input(), 
@@ -67,36 +107,8 @@ __decorate([
 ChatComponent = __decorate([
     core_1.Component({
         selector: 'div[chat]',
-        template: `
-        <div class="enter-form" *ngIf="!name">
-	        <div class="enter-text">
-		        To join <strong>{{chatRoom.Name}}</strong> please, enter your name below.
-	        </div>
-	        <input type="text" (keyup.enter)="onNameSubmit(nameInput.value)" #nameInput>
-	        <div>
-		        <button class="btn-send" (click)="onNameSubmit(nameInput.value)">Enter</button>
-	        </div>
-        </div>
-
-		<div class="conversation" *ngIf="messages && name" #chat [scrollTop]="chat.scrollHeight" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">
-			<div class="message-list" >
-				<div class="message" [class.my-message] = "name == message.UserName" *ngFor="let message of messages">
-					<span class="message-name">{{message.UserName}}</span><span class="message-time">{{message.PostedTime | date:'medium'}}</span>
-					<span class="message-body">{{message.Body}}</span>
-				</div>
-			</div>
-		</div>
-		<div class="new-message" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList" *ngIf="messages && name">
-			<div class="message-panel">
-				<div class="message-input">
-					<textarea placeholder="Type your message here..." #messageInput (keyup.enter)="sendMessage(messageInput.value); messageInput.value=''"></textarea>
-				</div>
-				<div class="message-send">
-					<button class="send-btn" (click)="sendMessage(messageInput.value); messageInput.value=''">Send&ensp;<i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-				</div>
-			</div>
-		</div>
-    `
+        templateUrl: 'app/chat/chat.component.html',
+        styleUrls: ['app/chat/chat.component.css']
     }), 
     __metadata('design:paramtypes', [chat_service_1.ChatService])
 ], ChatComponent);
