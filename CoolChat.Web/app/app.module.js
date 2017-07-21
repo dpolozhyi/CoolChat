@@ -15,6 +15,7 @@ const http_1 = require('@angular/http');
 const app_component_1 = require('./root/app.component');
 const chat_component_1 = require('./chat/chat.component');
 const chat_list_component_1 = require('./chat-list/chat-list.component');
+const log_in_component_1 = require('./log-in/log-in.component');
 const chat_service_1 = require('./shared/services/chat.service');
 let AppModule = class AppModule {
 };
@@ -24,7 +25,8 @@ AppModule = __decorate([
         declarations: [
             app_component_1.AppComponent,
             chat_component_1.ChatComponent,
-            chat_list_component_1.ChatListComponent
+            chat_list_component_1.ChatListComponent,
+            log_in_component_1.LogInComponent
         ],
         providers: [
             chat_service_1.ChatService,

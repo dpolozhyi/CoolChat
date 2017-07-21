@@ -19,14 +19,15 @@ module.exports = function(grunt) {
                 files: {
                     'app/root/app.component.css': 'app/root/app.component.less',
                     'app/chat-list/chat-list.component.css':  'app/chat-list/chat-list.component.less',
-                    'app/chat/chat.component.css': 'app/chat/chat.component.less'
+                    'app/chat/chat.component.css': 'app/chat/chat.component.less',
+                    'app/log-in/log-in.component.css': 'app/log-in/log-in.component.less'
                 }
             }
         },
 
         watch: {
             scripts: {
-                files: ['app/root/*.less', 'app/chat/*.less', 'app/chat-list/*.less'],
+                files: ['app/root/*.less', 'app/chat/*.less', 'app/chat-list/*.less', 'app/log-in/*.less'],
                 tasks: ['less'],
                 options: {
                     spawn: false,

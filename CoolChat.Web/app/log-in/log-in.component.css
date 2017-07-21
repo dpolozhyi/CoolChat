@@ -1,0 +1,156 @@
+div.login-container {
+  width: 100%;
+  height: 100%;
+  background: url(app/shared/assets/cold-background.jpg);
+  background-size: cover;
+}
+div.login-container div.login-header {
+  padding: 20px 0px;
+  text-align: center;
+}
+div.login-container div.login-header div.login-logo {
+  margin: auto;
+}
+div.login-container div.auth-form {
+  background: #fff;
+  box-shadow: 0px 0px 18px 2px rgba(0, 0, 0, 0.64);
+  width: 360px;
+  margin: auto;
+  margin-top: 10%;
+  padding: 25px 10px;
+  font-family: Roboto-Light;
+  font-size: 18px;
+  position: relative;
+}
+div.login-container div.auth-form div.login-form div.progress-line {
+  height: 4px;
+  width: 100%;
+  margin: 0;
+  background-color: #b3d4fc;
+  display: -webkit-flex;
+  display: flex;
+  position: absolute;
+  top: 0;
+  margin-left: -10px;
+  display: none;
+}
+div.login-container div.auth-form div.login-form div.progress-line:before {
+  height: 4px;
+  width: 100%;
+  margin: 0;
+  background-color: #3f51b5;
+  content: '';
+  -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@-webkit-keyframes running-progress {
+  0% {
+    margin-left: 0px;
+    margin-right: 100%;
+  }
+  50% {
+    margin-left: 25%;
+    margin-right: 0%;
+  }
+  100% {
+    margin-left: 100%;
+    margin-right: 0;
+  }
+}
+@keyframes running-progress {
+  0% {
+    margin-left: 0px;
+    margin-right: 100%;
+  }
+  50% {
+    margin-left: 25%;
+    margin-right: 0%;
+  }
+  100% {
+    margin-left: 100%;
+    margin-right: 0;
+  }
+}
+div.login-container div.auth-form div.login-form div.loading-curtain {
+  z-index: 99;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding-top: 4px;
+  display: none;
+}
+div.login-container div.auth-form div.login-form div.loading-curtain div.colored-curtain {
+  background: #3498db;
+  width: 100%;
+  height: 100%;
+  /*opacity: 0.4;*/
+}
+div.login-container div.auth-form div.login-form div.login-controls {
+  display: block;
+  margin: auto;
+  width: 325px;
+  position: relative;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field {
+  margin-bottom: 10px;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field span {
+  min-width: 110px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field input {
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-family: Roboto-Light;
+  width: 200px;
+  padding: 0 3px;
+  border-bottom: 2px solid #ccc;
+  transition: 0.1s;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field input:focus {
+  border-bottom-color: #3498db;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field.login-button-field {
+  margin-top: 20px;
+  box-sizing: border-box;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field div.help-links {
+  display: inline-block;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field div.help-links span {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #4183D7;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field div.help-links span.forgot-pass-label {
+  font-weight: bold;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field div.help-links span:hover {
+  cursor: pointer;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field div.login-button {
+  display: inline-block;
+  vertical-align: bottom;
+  float: right;
+  margin-right: 4px;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field div.login-button button {
+  background: white;
+  border: none;
+  font-size: 18px;
+  font-family: Roboto-Light;
+  padding: 8px 20px;
+  border: 1px solid #ccc;
+  float: right;
+  transition: 0.2s;
+}
+div.login-container div.auth-form div.login-form div.login-controls div.login-field div.login-button button:hover {
+  background: rgba(212, 216, 216, 0.3);
+  cursor: pointer;
+}

@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './root/app.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
+import { LogInComponent } from './log-in/log-in.component';
 
 import { ChatService, SignalrWindow } from './shared/services/chat.service';
 
@@ -15,7 +16,8 @@ import { ChatService, SignalrWindow } from './shared/services/chat.service';
     [
         AppComponent,
         ChatComponent,
-        ChatListComponent
+        ChatListComponent,
+        LogInComponent
     ],
     providers:
     [

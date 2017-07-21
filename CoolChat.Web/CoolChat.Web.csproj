@@ -240,8 +240,13 @@
     <Content Include="app\chat-list\chat-list.component.html" />
     <Content Include="app\chat\chat.component.css" />
     <Content Include="app\chat\chat.component.html" />
+    <Content Include="app\log-in\log-in.component.css" />
+    <Content Include="app\log-in\log-in.component.html" />
     <Content Include="app\root\app.component.css" />
     <Content Include="app\root\app.component.html" />
+    <Content Include="app\shared\assets\cold-background-v2.jpg" />
+    <Content Include="app\shared\assets\cold-background.jpg" />
+    <Content Include="app\shared\assets\cool-chat-cold-logo.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -268,6 +273,7 @@
     <Content Include="app\root\app.component.less" />
     <Content Include="app\chat-list\chat-list.component.less" />
     <Content Include="app\chat\chat.component.less" />
+    <Content Include="app\log-in\log-in.component.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -329,6 +335,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\log-in\log-in.component.ts" />
     <TypeScriptCompile Include="app\root\app.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\chat-list\chat-list.component.ts" />
