@@ -22,7 +22,9 @@ export class ChatService {
     private hubConnection: any;
     private hubProxy: any;
 
-    public connected: boolean = false;
+    starting$: Observable<any>;
+
+    private startingSubject = new Subject<any>();
 
     private msgCallback: MessageCallback;
 
@@ -35,6 +37,8 @@ export class ChatService {
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
         }
+
+        this.starting$ = this.startingSubject.asObservable();
 
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
@@ -51,8 +55,8 @@ export class ChatService {
         this.msgCallback = callback;
     }
 
-    connect(): Promise<any> {
-        return this.hubConnection.start();
+    connect() {
+        this.hubConnection.start().done(() => this.startingSubject.next()).fail((error) => this.startingSubject.error(error));
     }
 
     getChatRoomList(): Promise<ChatRoomModel[]> {

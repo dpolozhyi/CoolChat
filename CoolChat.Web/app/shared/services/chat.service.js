@@ -12,6 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 const core_1 = require("@angular/core");
+const Subject_1 = require("rxjs/Subject");
 require('rxjs/add/operator/toPromise');
 const http_1 = require('@angular/http');
 class SignalrWindow extends Window {
@@ -21,11 +22,12 @@ let ChatService = class ChatService {
     constructor(window, http) {
         this.window = window;
         this.http = http;
-        this.connected = false;
+        this.startingSubject = new Subject_1.Subject();
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
         }
+        this.starting$ = this.startingSubject.asObservable();
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
         this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
@@ -40,7 +42,7 @@ let ChatService = class ChatService {
         this.msgCallback = callback;
     }
     connect() {
-        return this.hubConnection.start();
+        this.hubConnection.start().done(() => this.startingSubject.next()).fail((error) => this.startingSubject.error(error));
     }
     getChatRoomList() {
         return this.http.get('/chat/list').toPromise().then(data => data.json());

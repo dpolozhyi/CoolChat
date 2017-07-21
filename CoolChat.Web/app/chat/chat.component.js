@@ -41,7 +41,6 @@ let ChatComponent = class ChatComponent {
         });
         this.prevChatRoom = this.chatRoom;
         this.scrollOffset = 0;
-        console.log("ngOnChanges: scroll ofset 0");
     }
     sendMessage(msgText) {
         if (!msgText.trim()) {
