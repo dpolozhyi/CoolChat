@@ -8,8 +8,23 @@ div.login-container div.login-header {
   padding: 20px 0px;
   text-align: center;
 }
+@media (max-width: 480px) and (orientation: portrait) {
+  div.login-container div.login-header {
+    padding: 80px 0px;
+  }
+}
 div.login-container div.login-header div.login-logo {
   margin: auto;
+  background: url(app/shared/assets/cool-chat-cold-logo_411_151.png);
+  width: 411px;
+  height: 151px;
+  background-size: cover;
+}
+@media (max-width: 480px) and (orientation: portrait) {
+  div.login-container div.login-header div.login-logo {
+    width: 288px;
+    height: 106px;
+  }
 }
 div.login-container div.auth-form {
   background: #fff;
@@ -21,6 +36,21 @@ div.login-container div.auth-form {
   font-family: Roboto-Light;
   font-size: 18px;
   position: relative;
+}
+@media (max-width: 1366px) and (orientation: landscape) {
+  div.login-container div.auth-form {
+    margin-top: 15%;
+  }
+}
+@media (orientation: portrait) {
+  div.login-container div.auth-form {
+    margin-top: 20%;
+  }
+}
+@media (min-width: 480px) and (max-width: 568px) and (orientation: portrait) {
+  div.login-container div.auth-form {
+    margin-top: 35%;
+  }
 }
 div.login-container div.auth-form div.login-form div.progress-line {
   height: 4px;
@@ -117,6 +147,7 @@ div.login-container div.auth-form div.login-form div.login-controls div.login-fi
 }
 div.login-container div.auth-form div.login-form div.login-controls div.login-field.login-button-field {
   margin-top: 20px;
+  margin-bottom: 0;
   box-sizing: border-box;
 }
 div.login-container div.auth-form div.login-form div.login-controls div.login-field div.help-links {
