@@ -5,30 +5,89 @@
 @logo-height-mini: 106px;
 
 div.login-container {
-
     width: 100%;
     height: 100%;
     background: url(app/shared/assets/cold-background.jpg);
     background-size: cover;
 
     div.login-header {
-        padding: 20px 0px;
+        padding: 40px 0px;
         text-align: center;
+        /* iPhone 5 ----------- */
+        @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) {
+            padding: 20px 0px;
+        }
 
-        @media (max-width: 480px) and (orientation: portrait){    
-            padding: 80px 0px;
+        @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) {
+            padding: 0px;
+        }
+        /* iPhone 6+ ----------- */
+        @media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) {
+            padding: 20px 0px;
+        }
+        /* Samsung Galaxy S5 ----------- */
+        @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) {
+        }
+
+        @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) {
+        }
+        /* Smartphones (landscape) ----------- */
+        @media only screen and (min-width : 321px) and (max-device-width : 768px)
+            and (orientation: landscape) {
+            padding: 20px 0px;
+        }
+        /* Smartphones (portrait) ----------- */
+        @media only screen and (max-width : 320px) {
+            /* Styles */
         }
 
         div.login-logo {
             margin: auto;
-            background: url(app/shared/assets/cool-chat-cold-logo_411_151.png);
+            background: url(app/shared/assets/cool-chat-cold-logo.png);
             width: @logo-width;
             height: @logo-height;
             background-size: cover;
-
-            @media (max-width: 480px) and (orientation: portrait){    
+            /* iPhone 5 ----------- */
+            @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) {
                 width: @logo-width-mini;
                 height: @logo-height-mini;
+            }
+
+            @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) {
+                width: @logo-width-mini;
+                height: @logo-height-mini;
+            }
+            /* iPhone 6 ----------- */
+            @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) {
+            }
+
+            @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) {
+                width: @logo-width-mini;
+                height: @logo-height-mini;
+            }
+            /* iPhone 6+ ----------- */
+            @media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) {
+                width: @logo-width-mini;
+                height: @logo-height-mini;
+            }
+            /* Samsung Galaxy S5 ----------- */
+            @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) {
+                width: @logo-width-mini;
+                height: @logo-height-mini;
+            }
+
+            @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) {
+                width: @logo-width-mini;
+                height: @logo-height-mini;
+            }
+            /* Smartphones (landscape) ----------- */
+            @media only screen and (min-width : 321px) and (max-device-width : 768px) {
+                width: @logo-width-mini;
+                height: @logo-height-mini;
+            }
+            /* Smartphones (portrait) ----------- */
+            @media only screen and (max-width : 320px) {
+                /* Styles */
             }
         }
     }
@@ -44,23 +103,60 @@ div.login-container {
         font-family: Roboto-Light;
         font-size: 18px;
         position: relative;
-
-        @media (max-width: 1366px) and (orientation: landscape) {
+        overflow: hidden;
+        /* iPhone 5 ----------- */
+        @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) {
+            width: 260px;
+            font-size: 16px;
             margin-top: 15%;
         }
 
-        @media (orientation: portrait) {
-            margin-top: 20%;
+        @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) {
+            margin-top: 0;
+        }
+        /* iPhone 6 ----------- */
+        @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) {
+            font-size: 18px;
+            margin-top: 5%;
         }
 
-        
-        @media (min-width: 480px) and (max-width: 568px) and (orientation: portrait) {
-            margin-top: 35%;
+        @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) {
+            width: 320px;
+            font-size: 18px;
+            margin-top: 15%;
+        }
+        /* iPhone 6+ ----------- */
+        @media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) {
+            font-size: 19px;
+        }
+        /* iPhone 6+ ----------- */
+        @media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) {
+            margin-top: 0;
+            font-size: 19px;
+        }
+        /* Samsung Galaxy S5 ----------- */
+        @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) {
+            margin-top: 0;
+        }
+
+        @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) {
+            width: 300px;
+            font-size: 18px;
+            margin-top: 15%;
+        }
+        /* Smartphones (landscape) ----------- */
+        @media only screen and (min-width : 321px) and (max-device-width : 768px) and (orientation: landscape) {
+            margin-top: 0;
+        }
+        /* Smartphones (portrait) ----------- */
+        @media only screen and (max-width : 320px) {
+            /* Styles */
         }
 
 
-        div.login-form {
-
+        div.login-form, div.reg-form {
+            transition: 0.3s;
+            transition: left 1s linear;
 
             div.progress-line {
                 height: 4px;
@@ -72,7 +168,8 @@ div.login-container {
                 position: absolute;
                 top: 0;
                 margin-left: -10px;
-                display: none;
+                opacity: 0;
+                transition: 0.2s;
 
                 &:before {
                     height: 4px;
@@ -81,7 +178,7 @@ div.login-container {
                     background-color: #3f51b5;
                     content: '';
                     -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-                    animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                    animation: running-progress 1s cubic-bezier(0.8, 0.9, 0.8, 1) infinite;
                 }
 
                 @-webkit-keyframes running-progress {
@@ -108,8 +205,8 @@ div.login-container {
                     }
 
                     50% {
-                        margin-left: 25%;
-                        margin-right: 0%;
+                        margin-left: 15%;
+                        margin-right: 15%;
                     }
 
                     100% {
@@ -129,12 +226,13 @@ div.login-container {
                 left: 0;
                 padding-top: 4px;
                 display: none;
+                transition: 0.3s;
 
                 div.colored-curtain {
                     background: #3498db;
                     width: 100%;
                     height: 100%;
-                    /*opacity: 0.4;*/
+                    opacity: 0.4;
                 }
             }
 
@@ -143,6 +241,14 @@ div.login-container {
                 margin: auto;
                 width: 325px;
                 position: relative;
+                /* iPhone 5 ----------- */
+                @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) {
+                    width: 260px;
+                }
+                /* Samsung Galaxy S5 ----------- */
+                @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) {
+                    width: 300px;
+                }
 
                 div.login-field {
                     margin-bottom: 10px;
@@ -162,6 +268,14 @@ div.login-container {
                         padding: 0 3px;
                         border-bottom: 2px solid #ccc;
                         transition: 0.1s;
+                        /* iPhone 5 ----------- */
+                        @media only screen and (min-width: 320px) and (max-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) {
+                            width: 140px;
+                        }
+                        /* Samsung Galaxy S5 ----------- */
+                        @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) {
+                            width: 175px;
+                        }
 
                         &:focus {
                             border-bottom-color: #3498db;
@@ -206,17 +320,50 @@ div.login-container {
                             font-family: Roboto-Light;
                             padding: 8px 20px;
                             border: 1px solid #ccc;
-                            float: right;
                             transition: 0.2s;
+                            /* iPhone 5 ----------- */
+                            @media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) {
+                                font-size: 16px;
+                            }
 
                             &:hover {
                                 background: rgba(212, 216, 216, 0.3);
                                 cursor: pointer;
                             }
                         }
+
+                        &.back-button {
+                            float: left;
+                        }
                     }
                 }
             }
         }
     }
+}
+
+.displayBlock {
+    display: block !important;
+}
+
+.displayFlex {
+    display: flex !important;
+}
+
+.oneOpacity{
+    opacity: 1 !important;
+}
+
+.zeroMargin {
+    margin: 0 !important;
+}
+
+.fullLeftMargin {
+    left: -100%;
+    position: absolute;
+}
+
+.fullRightMargin {
+    right: -100%;
+    position: absolute;
 }

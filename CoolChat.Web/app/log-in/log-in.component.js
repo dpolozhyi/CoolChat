@@ -9,7 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require('@angular/core');
+var AuthState;
+(function (AuthState) {
+    AuthState[AuthState["Login"] = 0] = "Login";
+    AuthState[AuthState["Register"] = 1] = "Register";
+    AuthState[AuthState["None"] = 2] = "None";
+})(AuthState || (AuthState = {}));
 let LogInComponent = class LogInComponent {
+    constructor() {
+        this.logged = false;
+        this.authState = AuthState;
+        this.loading = false;
+        this.state = AuthState.Login;
+    }
+    onRegister() {
+        this.state = AuthState.Register;
+    }
+    onLogin() {
+        this.loading = true;
+        setTimeout(() => this.loading = false, 3000);
+    }
 };
 LogInComponent = __decorate([
     core_1.Component({

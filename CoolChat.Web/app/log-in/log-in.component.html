@@ -7,12 +7,12 @@
     </div>
 
     <div class="auth-form">
-        <div class="login-form">
-            <div class="progress-line"></div>
-            <div class="loading-curtain">
+        <div class="login-form" [class.fullLeftMargin]="state == authState.Register">
+            <div class="progress-line" [class.oneOpacity]="loading"></div>
+            <div class="loading-curtain" [class.displayBlock]="loading">
                 <div class="colored-curtain"></div>
             </div>
-            <div class="login-controls">
+            <div class="login-controls zeroMargin" [class.zeroMargin]="state == authState.Register">
                 <div class="login-field">
                     <span>Login\E-mail:</span>
                     <input type="text" spellcheck="false">
@@ -24,10 +24,39 @@
                 <div class="login-field login-button-field">
                     <div class="help-links">
                         <span>Forgot your password?</span>
-                        <span class="forgot-pass-label">Don't have an account?</span>
+                        <span class="forgot-pass-label" (click)="onRegister()">Don't have an account?</span>
                     </div>
                     <div class="login-button">
-                        <button>Log In</button>
+                        <button (click)="onLogin()">Log In</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reg-form" [class.fullRightMargin]="state == authState.Login">
+            <div class="progress-line" [class.displayFlex]="logged" ></div>
+            <div class="loading-curtain" [class.displayBlock]="logged">
+                <div class="colored-curtain"></div>
+            </div>
+            <div class="login-controls">
+                <div class="login-field">
+                    <span>Login\E-mail:</span>
+                    <input type="text" spellcheck="false">
+                </div>
+                <div class="login-field">
+                    <span>Password:</span>
+                    <input type="password">
+                </div>
+                <div class="login-field">
+                    <span>Repeat Pass:</span>
+                    <input type="password">
+                </div>
+                <div class="login-field login-button-field">
+                    <div class="login-button back-button">
+                        <button (click)="state = authState.Login">Back to Login</button>
+                    </div>
+                    <div class="login-button">
+                        <button (click)="logged = !logged">Register</button>
                     </div>
                 </div>
             </div>
