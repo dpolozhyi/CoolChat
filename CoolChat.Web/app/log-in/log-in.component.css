@@ -390,3 +390,12 @@ div.login-container div.auth-form div.reg-form div.login-controls div.login-fiel
   right: -100%;
   position: absolute;
 }
+.redBorderColor {
+  border-color: #c0392b !important;
+}
+.yellowBorderColor {
+  border-color: #f1c40f !important;
+}
+.greenBorderColor {
+  border-color: #2ecc71 !important;
+}

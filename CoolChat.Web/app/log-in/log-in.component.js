@@ -15,12 +15,21 @@ var AuthState;
     AuthState[AuthState["Register"] = 1] = "Register";
     AuthState[AuthState["None"] = 2] = "None";
 })(AuthState || (AuthState = {}));
+var FieldStatus;
+(function (FieldStatus) {
+    FieldStatus[FieldStatus["Undefined"] = 0] = "Undefined";
+    FieldStatus[FieldStatus["Wrong"] = 1] = "Wrong";
+    FieldStatus[FieldStatus["Satisfied"] = 2] = "Satisfied";
+    FieldStatus[FieldStatus["Good"] = 3] = "Good";
+})(FieldStatus || (FieldStatus = {}));
 let LogInComponent = class LogInComponent {
     constructor() {
         this.logged = false;
         this.authState = AuthState;
+        this.fieldType = FieldStatus;
         this.loading = false;
         this.state = AuthState.Login;
+        this.passStatus = FieldStatus.Undefined;
     }
     onRegister() {
         this.state = AuthState.Register;
@@ -28,6 +37,28 @@ let LogInComponent = class LogInComponent {
     onLogin() {
         this.loading = true;
         setTimeout(() => this.loading = false, 3000);
+    }
+    onPasswordEnter(value) {
+        if (value.length < 6 || !value.match(/\d+/g)) {
+            this.passStatus = FieldStatus.Wrong;
+            return;
+        }
+        if (!this.IsContainUpperLetter(value)) {
+            this.passStatus = FieldStatus.Satisfied;
+            return;
+        }
+        this.passStatus = FieldStatus.Good;
+    }
+    IsContainUpperLetter(string) {
+        var i = 0;
+        var character = '';
+        while (i < string.length) {
+            character = string.charAt(i++);
+            if (!character.match(/\d+/g) && character == character.toUpperCase()) {
+                return true;
+            }
+        }
+        return false;
     }
 };
 LogInComponent = __decorate([

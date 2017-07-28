@@ -45,7 +45,11 @@
                 </div>
                 <div class="login-field">
                     <span>Password:</span>
-                    <input type="password">
+                    <input type="password" #pass (keyup)="onPasswordEnter(pass.value)" 
+                           [class.redBorderColor]="passStatus == fieldType.Wrong"
+                           [class.yellowBorderColor]="passStatus == fieldType.Satisfied"
+                           [class.greenBorderColor]="passStatus == fieldType.Good"
+                    />
                 </div>
                 <div class="login-field">
                     <span>Repeat Pass:</span>
