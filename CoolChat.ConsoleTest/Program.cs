@@ -1,36 +1,42 @@
-﻿using CoolChat.DataAccess;
+﻿using CoolChat.AuthService.Extensions;
+using CoolChat.AuthService.Models;
+using CoolChat.ConsoleTest.AuthServiceReference;
+using CoolChat.DataAccess;
 using CoolChat.DataAccess.EFContext;
 using CoolChat.DataAccess.Interfaces;
-using CoolChat.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoolChat.ConsoleTest
 {
     class Program
     {
-        public static string[] Names = new string[]
-        {
-            "Mike", "John", "Dave", "Helen", "Monica"
-        };
-
-        public static Random rand = new Random();
-
         static void Main(string[] args)
         {
-            IUnitOfWork uow = new EFUnitOfWork(new ChatContext());
-            User user = new User() { Name = "John", Gender = Gender.Male };
+            AuthServiceClient authClient = new AuthServiceClient();
+            //User user = authClient.Register(new RegisterModel() { Login = "wowbot", Password = "adgjmp", RepeatPassword = "adgjmp" });
+            string token = authClient.GetToken(new LoginModel() { Name = "wowbot", Password = "adgjmp" });
+            Console.WriteLine(token);
 
-            Message msg1 = new Message() { PostedTime = DateTime.Now, UserName = user, Body = "WTFF???" };
-            var messages = uow.Get<Message>().Get(includeProperties: "User");
-            foreach (var msg in messages)
+            string[] tokenParts = token.Split('.');
+
+            Payload payload = JsonConvert.DeserializeObject<Payload>(tokenParts[1].FromBase64Url());
+            //payload.Name = "adversary";
+            token = String.Concat(tokenParts[0], ".", JsonConvert.SerializeObject(payload).ToBase64Url(), ".", tokenParts[2]);
+            int i = 0;
+            while (i++ < 1000)
             {
-                Console.WriteLine("{0} {1}:\t{2}", msg.PostedTime.ToLongTimeString(), msg.UserName, msg.Body);
+                bool isValid = authClient.CheckToken(token);
+                Console.WriteLine("{0}\tToken is {1}", DateTime.Now.ToShortTimeString(), isValid ? "VALID" : "INvalid");
+                Thread.Sleep(3000);
             }
+
         }
     }
 }

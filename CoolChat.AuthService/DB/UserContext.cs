@@ -16,9 +16,9 @@ namespace CoolChat.AuthService.DB
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Role> Roles { get; set; }
+        //public DbSet<Role> Roles { get; set; }
 
-        public DbSet<UserRoles> UserRoles { get; set; }
+        //public DbSet<UserRoles> UserRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -23,12 +23,12 @@ namespace CoolChat.AuthService.Services
             {
                 User user = this.userService.GetUser(credentials);
                 Header header = new Header() { Algorithm = "HS256", Type = "JWT" };
-                Payload payload = new Payload() { Id = user.Id.ToString(), Name = user.Name, Expires = DateTime.UtcNow.Ticks };
+                Payload payload = new Payload() { Id = user.Id.ToString(), Name = user.Name, Expires = DateTime.UtcNow.AddSeconds(30).Ticks };
                 HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
                 string encodedHeader = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(header)));
                 string encodedPayload = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(payload)));
                 byte[] sign = hmac.ComputeHash(Encoding.UTF8.GetBytes(String.Concat(encodedHeader, ".", encodedPayload)));
-                string token = String.Concat(encodedPayload, ".", encodedPayload, ".", Convert.ToBase64String(sign));
+                string token = String.Concat(encodedHeader, ".", encodedPayload, ".", Convert.ToBase64String(sign));
                 return token;
             }
             throw new Exception("Invalid credentials");
