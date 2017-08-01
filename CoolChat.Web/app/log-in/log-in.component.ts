@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Router, ActivatedRoute }   from '@angular/router';
 import { ChatService } from '../shared/services/chat.service';
 
 import { ChatRoomModel } from '../shared/models/chatroom.model';
@@ -34,8 +35,19 @@ export class LogInComponent {
 
     private passStatus: FieldStatus = FieldStatus.Undefined;
 
-    onRegister() {
-        this.state = AuthState.Register;
+    constructor(private router: Router, route: ActivatedRoute) {
+        console.log(route.snapshot.data);
+        if (route.snapshot.data['isRegistration']) {
+            this.state = AuthState.Register;
+        }
+    }
+
+    toLogin() {
+        this.router.navigate(['login']);
+    }
+
+    toRegister() {
+        this.router.navigate(['register']);
     }
 
     onLogin() {

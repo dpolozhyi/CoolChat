@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
 var AuthState;
 (function (AuthState) {
     AuthState[AuthState["Login"] = 0] = "Login";
@@ -23,16 +24,24 @@ var FieldStatus;
     FieldStatus[FieldStatus["Good"] = 3] = "Good";
 })(FieldStatus || (FieldStatus = {}));
 let LogInComponent = class LogInComponent {
-    constructor() {
+    constructor(router, route) {
+        this.router = router;
         this.logged = false;
         this.authState = AuthState;
         this.fieldType = FieldStatus;
         this.loading = false;
         this.state = AuthState.Login;
         this.passStatus = FieldStatus.Undefined;
+        console.log(route.snapshot.data);
+        if (route.snapshot.data['isRegistration']) {
+            this.state = AuthState.Register;
+        }
     }
-    onRegister() {
-        this.state = AuthState.Register;
+    toLogin() {
+        this.router.navigate(['login']);
+    }
+    toRegister() {
+        this.router.navigate(['register']);
     }
     onLogin() {
         this.loading = true;
@@ -67,7 +76,7 @@ LogInComponent = __decorate([
         templateUrl: 'app/log-in/log-in.component.html',
         styleUrls: ['app/log-in/log-in.component.css']
     }), 
-    __metadata('design:paramtypes', [])
+    __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute])
 ], LogInComponent);
 exports.LogInComponent = LogInComponent;
 //# sourceMappingURL=log-in.component.js.map

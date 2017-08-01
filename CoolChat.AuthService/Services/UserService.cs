@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using CoolChat.AuthService.Models;
 using CoolChat.AuthService.DB;
+using CoolChat.AuthService.Exceptions;
 
 namespace CoolChat.AuthService.Services
 {
@@ -18,7 +19,7 @@ namespace CoolChat.AuthService.Services
         {
             if(user.Password != user.RepeatPassword)
             {
-                throw new Exception("Passwords dont match");
+                throw new PasswordsDontMatchException("Passwords dont match");
             }
             string salt = this.GetRandomSalt();
             User newUser = new User() { Name = user.Login, Password = this.GetPasswordHash(user.Password, salt), Salt = salt };

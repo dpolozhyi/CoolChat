@@ -82,6 +82,8 @@
       <DependentUpon>AuthService.svc</DependentUpon>
     </Compile>
     <Compile Include="DB\UserContext.cs" />
+    <Compile Include="Exceptions\InvalidUsersCredentialsException.cs" />
+    <Compile Include="Exceptions\PasswordsDontMatchException.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IAuthService.cs" />
     <Compile Include="Interfaces\ITokenService.cs" />

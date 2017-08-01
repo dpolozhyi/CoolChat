@@ -240,6 +240,10 @@
     <Content Include="app\chat-list\chat-list.component.html" />
     <Content Include="app\chat\chat.component.css" />
     <Content Include="app\chat\chat.component.html" />
+    <Content Include="app\load-waiter\load-waiter.component.css" />
+    <Content Include="app\load-waiter\load-waiter.component.html" />
+    <Content Include="app\messages\messages.component.css" />
+    <Content Include="app\messages\messages.component.html" />
     <Content Include="app\log-in\log-in.component.css" />
     <Content Include="app\log-in\log-in.component.html" />
     <Content Include="app\root\app.component.css" />
@@ -272,8 +276,10 @@
     <Content Include="Content\style.less" />
     <Content Include="app\root\app.component.less" />
     <Content Include="app\chat-list\chat-list.component.less" />
-    <Content Include="app\chat\chat.component.less" />
+    <Content Include="app\messages\messages.component.less" />
     <Content Include="app\log-in\log-in.component.less" />
+    <Content Include="app\chat\chat.component.less" />
+    <Content Include="app\load-waiter\load-waiter.component.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -335,14 +341,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\chat\chat.component.ts" />
+    <TypeScriptCompile Include="app\load-waiter\load-waiter.component.ts" />
     <TypeScriptCompile Include="app\log-in\log-in.component.ts" />
     <TypeScriptCompile Include="app\root\app.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\chat-list\chat-list.component.ts" />
-    <TypeScriptCompile Include="app\chat\chat.component.ts" />
+    <TypeScriptCompile Include="app\messages\messages.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\shared\models\chatroom.model.ts" />
+    <TypeScriptCompile Include="app\shared\models\login.model.ts" />
     <TypeScriptCompile Include="app\shared\models\message.model.ts" />
+    <TypeScriptCompile Include="app\shared\models\register.model.ts" />
+    <TypeScriptCompile Include="app\shared\services\auth.service.ts" />
     <TypeScriptCompile Include="app\shared\services\chat.service.ts" />
   </ItemGroup>
   <ItemGroup>

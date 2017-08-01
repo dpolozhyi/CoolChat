@@ -12,21 +12,37 @@ const core_1 = require('@angular/core');
 const platform_browser_1 = require('@angular/platform-browser');
 const forms_1 = require('@angular/forms');
 const http_1 = require('@angular/http');
+const router_1 = require('@angular/router');
 const app_component_1 = require('./root/app.component');
-const chat_component_1 = require('./chat/chat.component');
+const messages_component_1 = require('./messages/messages.component');
 const chat_list_component_1 = require('./chat-list/chat-list.component');
+const chat_component_1 = require('./chat/chat.component');
 const log_in_component_1 = require('./log-in/log-in.component');
+const load_waiter_component_1 = require('./load-waiter/load-waiter.component');
 const chat_service_1 = require('./shared/services/chat.service');
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule],
+        imports: [
+            platform_browser_1.BrowserModule,
+            forms_1.FormsModule,
+            http_1.HttpModule,
+            router_1.RouterModule.forRoot([
+                //{ path: '', redirectTo: 'login', pathMatch: 'full' },
+                { path: 'login', component: log_in_component_1.LogInComponent },
+                { path: 'register', component: log_in_component_1.LogInComponent, data: { isRegistration: true } },
+                { path: 'messages', component: chat_component_1.ChatComponent },
+                { path: '', component: load_waiter_component_1.LoadWaiterComponent }
+            ])
+        ],
         declarations: [
             app_component_1.AppComponent,
-            chat_component_1.ChatComponent,
+            messages_component_1.MessagesComponent,
             chat_list_component_1.ChatListComponent,
-            log_in_component_1.LogInComponent
+            chat_component_1.ChatComponent,
+            log_in_component_1.LogInComponent,
+            load_waiter_component_1.LoadWaiterComponent
         ],
         providers: [
             chat_service_1.ChatService,

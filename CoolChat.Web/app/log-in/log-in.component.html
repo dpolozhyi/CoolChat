@@ -24,7 +24,7 @@
                 <div class="login-field login-button-field">
                     <div class="help-links">
                         <span>Forgot your password?</span>
-                        <span class="forgot-pass-label" (click)="onRegister()">Don't have an account?</span>
+                        <span class="forgot-pass-label" (click)="toRegister()">Don't have an account?</span>
                     </div>
                     <div class="login-button">
                         <button (click)="onLogin()">Log In</button>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="login-field login-button-field">
                     <div class="login-button back-button">
-                        <button (click)="state = authState.Login">Back to Login</button>
+                        <button (click)="toLogin()">Back to Login</button>
                     </div>
                     <div class="login-button">
                         <button (click)="logged = !logged">Register</button>

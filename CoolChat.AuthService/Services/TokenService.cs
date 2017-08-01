@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
 using CoolChat.AuthService.Extensions;
+using CoolChat.AuthService.Exceptions;
 
 namespace CoolChat.AuthService.Services
 {
@@ -31,7 +32,7 @@ namespace CoolChat.AuthService.Services
                 string token = String.Concat(encodedHeader, ".", encodedPayload, ".", Convert.ToBase64String(sign));
                 return token;
             }
-            throw new Exception("Invalid credentials");
+            throw new InvalidUsersCredentialsException("Invalid credentials");
         }
 
         public bool IsValidToken(string token)

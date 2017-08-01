@@ -10,24 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 const router_1 = require('@angular/router');
-let AppComponent = class AppComponent {
+let LoadWaiterComponent = class LoadWaiterComponent {
     constructor(router) {
         this.router = router;
     }
     ngOnInit() {
-        this.router.events.subscribe((event) => {
-            console.log(event);
-            this.router.navigate['messages'];
-        });
+        setTimeout(() => this.router.navigate(['login']), 2000);
     }
 };
-AppComponent = __decorate([
+LoadWaiterComponent = __decorate([
     core_1.Component({
-        selector: 'div[app]',
-        templateUrl: 'app/root/app.component.html',
-        styleUrls: ['app/root/app.component.css']
+        selector: 'div[load-waiter]',
+        templateUrl: 'app/load-waiter/load-waiter.component.html',
+        styleUrls: ['app/load-waiter/load-waiter.component.css']
     }), 
     __metadata('design:paramtypes', [router_1.Router])
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+], LoadWaiterComponent);
+exports.LoadWaiterComponent = LoadWaiterComponent;
+//# sourceMappingURL=load-waiter.component.js.map

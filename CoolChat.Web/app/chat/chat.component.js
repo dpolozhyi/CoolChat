@@ -9,107 +9,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require('@angular/core');
-const chat_service_1 = require('../shared/services/chat.service');
-const chatroom_model_1 = require('../shared/models/chatroom.model');
-const message_model_1 = require('../shared/models/message.model');
 let ChatComponent = class ChatComponent {
-    constructor(chatService) {
-        this.chatService = chatService;
-        this.scrollOffset = 0;
-        this.messagesLoading = false;
+    constructor() {
+        this.minModeHiddenChatList = false;
     }
     ngOnInit() {
-        this.chatService.addMessageCallback((message) => {
-            this.scrollOffset = 0;
-            this.messages.push(message);
-        });
-        this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
-        this.prevChatRoom = this.chatRoom;
+        this.handleViewPortWidth(window.innerWidth);
     }
-    ngOnChanges(changes) {
-        if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
-            return;
+    handleViewPortWidth(width) {
+        if (width > 767) {
+            this.minModeHiddenChatList = true;
         }
-        if (!this.prevChatRoom) {
-            this.prevChatRoom = this.chatRoom;
-        }
-        this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
-        this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => {
-            console.log("Unsubscribed to " + this.prevChatRoom.Id);
-            this.chatService.subscribe(String(this.chatRoom.Id));
-            console.log("Subscribed to " + this.chatRoom.Id);
-        });
-        this.prevChatRoom = this.chatRoom;
-        this.scrollOffset = 0;
-    }
-    sendMessage(msgText) {
-        if (!msgText.trim()) {
-            return;
-        }
-        var newMessage = new message_model_1.MessageModel();
-        newMessage.Body = msgText;
-        newMessage.PostedTime = new Date();
-        newMessage.UserName = this.name;
-        newMessage.ChatRoomId = this.chatRoom.Id;
-        this.chatService.sendMessage(newMessage);
-    }
-    onNameSubmit(name) {
-        if (name.trim()) {
-            this.name = name.trim();
-            this.chatService.subscribe(String(this.chatRoom.Id));
+        else {
+            this.minModeHiddenChatList = false;
         }
     }
-    onMessageScroll(event) {
+    onChatListStateChanged(state) {
+        this.minModeHiddenChatList = state;
+    }
+    onResize(event) {
         const target = event.target;
-        if (target.scrollTop < 100 && !this.messagesLoading) {
-            this.messagesLoading = true;
-            this.chatService
-                .getEarlyMessages(this.chatRoom.Id, this.messages.length)
-                .then((messages) => {
-                this.scrollOffset = target.scrollHeight - target.scrollTop;
-                messages.reverse().forEach((value) => this.messages.unshift(value));
-                this.messagesLoading = false;
-            });
+        if (target.innerWidth > 767) {
+            this.minModeHiddenChatList = true;
         }
-        /* Why this isn't working? */
-        /*const target = event.target;
-        console.log(event.srcElement.scrollTop);
-        if (target.scrollTop < 1 && !this.messagesLoading) {
-            console.log("Scroll Height: " + target.scrollHeight);
-            console.log("Scroll Top: " + target.scrollTop);
-            var currentPosition = target.scrollHeight - target.scrollTop;
-            console.log("Triggered, scroll offset " + currentPosition)
-            this.messagesLoading = true;
-            this.chatService
-                .getEarlyMessages(this.chatRoom.Id, this.messages.length)
-                .then((messages) => {
-                    this.scrollOffset = currentPosition;
-                    console.log("Scroll offset is set: " + this.scrollOffset);
-                    messages.reverse().forEach((value) => this.messages.unshift(value));
-                    this.messagesLoading = false;
-                });
-        }*/
     }
 };
 __decorate([
-    core_1.Input(), 
-    __metadata('design:type', chatroom_model_1.ChatRoomModel)
-], ChatComponent.prototype, "chatRoom", void 0);
-__decorate([
-    core_1.Input(), 
-    __metadata('design:type', Boolean)
-], ChatComponent.prototype, "hiddenChatList", void 0);
-__decorate([
-    core_1.Input(), 
-    __metadata('design:type', Boolean)
-], ChatComponent.prototype, "minModeHiddenChatList", void 0);
+    core_1.HostListener('window:resize', ['$event']), 
+    __metadata('design:type', Function), 
+    __metadata('design:paramtypes', [Object]), 
+    __metadata('design:returntype', void 0)
+], ChatComponent.prototype, "onResize", null);
 ChatComponent = __decorate([
     core_1.Component({
         selector: 'div[chat]',
         templateUrl: 'app/chat/chat.component.html',
         styleUrls: ['app/chat/chat.component.css']
     }), 
-    __metadata('design:paramtypes', [chat_service_1.ChatService])
+    __metadata('design:paramtypes', [])
 ], ChatComponent);
 exports.ChatComponent = ChatComponent;
 //# sourceMappingURL=chat.component.js.map

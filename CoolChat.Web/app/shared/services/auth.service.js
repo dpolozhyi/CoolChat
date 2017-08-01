@@ -8,26 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
-let AppComponent = class AppComponent {
-    constructor(router) {
-        this.router = router;
-    }
-    ngOnInit() {
-        this.router.events.subscribe((event) => {
-            console.log(event);
-            this.router.navigate['messages'];
-        });
-    }
+const core_1 = require("@angular/core");
+require('rxjs/add/operator/toPromise');
+let AuthService = class AuthService {
 };
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'div[app]',
-        templateUrl: 'app/root/app.component.html',
-        styleUrls: ['app/root/app.component.css']
-    }), 
-    __metadata('design:paramtypes', [router_1.Router])
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+AuthService = __decorate([
+    core_1.Injectable(), 
+    __metadata('design:paramtypes', [])
+], AuthService);
+exports.AuthService = AuthService;
+//# sourceMappingURL=auth.service.js.map
