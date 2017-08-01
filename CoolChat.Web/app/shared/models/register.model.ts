@@ -1,5 +1,5 @@
-﻿export class RegisterModel {
-    Name: string;
-    Password: string;
-    RepeatPassword: string;
+﻿export interface RegisterModel {
+    login: string;
+    password: string;
+    repeatPassword: string;
 }

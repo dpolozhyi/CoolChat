@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                     'app/chat-list/chat-list.component.css':  'app/chat-list/chat-list.component.less',
                     'app/chat/chat.component.css': 'app/chat/chat.component.less',
                     'app/messages/messages.component.css': 'app/messages/messages.component.less',
-                    'app/log-in/log-in.component.css': 'app/log-in/log-in.component.less',
+                    'app/auth/auth.component.css': 'app/auth/auth.component.less',
                     'app/load-waiter/load-waiter.component.css': 'app/load-waiter/load-waiter.component.less'
                 }
             }
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
         watch: {
             scripts: {
-                files: ['app/root/*.less', 'app/chat/*.less', 'app/chat-list/*.less', 'app/log-in/*.less', 'app/messages/*.less', 'app/load-waiter/*.less'],
+                files: ['app/root/*.less', 'app/chat/*.less', 'app/chat-list/*.less', 'app/auth/*.less', 'app/messages/*.less', 'app/load-waiter/*.less'],
                 tasks: ['less'],
                 options: {
                     spawn: false,

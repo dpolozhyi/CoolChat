@@ -15,10 +15,9 @@ let AppComponent = class AppComponent {
         this.router = router;
     }
     ngOnInit() {
-        this.router.events.subscribe((event) => {
+        /*this.router.events.subscribe((event) => {
             console.log(event);
-            this.router.navigate['messages'];
-        });
+        })*/
     }
 };
 AppComponent = __decorate([

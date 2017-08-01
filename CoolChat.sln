@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.Business", "CoolChat.Business\CoolChat.Business.csproj", "{45BCB5FA-6112-422A-B336-107E670A5851}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.Web", "CoolChat.Web\CoolChat.Web.csproj", "{5F49E5CA-1B06-4F6D-8F49-5FC23FF38C92}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F4E0A3DD-68ED-4A39-9C7D-A87586061A91} = {F4E0A3DD-68ED-4A39-9C7D-A87586061A91}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolChat.AuthService", "CoolChat.AuthService\CoolChat.AuthService.csproj", "{F4E0A3DD-68ED-4A39-9C7D-A87586061A91}"
 EndProject

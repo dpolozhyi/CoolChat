@@ -17,9 +17,10 @@ const app_component_1 = require('./root/app.component');
 const messages_component_1 = require('./messages/messages.component');
 const chat_list_component_1 = require('./chat-list/chat-list.component');
 const chat_component_1 = require('./chat/chat.component');
-const log_in_component_1 = require('./log-in/log-in.component');
+const auth_component_1 = require('./auth/auth.component');
 const load_waiter_component_1 = require('./load-waiter/load-waiter.component');
 const chat_service_1 = require('./shared/services/chat.service');
+const auth_service_1 = require('./shared/services/auth.service');
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -30,8 +31,8 @@ AppModule = __decorate([
             http_1.HttpModule,
             router_1.RouterModule.forRoot([
                 //{ path: '', redirectTo: 'login', pathMatch: 'full' },
-                { path: 'login', component: log_in_component_1.LogInComponent },
-                { path: 'register', component: log_in_component_1.LogInComponent, data: { isRegistration: true } },
+                { path: 'login', component: auth_component_1.AuthComponent },
+                { path: 'register', component: auth_component_1.AuthComponent, data: { isRegistration: true } },
                 { path: 'messages', component: chat_component_1.ChatComponent },
                 { path: '', component: load_waiter_component_1.LoadWaiterComponent }
             ])
@@ -41,12 +42,13 @@ AppModule = __decorate([
             messages_component_1.MessagesComponent,
             chat_list_component_1.ChatListComponent,
             chat_component_1.ChatComponent,
-            log_in_component_1.LogInComponent,
+            auth_component_1.AuthComponent,
             load_waiter_component_1.LoadWaiterComponent
         ],
         providers: [
             chat_service_1.ChatService,
-            { provide: chat_service_1.SignalrWindow, useValue: window }
+            { provide: chat_service_1.SignalrWindow, useValue: window },
+            auth_service_1.AuthService
         ],
         bootstrap: [app_component_1.AppComponent]
     }), 

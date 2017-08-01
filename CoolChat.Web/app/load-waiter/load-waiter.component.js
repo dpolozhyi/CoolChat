@@ -10,12 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 const router_1 = require('@angular/router');
+const auth_service_1 = require('../shared/services/auth.service');
 let LoadWaiterComponent = class LoadWaiterComponent {
-    constructor(router) {
+    constructor(router, authService) {
         this.router = router;
+        this.authService = authService;
     }
     ngOnInit() {
-        setTimeout(() => this.router.navigate(['login']), 2000);
+        this.authService.isTokenValid().then(valid => {
+            if (valid) {
+                setTimeout(() => this.router.navigate(['messages']), 1000);
+            }
+            else {
+                setTimeout(() => this.router.navigate(['login']), 1000);
+            }
+        });
     }
 };
 LoadWaiterComponent = __decorate([
@@ -24,7 +33,7 @@ LoadWaiterComponent = __decorate([
         templateUrl: 'app/load-waiter/load-waiter.component.html',
         styleUrls: ['app/load-waiter/load-waiter.component.css']
     }), 
-    __metadata('design:paramtypes', [router_1.Router])
+    __metadata('design:paramtypes', [router_1.Router, auth_service_1.AuthService])
 ], LoadWaiterComponent);
 exports.LoadWaiterComponent = LoadWaiterComponent;
 //# sourceMappingURL=load-waiter.component.js.map

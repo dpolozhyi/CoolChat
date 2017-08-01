@@ -21,6 +21,7 @@ let ChatListComponent = class ChatListComponent {
         this.chatService.getChatRoomList().then(data => this.roomList = data);
     }
     selectRoom(room) {
+        console.log(this.hiddenChatList);
         this.selectedRoom = room;
         this.notifyChatListState.emit(true);
     }

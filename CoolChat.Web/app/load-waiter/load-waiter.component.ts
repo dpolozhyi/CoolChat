@@ -1,6 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AuthService } from '../shared/services/auth.service';
+
 @Component({
     selector: 'div[load-waiter]',
     templateUrl: 'app/load-waiter/load-waiter.component.html',
@@ -8,9 +10,16 @@ import { Router } from '@angular/router';
 })
 export class LoadWaiterComponent implements OnInit {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private authService: AuthService) { }
 
     ngOnInit() {
-        setTimeout(() => this.router.navigate(['login']), 2000);
+        this.authService.isTokenValid().then(valid => {
+            if (valid) {
+                setTimeout(() => this.router.navigate(['messages']), 1000);
+            }
+            else {
+                setTimeout(() => this.router.navigate(['login']), 1000);
+            }
+        });
     }
 }

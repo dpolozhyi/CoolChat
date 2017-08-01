@@ -15,11 +15,11 @@
             <div class="login-controls zeroMargin" [class.zeroMargin]="state == authState.Register">
                 <div class="login-field">
                     <span>Login\E-mail:</span>
-                    <input type="text" spellcheck="false">
+                    <input type="text" [(ngModel)]="loginModel.login" spellcheck="false">
                 </div>
                 <div class="login-field">
                     <span>Password:</span>
-                    <input type="password">
+                    <input type="password" [(ngModel)]="loginModel.password">
                 </div>
                 <div class="login-field login-button-field">
                     <div class="help-links">
@@ -41,11 +41,13 @@
             <div class="login-controls">
                 <div class="login-field">
                     <span>Login\E-mail:</span>
-                    <input type="text" spellcheck="false">
+                    <input type="text" [(ngModel)]="registerModel.login" spellcheck="false">
                 </div>
                 <div class="login-field">
                     <span>Password:</span>
-                    <input type="password" #pass (keyup)="onPasswordEnter(pass.value)" 
+                    <input type="password" #pass
+                           [(ngModel)]="registerModel.password"
+                           (keyup)="onPasswordEnter(pass.value)" 
                            [class.redBorderColor]="passStatus == fieldType.Wrong"
                            [class.yellowBorderColor]="passStatus == fieldType.Satisfied"
                            [class.greenBorderColor]="passStatus == fieldType.Good"
@@ -53,14 +55,14 @@
                 </div>
                 <div class="login-field">
                     <span>Repeat Pass:</span>
-                    <input type="password">
+                    <input type="password" [(ngModel)]="registerModel.repeatPassword">
                 </div>
                 <div class="login-field login-button-field">
                     <div class="login-button back-button">
                         <button (click)="toLogin()">Back to Login</button>
                     </div>
                     <div class="login-button">
-                        <button (click)="logged = !logged">Register</button>
+                        <button (click)="onRegister()">Register</button>
                     </div>
                 </div>
             </div>

@@ -138,6 +138,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
       <Private>True</Private>
@@ -227,12 +229,19 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\ChatController.cs" />
     <Compile Include="Controllers\api\MessageController.cs" />
+    <Compile Include="Controllers\api\TokenController.cs" />
+    <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\AuthServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -244,8 +253,8 @@
     <Content Include="app\load-waiter\load-waiter.component.html" />
     <Content Include="app\messages\messages.component.css" />
     <Content Include="app\messages\messages.component.html" />
-    <Content Include="app\log-in\log-in.component.css" />
-    <Content Include="app\log-in\log-in.component.html" />
+    <Content Include="app\auth\auth.component.css" />
+    <Content Include="app\auth\auth.component.html" />
     <Content Include="app\root\app.component.css" />
     <Content Include="app\root\app.component.html" />
     <Content Include="app\shared\assets\cold-background-v2.jpg" />
@@ -277,7 +286,7 @@
     <Content Include="app\root\app.component.less" />
     <Content Include="app\chat-list\chat-list.component.less" />
     <Content Include="app\messages\messages.component.less" />
-    <Content Include="app\log-in\log-in.component.less" />
+    <Content Include="app\auth\auth.component.less" />
     <Content Include="app\chat\chat.component.less" />
     <Content Include="app\load-waiter\load-waiter.component.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -295,6 +304,16 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="Service References\AuthServiceReference\AuthService.disco" />
+    <None Include="Service References\AuthServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\AuthServiceReference\configuration.svcinfo" />
+    <Content Include="Service References\AuthServiceReference\CoolChat.Web.AuthServiceReference.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\AuthServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="systemjs.config.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -313,6 +332,16 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="tsconfig.json" />
+    <None Include="Service References\AuthServiceReference\AuthService.wsdl" />
+    <None Include="Service References\AuthServiceReference\AuthService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AuthServiceReference\AuthService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AuthServiceReference\AuthService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -343,7 +372,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\chat\chat.component.ts" />
     <TypeScriptCompile Include="app\load-waiter\load-waiter.component.ts" />
-    <TypeScriptCompile Include="app\log-in\log-in.component.ts" />
+    <TypeScriptCompile Include="app\auth\auth.component.ts" />
     <TypeScriptCompile Include="app\root\app.component.ts" />
     <TypeScriptCompile Include="app\app.module.ts" />
     <TypeScriptCompile Include="app\chat-list\chat-list.component.ts" />
@@ -358,6 +387,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AuthServiceReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

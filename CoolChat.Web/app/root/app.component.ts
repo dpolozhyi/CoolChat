@@ -11,9 +11,8 @@ export class AppComponent implements OnInit {
     constructor(private router: Router) { }
 
     ngOnInit() {
-        this.router.events.subscribe((event) => {
+        /*this.router.events.subscribe((event) => {
             console.log(event);
-            this.router.navigate['messages'];
-        })
+        })*/
     }
 }

@@ -22,10 +22,10 @@ namespace CoolChat.AuthService.DB
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().Property(p => p.Password).HasMaxLength(128);
+            modelBuilder.Entity<User>().Property(p => p.PasswordHash).HasMaxLength(512);
             modelBuilder.Entity<User>().Property(p => p.Salt).HasMaxLength(128);
             modelBuilder.Entity<User>().Property(p => p.Email).HasMaxLength(128);
-            modelBuilder.Entity<User>().Property(p => p.Name).HasMaxLength(128);
+            modelBuilder.Entity<User>().Property(p => p.Login).HasMaxLength(128);
 
             base.OnModelCreating(modelBuilder);
         }

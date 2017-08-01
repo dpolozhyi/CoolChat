@@ -22,7 +22,7 @@ namespace CoolChat.AuthService.Services
                 throw new PasswordsDontMatchException("Passwords dont match");
             }
             string salt = this.GetRandomSalt();
-            User newUser = new User() { Name = user.Login, Password = this.GetPasswordHash(user.Password, salt), Salt = salt };
+            User newUser = new User() { Login = user.Login, PasswordHash = this.GetPasswordHash(user.Password, salt), Salt = salt };
             var addedUser = context.Users.Add(newUser);
             context.SaveChanges();
             return addedUser;
@@ -30,10 +30,10 @@ namespace CoolChat.AuthService.Services
 
         public User GetUser(LoginModel credentials)
         {
-            User user = this.context.Users.Where(n => n.Name == credentials.Name).FirstOrDefault();
+            User user = this.context.Users.Where(n => n.Login == credentials.Login).FirstOrDefault();
             if (user != null)
             {
-                if (user.Password == this.GetPasswordHash(credentials.Password, user.Salt))
+                if (user.PasswordHash == this.GetPasswordHash(credentials.Password, user.Salt))
                 {
                     return user;
                 }
@@ -43,10 +43,10 @@ namespace CoolChat.AuthService.Services
 
         public bool IsValidUser(LoginModel credentials)
         {
-            User user = this.context.Users.Where(n => n.Name == credentials.Name).FirstOrDefault();
+            User user = this.context.Users.Where(n => n.Login == credentials.Login).FirstOrDefault();
             if(user != null)
             {
-                if(user.Password == this.GetPasswordHash(credentials.Password, user.Salt))
+                if(user.PasswordHash == this.GetPasswordHash(credentials.Password, user.Salt))
                 {
                     return true;
                 }

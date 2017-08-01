@@ -1,8 +1,11 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { Router, ActivatedRoute }   from '@angular/router';
 import { ChatService } from '../shared/services/chat.service';
+import { AuthService } from '../shared/services/auth.service';
 
 import { ChatRoomModel } from '../shared/models/chatroom.model';
+import { LoginModel } from '../shared/models/login.model';
+import { RegisterModel } from '../shared/models/register.model';
 
 enum AuthState {
     Login,
@@ -18,11 +21,11 @@ enum FieldStatus {
 }
 
 @Component({
-    selector: 'div[log-in]',
-    templateUrl: 'app/log-in/log-in.component.html',
-    styleUrls: ['app/log-in/log-in.component.css']
+    selector: 'div[auth]',
+    templateUrl: 'app/auth/auth.component.html',
+    styleUrls: ['app/auth/auth.component.css']
 })
-export class LogInComponent {
+export class AuthComponent {
     private logged: boolean = false;
 
     authState: any = AuthState;
@@ -35,8 +38,13 @@ export class LogInComponent {
 
     private passStatus: FieldStatus = FieldStatus.Undefined;
 
-    constructor(private router: Router, route: ActivatedRoute) {
-        console.log(route.snapshot.data);
+    private loginModel: LoginModel = { login: "", password: "" };
+
+    private registerModel: RegisterModel = { login: "", password: "", repeatPassword: "" };
+
+    private name: string;
+
+    constructor(private router: Router, route: ActivatedRoute, private authService: AuthService) {
         if (route.snapshot.data['isRegistration']) {
             this.state = AuthState.Register;
         }
@@ -52,7 +60,16 @@ export class LogInComponent {
 
     onLogin() {
         this.loading = true;
-        setTimeout(() => this.loading = false, 3000);
+        this.authService.getToken(this.loginModel).then(token => {
+            console.log(token);
+            this.loading = false;
+            this.router.navigate(['']);
+        })
+    }
+
+    onRegister() {
+        console.log(this.registerModel);
+        this.authService.registerUser(this.registerModel).then(res => console.log(res));
     }
 
     onPasswordEnter(value: string) {

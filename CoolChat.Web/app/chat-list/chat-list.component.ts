@@ -30,9 +30,11 @@ export class ChatListComponent implements OnInit{
     ngOnInit() {
         this.chatService.connect();
         this.chatService.getChatRoomList().then(data => this.roomList = data);
+
     }
 
     selectRoom(room: ChatRoomModel) {
+        console.log(this.hiddenChatList);
         this.selectedRoom = room;
         this.notifyChatListState.emit(true);
     }

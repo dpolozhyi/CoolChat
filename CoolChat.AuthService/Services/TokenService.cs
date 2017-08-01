@@ -24,7 +24,7 @@ namespace CoolChat.AuthService.Services
             {
                 User user = this.userService.GetUser(credentials);
                 Header header = new Header() { Algorithm = "HS256", Type = "JWT" };
-                Payload payload = new Payload() { Id = user.Id.ToString(), Name = user.Name, Expires = DateTime.UtcNow.AddSeconds(30).Ticks };
+                Payload payload = new Payload() { Id = user.Id.ToString(), Name = user.Login, Expires = DateTime.UtcNow.AddSeconds(30).Ticks };
                 HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
                 string encodedHeader = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(header)));
                 string encodedPayload = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(payload)));
