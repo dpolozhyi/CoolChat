@@ -25,6 +25,11 @@ div.chat-list ul {
   top: 40px;
   bottom: 0;
 }
+@media (max-height: 736px) and (max-width: 736px) {
+  div.chat-list ul {
+    top: 50px;
+  }
+}
 div.chat-list ul li.room-list {
   padding: 15px 0px 15px 10px;
   font-size: 22px;
@@ -114,6 +119,11 @@ div.chat-list div.search-dialog {
   box-sizing: border-box;
   position: absolute;
 }
+@media (max-height: 736px) and (max-width: 736px) {
+  div.chat-list div.search-dialog {
+    height: 50px;
+  }
+}
 div.chat-list div.search-dialog label {
   position: absolute;
   left: 9px;
@@ -122,6 +132,12 @@ div.chat-list div.search-dialog label {
 div.chat-list div.search-dialog label i.fa-search {
   font-size: 22px;
   opacity: 0.65;
+}
+@media (max-height: 736px) and (max-width: 736px) {
+  div.chat-list div.search-dialog label {
+    height: 60px;
+    top: 10px;
+  }
 }
 div.chat-list div.search-dialog input[type="text"] {
   border: none;
@@ -183,6 +199,11 @@ div.chat-list div.hide:hover {
 }
 .hiddenChatList {
   margin-left: -25% !important;
+}
+@media (max-width: 1136px) {
+  .hiddenChatList {
+    margin-left: -284px !important;
+  }
 }
 .hiddenHideButton {
   margin-left: 4px !important;

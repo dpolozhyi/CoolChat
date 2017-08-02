@@ -28,22 +28,13 @@ div.header span.logo:before {
 div.header span.chat-list-ico {
   position: absolute;
   right: 20px;
-  top: 0px;
+  top: 50%;
+  transform: translateY(-50%);
   display: none;
 }
 @media (max-width: 768px) {
   div.header span.chat-list-ico {
     display: inline-block;
-  }
-}
-@media (max-height: 600px) {
-  div.header span.chat-list-ico {
-    top: 0;
-  }
-}
-@media (min-height: 600px) and (max-height: 820px) {
-  div.header span.chat-list-ico {
-    top: 5px;
   }
 }
 div.header span.chat-list-ico:hover {

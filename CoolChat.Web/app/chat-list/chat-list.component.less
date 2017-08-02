@@ -25,6 +25,10 @@
         top: 40px;
         bottom: 0;
 
+        @media (max-height: 736px) and (max-width: 736px) {
+            top: 50px;
+        }
+
         li.room-list {
             padding: 15px 0px 15px 10px;
             font-size: 22px;
@@ -129,6 +133,10 @@
         box-sizing: border-box;
         position: absolute;
 
+        @media (max-height: 736px) and (max-width: 736px) {
+            height: 50px;
+        }
+
         label {
             position: absolute;
             left: 9px;
@@ -137,6 +145,11 @@
             i.fa-search {
                 font-size: 22px;
                 opacity: 0.65;
+            }
+
+            @media (max-height: 736px) and (max-width: 736px) {
+                height: 60px;
+                top: 10px;
             }
         }
 
@@ -206,6 +219,10 @@
 
 .hiddenChatList {
     margin-left: -25% !important;
+
+    @media (max-width: 1136px){
+        margin-left: -284px !important;
+    }
 }
 
 .hiddenHideButton {
