@@ -8,8 +8,8 @@ namespace CoolChat.Entities
 
         public string Name { get; set; }
 
-        public Gender Gender { get; set; }
+        public string AvatarUrl { get; set; }
 
-        public ICollection<Message> Messages { get; set; }
+        public ICollection<Dialog> Dialogs { get; set; }
     }
 }

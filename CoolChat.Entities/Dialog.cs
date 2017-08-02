@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CoolChat.Entities
 {
-    public class ChatRoom
+    public class Dialog
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public bool IsActive { get; set; }
-
-        public DateTime CreatedTime { get; set; }
-
-        public DateTime? ClosedTime { get; set; }
+        public ICollection<User> Members { get; set; }
 
         public ICollection<Message> Messages { get; set; }
 
-        //public ICollection<User> Users { get; set; }
+        public DateTime TimeCreated { get; set; }
     }
 }

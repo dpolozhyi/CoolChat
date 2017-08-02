@@ -38,9 +38,9 @@ export class AuthComponent {
 
     private passStatus: FieldStatus = FieldStatus.Undefined;
 
-    private loginModel: LoginModel = { login: "", password: "" };
+    private loginModel: LoginModel = new LoginModel();
 
-    private registerModel: RegisterModel = { login: "", password: "", repeatPassword: "" };
+    private registerModel: RegisterModel = new RegisterModel();
 
     private name: string;
 

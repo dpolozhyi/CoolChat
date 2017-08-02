@@ -40,8 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatRoom.cs" />
-    <Compile Include="Gender.cs" />
+    <Compile Include="Dialog.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

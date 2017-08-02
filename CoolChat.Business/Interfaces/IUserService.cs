@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoolChat.Entities
+namespace CoolChat.Business.Interfaces
 {
-    public enum Gender
+    public class IUserService
     {
-        Male,
-        Female
+        
     }
 }

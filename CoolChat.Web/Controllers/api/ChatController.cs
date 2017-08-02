@@ -12,11 +12,8 @@ namespace CoolChat.Web.Controllers.api
     {
         private IHubContext hubContext;
 
-        private IChatService chatService;
-
-        public ChatController(IChatService chatService)
+        public ChatController()
         {
-            this.chatService = chatService;
             this.hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
         }
 
@@ -25,8 +22,9 @@ namespace CoolChat.Web.Controllers.api
         // GET: api/Chat
         public IEnumerable<ChatRoomViewModel> Get()
         {
-            var returned =  this.chatService.GetChatRoomList();
-            return returned;
+            /*var returned =  this.chatService.GetChatRoomList();
+            return returned;*/
+            return new List<ChatRoomViewModel>();
         }
 
         [Route("{name}")]
@@ -34,7 +32,8 @@ namespace CoolChat.Web.Controllers.api
         // GET: api/Chat/myroom
         public ChatRoomViewModel Get(string name)
         {
-            return this.chatService.GetChatRoomByName(name);
+            //return this.chatService.GetChatRoomByName(name);
+            return new ChatRoomViewModel();
         }
 
         [Route("")]
@@ -42,9 +41,10 @@ namespace CoolChat.Web.Controllers.api
         // POST: api/Chat
         public MessageViewModel Post(MessageViewModel message)
         {
-            var returned = this.chatService.PostMessage(message);
-            hubContext.Clients.Group(returned.ChatRoomId.ToString()).AddNewMessageToPage(returned);
-            return returned;
+            //var returned = this.chatService.PostMessage(message);
+            //hubContext.Clients.Group(returned.ChatRoomId.ToString()).AddNewMessageToPage(returned);
+            //return returned;
+            return new MessageViewModel();
         }
     }
 }

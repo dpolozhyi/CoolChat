@@ -1,6 +1,28 @@
 ﻿<div class="chat-list" [class.hiddenChatList]="hiddenChatList" [class.fullWidth]="!minModeHiddenChatList" [class.zeroMarginLeft]="!minModeHiddenChatList">
+    <div class="search-dialog">
+        <label for="search-dialog-input">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </label>
+        <input id="search-dialog-input" type="text" placeholder="Search..." />
+    </div>
     <ul>
-        <li class="room-list" *ngFor="let room of roomList" [class.selectedRoom]="room == selectedRoom" (click)="selectRoom(room)">{{room.Name}}</li>
+        <li class="room-list">
+            <div class="dialog">
+                <div class="avatar"></div>
+                <div class="message">
+                    <div class="message-header">
+                        <span class="name">Mike</span>
+                        <span class="time">02.08.2017</span>
+                    </div>
+                    <div class="message-body">
+                        <span class="message-text"><span class="sender">You: </span>Hey everyone, im gon...</span>
+                        <span class="message-notification">3</span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="room-list">Hello</li>
+        <li class="room-list">Greetings</li>
     </ul>
     <div class="hide" id="hide-button" [class.hiddenHideButton]="hiddenChatList" (click)="hiddenChatList = !hiddenChatList">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>

@@ -25,7 +25,7 @@ import { AuthService } from './shared/services/auth.service';
             { path: 'login', component: AuthComponent },
             { path: 'register', component: AuthComponent, data: { isRegistration: true } },
             { path: 'messages', component: ChatComponent },
-            { path: '', component: LoadWaiterComponent }
+            { path: '', component: ChatComponent }
         ])
     ],
     declarations:

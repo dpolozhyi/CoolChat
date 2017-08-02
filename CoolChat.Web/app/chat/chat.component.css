@@ -8,7 +8,7 @@ div.header {
   font-family: Roboto-Light;
   color: white;
   z-index: 999;
-  padding: 0 22px;
+  padding: 0 36px;
   box-sizing: border-box;
 }
 div.header span.logo:before {

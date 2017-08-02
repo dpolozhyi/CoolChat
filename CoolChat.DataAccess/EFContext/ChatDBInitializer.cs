@@ -1,5 +1,6 @@
 ﻿using CoolChat.Entities;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace CoolChat.DataAccess.EFContext
@@ -33,11 +34,23 @@ namespace CoolChat.DataAccess.EFContext
 
             Random rand = new Random();
 
-            ChatRoom chat1 = new ChatRoom() { CreatedTime = DateTime.Now, IsActive = true, Name = "Funny room" };
-            ChatRoom chat2 = new ChatRoom() { CreatedTime = DateTime.Now, IsActive = true, Name = "Spam room" };
+            User user1 = new User() { Name = "wowbot" };
+            User user2 = new User() { Name = "volman" };
 
-            context.ChatRooms.Add(chat1);
-            context.ChatRooms.Add(chat2);
+            Dialog dial1 = new Dialog() { TimeCreated = DateTime.Now, Members = new List<User>() { user1, user2 } };
+
+            Message msg1 = new Message() { Body = "qq all", PostedTime = DateTime.Now.AddSeconds(10), User = user1, Dialog = dial1 };
+            Message msg2 = new Message() { Body = "yo, wassup?", PostedTime = DateTime.Now.AddSeconds(23), User = user2, Dialog = dial1 };
+            Message msg3 = new Message() { Body = "good, chillin", PostedTime = DateTime.Now.AddSeconds(35), User = user1, Dialog = dial1 };
+
+            context.Users.Add(user1);
+            context.Users.Add(user2);
+
+            context.Set<Dialog>().Add(dial1);
+
+            context.Messages.Add(msg1);
+            context.Messages.Add(msg2);
+            context.Messages.Add(msg3);
 
             /*for (int i = 0; i < 100; i++)
             {

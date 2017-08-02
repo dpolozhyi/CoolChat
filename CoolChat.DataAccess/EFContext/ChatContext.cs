@@ -10,20 +10,21 @@ namespace CoolChat.DataAccess.EFContext
             Database.SetInitializer(new ChatDBInitializer());
         }
 
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Dialog> ChatRooms { get; set; }
+
         public DbSet<Message> Messages { get; set; }
 
-        public DbSet<ChatRoom> ChatRooms { get; set; }
-
-        //public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>().Property(p => p.Name).HasMaxLength(30);
+            modelBuilder.Entity<User>().Property(p => p.Name).HasMaxLength(128);
+            modelBuilder.Entity<User>().Property(p => p.AvatarUrl).HasMaxLength(512);
 
-            modelBuilder.Entity<Message>().Property(p => p.Body).HasMaxLength(1000);
-            modelBuilder.Entity<Message>().Property(p => p.UserName).HasMaxLength(30);
+            modelBuilder.Entity<Message>().Property(p => p.Body).HasMaxLength(2048);
 
-            modelBuilder.Entity<ChatRoom>().Property(p => p.Name).HasMaxLength(20);
+            modelBuilder.Entity<Dialog>().Property(p => p.Name).HasMaxLength(128);
 
             base.OnModelCreating(modelBuilder);
         }

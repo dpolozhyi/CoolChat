@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require('@angular/core');
 const router_1 = require('@angular/router');
 const auth_service_1 = require('../shared/services/auth.service');
+const login_model_1 = require('../shared/models/login.model');
+const register_model_1 = require('../shared/models/register.model');
 var AuthState;
 (function (AuthState) {
     AuthState[AuthState["Login"] = 0] = "Login";
@@ -34,8 +36,8 @@ let AuthComponent = class AuthComponent {
         this.loading = false;
         this.state = AuthState.Login;
         this.passStatus = FieldStatus.Undefined;
-        this.loginModel = { login: "", password: "" };
-        this.registerModel = { login: "", password: "", repeatPassword: "" };
+        this.loginModel = new login_model_1.LoginModel();
+        this.registerModel = new register_model_1.RegisterModel();
         if (route.snapshot.data['isRegistration']) {
             this.state = AuthState.Register;
         }

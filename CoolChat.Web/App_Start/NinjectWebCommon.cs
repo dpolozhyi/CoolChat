@@ -78,7 +78,7 @@ namespace CoolChat.Web.App_Start
 
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IChatService>().To<ChatService>();
+            //kernel.Bind<IChatService>().To<ChatService>();
             kernel.Bind<IUnitOfWork>().To<EFUnitOfWork>();
         }
     }

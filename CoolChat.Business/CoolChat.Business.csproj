@@ -44,11 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Interfaces\IChatService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BriefDialogViewModel.cs" />
     <Compile Include="ViewModels\ChatRoomViewModel.cs" />
+    <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoolChat.DataAccess\CoolChat.DataAccess.csproj">

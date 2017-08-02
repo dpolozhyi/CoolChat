@@ -12,7 +12,7 @@ namespace CoolChat.Web.App_Start
     {
         public static void RegisterMappings()
         {
-            Mapper.Initialize(
+            /*Mapper.Initialize(
             config =>
             {
                 config.CreateMap<ChatRoom, ChatRoomViewModel>()
@@ -34,7 +34,7 @@ namespace CoolChat.Web.App_Start
                     .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                     .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
                     .ForMember(dest => dest.PostedTime, opt => opt.MapFrom(src => src.PostedTime));
-            });
+            });*/
         }
     }
 }

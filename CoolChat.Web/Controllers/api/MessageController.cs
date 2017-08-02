@@ -44,7 +44,7 @@ namespace CoolChat.Web.Controllers.api
         public MessageViewModel Post(MessageViewModel message)
         {
             var returned = this.chatService.PostMessage(message);
-            hubContext.Clients.Group(returned.ChatRoomId.ToString()).AddNewMessageToPage(returned);
+            //hubContext.Clients.Group(returned.ChatRoomId.ToString()).AddNewMessageToPage(returned);
             return returned;
         }
 

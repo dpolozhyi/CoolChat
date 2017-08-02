@@ -18,7 +18,7 @@ export class LoadWaiterComponent implements OnInit {
                 setTimeout(() => this.router.navigate(['messages']), 1000);
             }
             else {
-                setTimeout(() => this.router.navigate(['login']), 1000);
+                setTimeout(() => this.router.navigate(['messages']), 1000);
             }
         });
     }
