@@ -3,13 +3,21 @@ div.header {
   height: 8%;
   min-height: 40px;
   width: 100%;
-  position: fixed;
+  position: absolute;
   font-size: 38px;
   font-family: Roboto-Light;
   color: white;
   z-index: 999;
   padding: 0 36px;
   box-sizing: border-box;
+}
+@media (max-height: 500px) {
+  div.header {
+    top: 0px;
+    position: absolute;
+    font-size: 34px;
+    overflow: hidden;
+  }
 }
 div.header span.logo:before {
   content: "";
@@ -20,7 +28,7 @@ div.header span.logo:before {
 div.header span.chat-list-ico {
   position: absolute;
   right: 20px;
-  top: 10px;
+  top: 0px;
   display: none;
 }
 @media (max-width: 768px) {
@@ -49,16 +57,18 @@ div.header span.chat-list-ico:before {
 }
 .main {
   height: 92%;
-  min-height: 290px;
   width: 100%;
   position: relative;
   top: 8%;
   left: 0;
   overflow: hidden;
 }
-@media (max-heigt: 500px) {
+@media (max-height: 500px) {
   .main {
     top: 40px;
+    bottom: 0px;
+    position: absolute;
+    height: unset;
   }
 }
 :host {
