@@ -1,15 +1,15 @@
 ﻿div.chat-list {
     border-right: 4px solid #3498db;
+    //box-shadow: 2px 2px 39px -3px rgba(0,0,0,0.75);
     display: inline-block;
     width: 25%;
+    min-width: 284px;
     height: 100%;
     z-index: 999;
-    top: 8%;
     left: 0;
-    overflow-x: hidden;
     transition: 0.4s;
-    box-sizing: border-box;
-    overflow-y: scroll;
+    box-sizing: content-box;
+    position: relative;
 
     @media (max-heigt: 500px) {
         top: 40px;
@@ -17,11 +17,17 @@
 
     @media (max-width: 768px) {
         margin-left: -25%;
+        min-width: unset;
     }
 
     ul {
         margin: 0;
         padding: 0;
+        overflow-y: auto;
+        width: 100%;
+        position: absolute;
+        top: 40px;
+        bottom: 0;
 
         li.room-list {
             padding: 15px 0px 15px 10px;
@@ -30,11 +36,12 @@
             border-bottom: 1px solid #ccc;
             transition: 0.15s;
             min-height: 50px;
-            display:block;
+            display: block;
 
             div.dialog {
                 min-width: 260px;
                 vertical-align: bottom;
+                position: relative;
 
                 div.avatar {
                     background: url(https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png);
@@ -43,57 +50,65 @@
                     width: 50px;
                     border-radius: 50%;
                     position: absolute;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
 
-                div.message{
+                div.message {
                     height: 50px;
                     margin-left: 50px;
                     padding: 0 10px;
                     position: relative;
 
-                    div.message-header{
-                        font-size: 18px;
+                    div.message-header {
                         min-width: 200px;
                         overflow: hidden;
 
-                        span.name{
+                        span.name {
                             float: left;
+                            font-size: 17px;
+                            font-weight: bold;
                         }
 
-                        span.time{
+                        span.time {
                             font-size: 14px;
                             float: right;
+                            color: #777;
+                            font-weight: bold;
                         }
                     }
 
-                    div.message-body{
+                    div.message-body {
                         font-size: 16px;
                         position: relative;
                         min-width: 200px;
                         bottom: 5px;
                         overflow: hidden;
-                        white-space: nowrap;
+                        white-space: normal;
                         margin-top: 10px;
 
-                        span.message-text{
+                        span.message-text {
                             //background: #ccc;
                             padding: 2px 0px;
                             vertical-align: middle;
 
-                            span.sender{
+                            span.sender {
                                 color: red;
                             }
                         }
 
-                        span.message-notification{
+                        span.message-notification {
                             min-width: 10px;
                             float: right;
                             margin-right: 5px;
                             background: #3498db;
                             padding: 2px 7px;
-
                             border-radius: 50%;
-                            color:white;
+                            color: white;
                         }
                     }
                 }
@@ -112,9 +127,11 @@
         font-size: 22px;
         font-family: Roboto-Light;
         border-bottom: 1px solid #ccc;
-        transition: 0.15s;
-        position: relative;
         height: 40px;
+        width: 100%;
+        min-width: inherit;
+        box-sizing: border-box;
+        position: absolute;
 
         label {
             position: absolute;
@@ -135,7 +152,7 @@
             height: 100%;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             padding: 6px 15px 6px 40px;
-            transition: all 0.3s ease 0s;
+            transition: 0.3s;
             outline: 0 !important;
             box-sizing: border-box;
 
@@ -149,8 +166,8 @@
     div.hide {
         z-index: 999;
         display: inline-block;
-        left: 25%;
-        margin-left: -52px;
+        left: 100%;
+        margin-left: -48px;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -188,4 +205,27 @@
     @media (max-width: 768px) {
         width: 100%;
     }
+}
+
+
+.hiddenChatList {
+    margin-left: -25% !important;
+}
+
+.hiddenHideButton {
+    margin-left: 4px !important;
+    transform: translateY(-50%) rotate(180deg) !important;
+    opacity: 0.5 !important;
+}
+
+.fullWidth {
+    width: 100% !important;
+}
+
+.zeroMarginLeft {
+    margin-left: 0 !important;
+}
+
+.oneHunMarginLeft {
+    margin-left: 100% !important;
 }
