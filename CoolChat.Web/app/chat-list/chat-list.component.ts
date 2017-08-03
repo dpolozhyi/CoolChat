@@ -18,7 +18,7 @@ export class ChatListComponent implements OnInit{
 
     private roomList: ChatRoomModel[];
 
-    private selectedRoom: ChatRoomModel;
+    private selectedRoom: ChatRoomModel = new ChatRoomModel();
 
     constructor(private chatService: ChatService) {
         this.chatService.starting$.subscribe(

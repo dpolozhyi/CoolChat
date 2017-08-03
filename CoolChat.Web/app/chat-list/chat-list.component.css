@@ -1,13 +1,13 @@
 div.chat-list {
   border-right: 4px solid #3498db;
-  display: inline-block;
   width: 25%;
-  min-width: 284px;
+  min-width: 286px;
   height: 100%;
   z-index: 999;
   left: 0;
+  float: left;
   transition: 0.4s;
-  box-sizing: content-box;
+  box-sizing: border-box;
   position: relative;
 }
 @media (max-width: 768px) {
@@ -90,6 +90,7 @@ div.chat-list ul li.room-list div.dialog div.message div.message-body {
 div.chat-list ul li.room-list div.dialog div.message div.message-body span.message-text {
   padding: 2px 0px;
   vertical-align: middle;
+  white-space: nowrap;
 }
 div.chat-list ul li.room-list div.dialog div.message div.message-body span.message-text span.sender {
   color: red;
@@ -183,13 +184,8 @@ div.chat-list div.hide:hover {
   opacity: 1 !important;
 }
 .chat-area {
-  float: right;
   transition: 0.4s;
-  right: 0;
-  width: 75%;
   height: 100%;
-  display: inline-block;
-  margin-left: -4px;
   z-index: 1;
 }
 @media (max-width: 768px) {

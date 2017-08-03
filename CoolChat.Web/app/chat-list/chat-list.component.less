@@ -1,14 +1,14 @@
 ﻿div.chat-list {
     border-right: 4px solid #3498db;
     //box-shadow: 2px 2px 39px -3px rgba(0,0,0,0.75);
-    display: inline-block;
     width: 25%;
-    min-width: 284px;
+    min-width: 286px;
     height: 100%;
     z-index: 999;
     left: 0;
+    float:left;
     transition: 0.4s;
-    box-sizing: content-box;
+    box-sizing: border-box;
     position: relative;
 
     @media (max-width: 768px) {
@@ -95,6 +95,7 @@
                             //background: #ccc;
                             padding: 2px 0px;
                             vertical-align: middle;
+                            white-space: nowrap;
 
                             span.sender {
                                 color: red;
@@ -202,13 +203,8 @@
 }
 
 .chat-area {
-    float: right;
     transition: 0.4s;
-    right: 0;
-    width: 75%;
     height: 100%;
-    display: inline-block;
-    margin-left: -4px;
     z-index: 1;
 
     @media (max-width: 768px) {

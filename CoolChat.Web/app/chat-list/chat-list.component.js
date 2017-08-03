@@ -10,10 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 const chat_service_1 = require('../shared/services/chat.service');
+const chatroom_model_1 = require('../shared/models/chatroom.model');
 let ChatListComponent = class ChatListComponent {
     constructor(chatService) {
         this.chatService = chatService;
         this.notifyChatListState = new core_1.EventEmitter();
+        this.selectedRoom = new chatroom_model_1.ChatRoomModel();
         this.chatService.starting$.subscribe(() => { console.log("signalr service has been started"); }, () => { console.warn("signalr service failed to start!"); });
     }
     ngOnInit() {
