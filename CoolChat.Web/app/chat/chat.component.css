@@ -19,6 +19,11 @@ div.header {
     overflow: hidden;
   }
 }
+@media (max-height: 736px) and (max-width: 736px) {
+  div.header {
+    padding: 0 6px;
+  }
+}
 div.header span.logo:before {
   content: "";
   display: inline-block;
