@@ -1,3 +1,6 @@
+::-webkit-scrollbar {
+  width: 4px;
+}
 div.enter-form {
   width: 300px;
   margin: auto;
