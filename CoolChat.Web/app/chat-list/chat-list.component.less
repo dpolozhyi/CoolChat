@@ -10,9 +10,10 @@
     transition: 0.4s;
     box-sizing: border-box;
     position: relative;
+    background: #fff;
 
     @media (max-width: 768px) {
-        margin-left: -25%;
+        margin-left: -200px;
         min-width: unset;
     }
 
@@ -44,7 +45,6 @@
                 position: relative;
 
                 div.avatar {
-                    background-size: cover;
                     height: 50px;
                     width: 50px;
                     position: absolute;
@@ -159,9 +159,21 @@
                 cursor: pointer;
                 background: rgba(0, 0, 0, 0.08);
 
-                div.dialog div.avatar div.avatar-area div.online-mark{
+                div.dialog div.avatar div.avatar-area div.online-mark {
                     background: #ebebeb;
                 }
+            }
+        }
+
+        li.dialog-selected {
+            background: rgba(0,0,0,0.14);
+
+            div.dialog div.avatar div.avatar-area div.online-mark {
+                background: #dcdcdc;
+            }
+
+            &:hover{
+                background: rgba(0,0,0,0.14);
             }
         }
     }
@@ -250,9 +262,11 @@
     transition: 0.4s;
     height: 100%;
     z-index: 1;
+    overflow: hidden;
+    position: relative;
 
     @media (max-width: 768px) {
-        width: 100%;
+        //width: 100%;
     }
 }
 

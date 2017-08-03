@@ -52,16 +52,65 @@ div.conversation {
     height: 90%;
   }
 }
+@media (max-height: 625px) {
+  div.conversation {
+    position: absolute;
+    bottom: 54px;
+    width: 100%;
+    height: unset;
+    overflow-x: hidden;
+  }
+}
 div.conversation div.message-list {
   max-width: 768px;
   min-width: 308px;
   margin: auto;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
-div.conversation div.message-list div.message {
-  background: #00BCD4;
+div.conversation div.message-list div.message-wrapper {
+  position: relative;
+}
+div.conversation div.message-list div.message-wrapper.my-message-wrapper div.user-avatar {
+  right: 0;
+}
+div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message {
+  margin: 10px 65px 10px 25px;
+}
+div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message {
+  background: #ddd;
+}
+div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message:before {
+  position: absolute;
+  content: "";
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  border-style: solid;
+  border-color: black;
+  border-left-width: 10px;
+  border-top-width: 10px;
+  border-bottom-width: 10px;
+  border-color: transparent #ddd;
+}
+div.conversation div.message-list div.message-wrapper div.user-avatar {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  top: 50%;
+  transform: translateY(-50%);
+}
+div.conversation div.message-list div.message-wrapper div.user-avatar img {
+  width: 100%;
+  height: 100%;
+}
+div.conversation div.message-list div.message-wrapper div.message {
+  background: #fff;
   color: #333;
-  margin: 10px 10px 25px;
-  margin-left: 60px;
+  margin: 10px 25px 10px 65px;
   padding: 10px 25px;
   border-radius: 10px;
   font-size: 20px;
@@ -70,24 +119,24 @@ div.conversation div.message-list div.message {
   word-wrap: break-word;
 }
 @media (max-width: 768px) and (orientation: portrait) {
-  div.conversation div.message-list div.message {
+  div.conversation div.message-list div.message-wrapper div.message {
     padding: 10px 15px;
   }
 }
-div.conversation div.message-list div.message span {
+div.conversation div.message-list div.message-wrapper div.message span {
   display: block;
 }
-div.conversation div.message-list div.message span.message-name {
+div.conversation div.message-list div.message-wrapper div.message span.message-name {
   margin-bottom: 5px;
   font-size: 18px;
   color: #34495e;
   display: inline-block;
   font-weight: bold;
 }
-div.conversation div.message-list div.message span.message-body {
+div.conversation div.message-list div.message-wrapper div.message span.message-body {
   color: #0d3d56;
 }
-div.conversation div.message-list div.message span.message-time {
+div.conversation div.message-list div.message-wrapper div.message span.message-time {
   color: #34495e;
   line-height: 27px;
   text-align: right;
@@ -95,72 +144,64 @@ div.conversation div.message-list div.message span.message-time {
   display: inline-block;
   float: right;
 }
-div.conversation div.message-list div.message:before {
+div.conversation div.message-list div.message-wrapper div.message:before {
   position: absolute;
   content: "";
-  bottom: -20px;
-  right: 25px;
-  left: 0;
-  border: 0;
-  border-style: solid;
-  border-color: black;
-  border-right-width: 30px;
-  border-bottom-width: 20px;
-  border-color: transparent #00BCD4;
-}
-div.conversation div.message-list div.message:after {
-  position: absolute;
-  content: "";
-  bottom: -20px;
-  right: 25px;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
   border: 0;
   border-style: solid;
   border-color: black;
   border-right-width: 10px;
-  border-bottom-width: 20px;
-  border-color: transparent #ecf0f1;
+  border-top-width: 10px;
+  border-bottom-width: 10px;
+  border-color: transparent #fff;
 }
-div.conversation div.message-list div.message.my-message {
-  background: #b5c689;
-  margin-left: 10px;
-  margin-right: 60px;
+div.conversation div.message-list div.message-separator {
+  position: relative;
+  margin: 30px 0;
 }
-div.conversation div.message-list div.message.my-message:before {
+div.conversation div.message-list div.message-separator div.separator-mask {
+  overflow: hidden;
+  height: 10px;
+}
+div.conversation div.message-list div.message-separator div.separator-mask:after {
+  content: '';
+  display: block;
+  margin: -26px auto 0;
+  width: 100%;
+  height: 25px;
+  border-radius: 10.41666667px;
+  border: 1px solid #ccc;
+}
+div.conversation div.message-list div.message-separator span.separator-text {
+  text-align: center;
+  padding: 2px 5px;
+  border-radius: 8px;
   position: absolute;
-  content: "";
-  bottom: -20px;
-  left: 25px;
-  right: 0;
-  border: 0;
-  border-style: solid;
-  border-color: black;
-  border-left-width: 30px;
-  border-bottom-width: 20px;
-  border-color: transparent #b5c689;
-}
-div.conversation div.message-list div.message.my-message:after {
-  position: absolute;
-  content: "";
-  bottom: -20px;
-  left: 25px;
-  border: 0;
-  border-style: solid;
-  border-color: black;
-  border-left-width: 10px;
-  border-bottom-width: 20px;
-  border-color: transparent #ecf0f1;
+  left: 50%;
+  top: -100%;
+  transform: translateX(-50%);
+  display: inline-block;
+  min-width: 50px;
+  padding: 5px 15px 7px;
+  font: 700 12px/1 'Open Sans', sans-serif;
+  box-shadow: inset 0 -1px 0 1px rgba(0, 0, 0, 0.1), inset 0 -10px 20px rgba(0, 0, 0, 0.1);
+  color: #777;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  background: #fff;
 }
 div.new-message {
-  background: #f7f8f9;
+  background: #fff;
   border-top: 1px solid #bdc3c7;
   box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.5);
   height: 10%;
   min-height: 54px;
   bottom: 0;
+  box-sizing: border-box;
   transition: 0.4s;
   padding: 0 14px 0 10px;
-  box-sizing: border-box;
-  overflow: auto;
 }
 @media (max-width: 768px) {
   div.new-message {
@@ -174,10 +215,17 @@ div.new-message {
     padding: 0;
   }
 }
+@media (max-height: 625px) {
+  div.new-message {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
 div.new-message div.message-panel {
   max-width: 748px;
   min-width: 320px;
-  height: 38px;
+  height: 52px;
   margin: auto;
   position: relative;
   top: 50%;
@@ -188,6 +236,12 @@ div.new-message div.message-panel {
     height: 100%;
   }
 }
+@media (max-height: 540px) {
+  div.new-message div.message-panel {
+    top: unset;
+    transform: none;
+  }
+}
 div.new-message div.message-panel div.message-smile {
   position: absolute;
   width: 50px;
@@ -195,9 +249,21 @@ div.new-message div.message-panel div.message-smile {
   font-size: 34px;
   text-align: center;
   vertical-align: middle;
-  line-height: 38px;
+  line-height: 54px;
   border-radius: 50%;
   color: #888;
+}
+div.new-message div.message-panel div.message-smile:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+div.new-message div.message-panel div.message-smile:after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 }
 div.new-message div.message-panel div.message-smile:hover {
   cursor: pointer;
@@ -219,6 +285,7 @@ div.new-message div.message-panel div.message-input textarea {
   resize: none;
   transition: 0.3s;
   font-size: 16px;
+  padding: 10px 0;
 }
 div.new-message div.message-panel div.message-input textarea:focus {
   outline: 0 !important;
@@ -233,9 +300,21 @@ div.new-message div.message-panel div.message-send {
   font-size: 26px;
   text-align: center;
   vertical-align: middle;
-  line-height: 38px;
+  line-height: 54px;
   border-radius: 50%;
   color: #444;
+}
+div.new-message div.message-panel div.message-send:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+div.new-message div.message-panel div.message-send:after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 }
 div.new-message div.message-panel div.message-send:hover {
   text-shadow: 1px 1px 5px #3498db;
