@@ -14,7 +14,7 @@ namespace CoolChat.Business.ViewModels
 
         public int NewMessagesNumber { get; set; }
 
-        public ICollection<UserViewModel> Members { get; set; }
+        public IEnumerable<UserViewModel> Members { get; set; }
 
         public MessageViewModel LastMessage { get; set; }
 

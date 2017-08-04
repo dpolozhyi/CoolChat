@@ -1,186 +1,196 @@
-﻿div.header {
-    background: #3498db;
-    height: 8%;
-    min-height: 50px;
+﻿div.container {
     width: 100%;
-    min-width: 250px;
-    position: absolute;
-    font-size: 38px;
-    font-family: Roboto-Light;
-    color: white;
-    z-index: 999;
-    box-sizing: border-box;
-    box-shadow: 2px 2px 5px -3px rgba(0,0,0,0.75);
-    @media (max-height: 625px) {
-        top: 0px;
+    height: 100%;
+    max-width: 1600px;
+    position: relative;
+    margin: auto;
+    background: #eef7fa;
+
+    div.header {
+        background: #3498db;
+        height: 8%;
+        min-height: 50px;
+        width: 100%;
+        min-width: 250px;
         position: absolute;
-        //font-size: 34px;
-        overflow: hidden;
-    }
-
-    @media (max-height: 736px) and (max-width: 736px) {
-        //padding: 0 6px;
-    }
-
-
-    div.logo-bar {
-        width: 25%;
-        min-width: 286px;
-        height: 100%;
-        left: 0;
-        float: left;
-        transition: 0.4s;
+        font-size: 38px;
+        font-family: Roboto-Light;
+        color: white;
+        z-index: 999;
         box-sizing: border-box;
-        white-space: nowrap;
-        position: relative;
+        box-shadow: 0px 2px 10px -5px rgba(0,0,0,0.75);
 
-        @media (max-width: 768px) {
-            margin-left: -200px;
-            min-width: unset;
-            width: unset;
+        @media (max-height: 625px) {
+            top: 0px;
+            position: absolute;
+            //font-size: 34px;
+            overflow: hidden;
         }
 
-        span.logo {
-
-            &:before {
-                content: "";
-                display: inline-block;
-                height: 100%;
-                vertical-align: middle;
-            }
+        @media (max-height: 736px) and (max-width: 736px) {
+            //padding: 0 6px;
         }
-    }
 
-    div.info-bar {
-        height: 100%;
-        box-sizing: border-box;
-        position: relative;
-        overflow: hidden;
-        padding-right: 4px;
-        min-width: 308px;
 
-        div.central-bar {
+        div.logo-bar {
+            width: 25%;
+            min-width: 286px;
             height: 100%;
-            max-width: 768px;
-            min-width: 308px;
-            margin: auto;
-            padding: 0 10px;
+            left: 0;
+            float: left;
+            transition: 0.4s;
             box-sizing: border-box;
+            white-space: nowrap;
+            position: relative;
 
-            div.user-info {
-                height: 100%;
-                box-sizing: border-box;
-                position: relative;
+            @media (max-width: 768px) {
+                margin-left: -200px;
+                min-width: unset;
+                width: unset;
+            }
 
-                div.user-wrapper {
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-50%);
+            span.logo {
 
-                    div.avatar {
-                        background-size: cover;
-                        height: 50px;
-                        width: 50px;
-                        position: absolute;
-
-                        div.avatar-area {
-                            position: relative;
-                            height: 100%;
-                            width: 100%;
-                            width: 50px;
-
-                            div.avatar-image {
-                                height: 100%;
-                                width: 100%;
-                                border-radius: 50%;
-                                overflow: hidden;
-
-                                img {
-                                    width: 100%;
-                                    height: 100%;
-                                }
-                            }
-
-                            div.online-mark {
-                                width: 14px;
-                                height: 14px;
-                                position: absolute;
-                                background: #3498db;
-                                right: 0px;
-                                bottom: 0px;
-                                padding: 3px;
-                                box-sizing: border-box;
-                                border-radius: 50%;
-
-                                div.online-circle {
-                                    background: #2ecc71;
-                                    width: 8px;
-                                    height: 8px;
-                                    border-radius: 50%;
-                                }
-                            }
-                        }
-                    }
-
-                    div.user-info-body {
-                        margin-left: 50px;
-                        padding: 0 10px;
-                        height: 50px;
-
-                        div.user-name {
-                            font-size: 18px;
-                            font-weight: bold;
-                        }
-
-                        div.user-status {
-                            font-size: 16px;
-                            color: #eee;
-                            margin-top: 5px;
-                        }
-                    }
+                &:before {
+                    content: "";
+                    display: inline-block;
+                    height: 100%;
+                    vertical-align: middle;
                 }
             }
         }
 
+        div.info-bar {
+            height: 100%;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+            padding-right: 4px;
+            min-width: 308px;
 
-        span.chat-list-ico {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: none;
-
-            @media (max-width: 768px) {
-                display: inline-block;
-            }
-
-            &:hover {
-                cursor: pointer;
-            }
-
-            &:before {
-                content: "";
-                display: inline-block;
+            div.central-bar {
                 height: 100%;
-                vertical-align: middle;
+                max-width: 768px;
+                min-width: 308px;
+                margin: auto;
+                padding: 0 10px;
+                box-sizing: border-box;
+
+                div.user-info {
+                    height: 100%;
+                    box-sizing: border-box;
+                    position: relative;
+
+                    div.user-wrapper {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+
+                        div.avatar {
+                            background-size: cover;
+                            height: 50px;
+                            width: 50px;
+                            position: absolute;
+
+                            div.avatar-area {
+                                position: relative;
+                                height: 100%;
+                                width: 100%;
+                                width: 50px;
+
+                                div.avatar-image {
+                                    height: 100%;
+                                    width: 100%;
+                                    border-radius: 50%;
+                                    overflow: hidden;
+
+                                    img {
+                                        width: 100%;
+                                        height: 100%;
+                                    }
+                                }
+
+                                div.online-mark {
+                                    width: 14px;
+                                    height: 14px;
+                                    position: absolute;
+                                    background: #3498db;
+                                    right: 0px;
+                                    bottom: 0px;
+                                    padding: 3px;
+                                    box-sizing: border-box;
+                                    border-radius: 50%;
+
+                                    div.online-circle {
+                                        background: #2ecc71;
+                                        width: 8px;
+                                        height: 8px;
+                                        border-radius: 50%;
+                                    }
+                                }
+                            }
+                        }
+
+                        div.user-info-body {
+                            margin-left: 50px;
+                            padding: 0 10px;
+                            height: 50px;
+
+                            div.user-name {
+                                font-size: 18px;
+                                font-weight: bold;
+                            }
+
+                            div.user-status {
+                                font-size: 16px;
+                                color: #eee;
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            span.chat-list-ico {
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                display: none;
+
+                @media (max-width: 768px) {
+                    display: inline-block;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                &:before {
+                    content: "";
+                    display: inline-block;
+                    height: 100%;
+                    vertical-align: middle;
+                }
             }
         }
     }
-}
 
-.main {
-    height: 92%;
-    width: 100%;
-    position: relative;
-    top: 8%;
-    left: 0;
-    overflow: hidden;
+    .main {
+        height: 92%;
+        width: 100%;
+        position: relative;
+        top: 8%;
+        left: 0;
+        overflow: hidden;
 
-    @media (max-height: 625px) {
-        top: 50px;
-        bottom: 0px;
-        position: absolute;
-        height: unset;
+        @media (max-height: 625px) {
+            top: 50px;
+            bottom: 0px;
+            position: absolute;
+            height: unset;
+        }
     }
 }
 

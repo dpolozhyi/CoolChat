@@ -1,4 +1,8 @@
-﻿using CoolChat.Web.AuthServiceReference;
+﻿using CoolChat.Business.Interfaces;
+using CoolChat.Business.Services;
+using CoolChat.DataAccess;
+using CoolChat.DataAccess.EFContext;
+using CoolChat.Web.AuthServiceReference;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +15,18 @@ namespace CoolChat.Web.Controllers.api
     public class UserController : ApiController
     {
         private AuthServiceClient authService = new AuthServiceClient();
+
+        private IUserService userService;
+
+        public UserController() : this(new UserService(new EFUnitOfWork(new ChatContext())))
+        {
+
+        }
+
+        public UserController(IUserService userService)
+        {
+            this.userService = userService;
+        }
 
         // GET: api/User
         public IEnumerable<string> Get()
@@ -34,7 +50,8 @@ namespace CoolChat.Web.Controllers.api
             });
             if(user != null)
             {
-                return Ok();
+                Entities.User addedUser = this.userService.AddNewUser(new Entities.User() { Id = user.Id, Name = user.Login, LastTimeActivity=DateTime.UtcNow });
+                return Ok(addedUser);
             }
             else
             {

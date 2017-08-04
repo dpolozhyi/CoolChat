@@ -1,4 +1,4 @@
-﻿using CoolChat.Entities;
+﻿using CoolChat.Business.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CoolChat.Business.Interfaces
 {
-    public interface IUserService
+    public interface IUserAccountService
     {
-        User AddNewUser(User user);
+        UserAccountViewModel GetMainUserModel(int userId);
     }
 }

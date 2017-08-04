@@ -12,9 +12,9 @@ namespace CoolChat.Business.ViewModels
 
         public string Name { get; set; }
 
-        public ICollection<UserViewModel> Members { get; set; }
+        public IEnumerable<UserViewModel> Members { get; set; }
 
-        public ICollection<MessageViewModel> Messages { get; set; }
+        public IEnumerable<MessageViewModel> Messages { get; set; }
 
         public DateTime TimeCreated { get; set; }
     }

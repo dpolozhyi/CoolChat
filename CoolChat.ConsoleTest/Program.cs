@@ -21,7 +21,7 @@ namespace CoolChat.ConsoleTest
         {
             AuthServiceClient authClient = new AuthServiceClient();
             //User user = authClient.Register(new RegisterModel() { Login = "wowbot", Password = "adgjmp", RepeatPassword = "adgjmp" });
-            string token = authClient.GetToken(new LoginModel() { Name = "wowbot", Password = "adgjmp" });
+            string token = authClient.GetToken(new LoginModel() { Login = "wowbot", Password = "adgjmp" });
             Console.WriteLine(token);
 
             string[] tokenParts = token.Split('.');

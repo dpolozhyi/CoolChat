@@ -31,7 +31,7 @@ namespace CoolChat.DataAccess
             Func<IQueryable<T>, IOrderedQueryable<T>> postOrderBy = null
             )
         {
-            IQueryable<T> query = this.context.Set<T>(); ;
+            IQueryable<T> query = this.context.Set<T>();
 
             if (filter != null)
             {
@@ -54,7 +54,7 @@ namespace CoolChat.DataAccess
                 query = query.Skip(offset).Take(limit);
             }
 
-            if(postOrderBy != null)
+            if (postOrderBy != null)
             {
                 return postOrderBy(query).ToList();
             }

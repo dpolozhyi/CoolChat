@@ -32,5 +32,10 @@ namespace CoolChat.AuthService
         {
             return this.userService.RegisterUser(registerModel);
         }
+
+        public int GetUserId(string token)
+        {
+            return this.tokenService.GetUserId(token);
+        }
     }
 }

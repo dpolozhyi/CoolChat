@@ -19,10 +19,10 @@ let LoadWaiterComponent = class LoadWaiterComponent {
     ngOnInit() {
         this.authService.isTokenValid().then(valid => {
             if (valid) {
-                setTimeout(() => this.router.navigate(['messages']), 1000);
+                setTimeout(() => this.router.navigate(['dialogs']), 1000);
             }
             else {
-                setTimeout(() => this.router.navigate(['messages']), 1000);
+                setTimeout(() => this.router.navigate(['login']), 1000);
             }
         });
     }

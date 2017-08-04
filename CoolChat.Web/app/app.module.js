@@ -33,8 +33,8 @@ AppModule = __decorate([
                 //{ path: '', redirectTo: 'login', pathMatch: 'full' },
                 { path: 'login', component: auth_component_1.AuthComponent },
                 { path: 'register', component: auth_component_1.AuthComponent, data: { isRegistration: true } },
-                { path: 'messages', component: chat_component_1.ChatComponent },
-                { path: '', component: chat_component_1.ChatComponent }
+                { path: 'dialogs', component: chat_component_1.ChatComponent },
+                { path: '', component: load_waiter_component_1.LoadWaiterComponent }
             ])
         ],
         declarations: [

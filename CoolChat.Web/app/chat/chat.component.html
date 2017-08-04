@@ -1,34 +1,36 @@
-﻿<div class="header">
-    <div class="logo-bar">
-        <span class="logo">CoolChat</span>
-    </div>
-    <div class="info-bar">
-        <div class="central-bar">
-            <div class="user-info">
-                <div class="user-wrapper">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
+﻿<div class="container">
+    <div class="header">
+        <div class="logo-bar">
+            <span class="logo">CoolChat</span>
+        </div>
+        <div class="info-bar">
+            <div class="central-bar">
+                <div class="user-info">
+                    <div class="user-wrapper">
+                        <div class="avatar">
+                            <div class="avatar-area">
+                                <div class="avatar-image">
+                                    <img src="https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png" />
+                                </div>
+                                <div class="online-mark">
+                                    <div class="online-circle">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="user-info-body">
-                        <div class="user-name">
-                            Mike
-                        </div>
-                        <div class="user-status">
-                            Last seen yesterday
+                        <div class="user-info-body">
+                            <div class="user-name">
+                                Mike
+                            </div>
+                            <div class="user-status">
+                                Last seen yesterday
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <span class="chat-list-ico" id="showChatList" (click)="minModeHiddenChatList = !minModeHiddenChatList"><i class="fa fa-bars" aria-hidden="true"></i></span>
         </div>
-        <span class="chat-list-ico" id="showChatList" (click)="minModeHiddenChatList = !minModeHiddenChatList"><i class="fa fa-bars" aria-hidden="true"></i></span>
     </div>
+    <div chat-list class="main" (notifyChatListState)="onChatListStateChanged($event)" [minModeHiddenChatList]="minModeHiddenChatList"></div>
 </div>
-<div chat-list class="main" (notifyChatListState)="onChatListStateChanged($event)" [minModeHiddenChatList]="minModeHiddenChatList"></div>

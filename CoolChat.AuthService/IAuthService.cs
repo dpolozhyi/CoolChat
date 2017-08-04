@@ -20,5 +20,8 @@ namespace CoolChat.AuthService
 
         [OperationContract]
         bool CheckToken(string token);
+
+        [OperationContract]
+        int GetUserId(string token);
     }
 }

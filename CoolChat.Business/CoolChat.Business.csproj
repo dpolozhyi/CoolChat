@@ -44,17 +44,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IUserAccountService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Services\ChatService.cs" />
-    <Compile Include="Interfaces\IChatService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\UserAccountService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\BriefDialogViewModel.cs" />
     <Compile Include="ViewModels\ChatRoomViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\UserAccountViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CoolChat.AuthService\CoolChat.AuthService.csproj">
+      <Project>{F4E0A3DD-68ED-4A39-9C7D-A87586061A91}</Project>
+      <Name>CoolChat.AuthService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CoolChat.DataAccess\CoolChat.DataAccess.csproj">
       <Project>{0B10C402-BC76-4590-89EA-94ACDDA525D6}</Project>
       <Name>CoolChat.DataAccess</Name>

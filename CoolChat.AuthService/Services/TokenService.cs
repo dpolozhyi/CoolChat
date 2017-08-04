@@ -24,7 +24,7 @@ namespace CoolChat.AuthService.Services
             {
                 User user = this.userService.GetUser(credentials);
                 Header header = new Header() { Algorithm = "HS256", Type = "JWT" };
-                Payload payload = new Payload() { Id = user.Id.ToString(), Name = user.Login, Expires = DateTime.UtcNow.AddSeconds(30).Ticks };
+                Payload payload = new Payload() { Id = user.Id.ToString(), Name = user.Login, Expires = DateTime.UtcNow.AddSeconds(1800).Ticks };
                 HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
                 string encodedHeader = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(header)));
                 string encodedPayload = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(payload)));
@@ -57,6 +57,22 @@ namespace CoolChat.AuthService.Services
         {
             HMACSHA256 hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
             return Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(strToSign)));
+        }
+
+        public int GetUserId(string token)
+        {
+            if(this.IsValidToken(token))
+            {
+                string[] tokenParts = token.Split('.');
+                if (tokenParts.Length < 3)
+                {
+                    return -1;
+                }
+
+                Payload payload = JsonConvert.DeserializeObject<Payload>(tokenParts[1].FromBase64Url());
+                return Int32.Parse(payload.Id);
+            }
+            return -1;
         }
     }
 }

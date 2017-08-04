@@ -12,29 +12,29 @@ namespace CoolChat.Web.App_Start
     {
         public static void RegisterMappings()
         {
-            /*Mapper.Initialize(
+            Mapper.Initialize(
             config =>
             {
-                config.CreateMap<ChatRoom, ChatRoomViewModel>()
+                config.CreateMap<Dialog, BriefDialogViewModel>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive))
+                    .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.Messages.OrderBy(n => n.PostedTime)))
+                    .ForMember(dest => dest.Members, opt => opt.MapFrom(src => src))
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                    .ForMember(dest => dest.CreatedTime, opt => opt.MapFrom(src => src.CreatedTime))
-                    .ForMember(dest => dest.ClosedTime, opt => opt.MapFrom(src => src.ClosedTime))
-                    .ForMember(dest => dest.Messages, opt => opt.MapFrom(src => src.Messages));
+                    .ForMember(dest => dest.NewMessagesNumber, opt => opt.MapFrom(src => src.Messages.Count(n => !n.isReaded)))
+                    .ForMember(dest => dest.TimeCreated, opt => opt.MapFrom(src => src.TimeCreated));
 
-                config.CreateMap<Message, MessageViewModel>()
+                config.CreateMap<User, UserAccountViewModel>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
-                    .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
-                    .ForMember(dest => dest.PostedTime, opt => opt.MapFrom(src => src.PostedTime));
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.AvatarUrl))
+                    .ForMember(dest => dest.LastTimeActivity, opt => opt.MapFrom(src => src.LastTimeActivity));
 
-                config.CreateMap<MessageViewModel, Message>()
+                config.CreateMap<User, UserViewModel>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                    .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
-                    .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
-                    .ForMember(dest => dest.PostedTime, opt => opt.MapFrom(src => src.PostedTime));
-            });*/
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.AvatarUrl))
+                    .ForMember(dest => dest.LastTimeActivity, opt => opt.MapFrom(src => src.LastTimeActivity));
+            });
         }
     }
 }

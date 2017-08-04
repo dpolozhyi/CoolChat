@@ -11,5 +11,7 @@ namespace CoolChat.AuthService.Interfaces
         string GetToken(LoginModel credentials);
 
         bool IsValidToken(string token);
+
+        int GetUserId(string token);
     }
 }

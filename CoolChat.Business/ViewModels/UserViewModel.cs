@@ -14,6 +14,6 @@ namespace CoolChat.Business.ViewModels
 
         public string AvatarUrl { get; set; }
 
-        public ICollection<DialogViewModel> Dialogs { get; set; }
+        public DateTime LastTimeActivity { get; set; }
     }
 }

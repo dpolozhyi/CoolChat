@@ -281,6 +281,12 @@ namespace CoolChat.Web.AuthServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthService/CheckToken", ReplyAction="http://tempuri.org/IAuthService/CheckTokenResponse")]
         System.Threading.Tasks.Task<bool> CheckTokenAsync(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthService/GetUserId", ReplyAction="http://tempuri.org/IAuthService/GetUserIdResponse")]
+        int GetUserId(string token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthService/GetUserId", ReplyAction="http://tempuri.org/IAuthService/GetUserIdResponse")]
+        System.Threading.Tasks.Task<int> GetUserIdAsync(string token);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -332,6 +338,14 @@ namespace CoolChat.Web.AuthServiceReference {
         
         public System.Threading.Tasks.Task<bool> CheckTokenAsync(string token) {
             return base.Channel.CheckTokenAsync(token);
+        }
+        
+        public int GetUserId(string token) {
+            return base.Channel.GetUserId(token);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetUserIdAsync(string token) {
+            return base.Channel.GetUserIdAsync(token);
         }
     }
 }

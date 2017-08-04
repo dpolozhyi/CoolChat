@@ -19,7 +19,7 @@
                 </div>
                 <div class="login-field">
                     <span>Password:</span>
-                    <input type="password" [(ngModel)]="loginModel.password">
+                    <input type="password" [(ngModel)]="loginModel.password" (keydown.enter)="onLogin()">
                 </div>
                 <div class="login-field login-button-field">
                     <div class="help-links">

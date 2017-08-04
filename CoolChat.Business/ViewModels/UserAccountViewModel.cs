@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CoolChat.Entities
+namespace CoolChat.Business.ViewModels
 {
-    public class User
+    public class UserAccountViewModel
     {
         public int Id { get; set; }
 
@@ -13,6 +16,6 @@ namespace CoolChat.Entities
 
         public DateTime LastTimeActivity { get; set; }
 
-        public ICollection<Dialog> Dialogs { get; set; }
+        public IEnumerable<BriefDialogViewModel> Dialogs { get; set; }
     }
 }
