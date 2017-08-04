@@ -9,12 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+const auth_service_1 = require('../shared/services/auth.service');
 let ChatComponent = class ChatComponent {
-    constructor() {
+    constructor(authService, router) {
+        this.authService = authService;
+        this.router = router;
         this.minModeHiddenChatList = false;
+        this.expandedSettings = false;
     }
     ngOnInit() {
         this.handleViewPortWidth(window.innerWidth);
+    }
+    onLogout() {
+        this.authService.logOut();
+        this.router.navigate(['login']);
+    }
+    onSettingsButtonMouseMove() {
+        this.expandedSettings = true;
+        if (this.hideSettingsTimeout) {
+            clearTimeout(this.hideSettingsTimeout);
+        }
+        this.hideSettingsTimeout = setTimeout(() => this.expandedSettings = false, 800);
     }
     handleViewPortWidth(width) {
         if (width > 767) {
@@ -46,7 +62,7 @@ ChatComponent = __decorate([
         templateUrl: 'app/chat/chat.component.html',
         styleUrls: ['app/chat/chat.component.css']
     }), 
-    __metadata('design:paramtypes', [])
+    __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
 ], ChatComponent);
 exports.ChatComponent = ChatComponent;
 //# sourceMappingURL=chat.component.js.map

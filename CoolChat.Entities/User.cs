@@ -11,6 +11,8 @@ namespace CoolChat.Entities
 
         public string AvatarUrl { get; set; }
 
+        public bool IsOnline { get; set; }
+
         public DateTime LastTimeActivity { get; set; }
 
         public ICollection<Dialog> Dialogs { get; set; }

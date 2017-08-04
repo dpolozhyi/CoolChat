@@ -3,6 +3,7 @@
     box-shadow: 2px 2px 10px -3px rgba(0,0,0,0.75);
     width: 25%;
     min-width: 286px;
+    max-width: 360px;
     height: 100%;
     z-index: 999;
     left: 0;
@@ -15,6 +16,7 @@
     @media (max-width: 768px) {
         margin-left: -200px;
         min-width: unset;
+        max-width: unset;
     }
 
     ul {
@@ -126,31 +128,29 @@
                             padding: 2px 0px;
                             vertical-align: middle;
                             white-space: nowrap;
+                            overflow: hidden;
+                            display: block;
+                            margin-right: 24px;
+                            text-overflow: ellipsis;  
 
                             span.sender {
                                 color: red;
                             }
                         }
-                    }
 
-                    span.message-notification {
-                        /*min-width: 10px;
-                        float: right;
-                        margin-right: 5px;
-                        background: #3498db;
-                        padding: 2px 7px;
-                        border-radius: 50%;
-                        color: white;*/
-                        position: absolute;
-                        right: 0;
-                        bottom: 0;
-                        background: #3498db;
-                        font-size: 16px;
-                        padding: 2px 7px;
-                        border-radius: 50%;
-                        color: white;
-                        margin-bottom: 3px;
-                        margin-right: 10px;
+
+                        span.message-notification {
+                            min-width: 10px;
+                            float: right;
+                            background: #3498db;
+                            padding: 2px 7px;
+                            border-radius: 50%;
+                            color: white;
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            display: block;
+                        }
                     }
                 }
             }
@@ -172,7 +172,7 @@
                 background: #dcdcdc;
             }
 
-            &:hover{
+            &:hover {
                 background: rgba(0,0,0,0.14);
             }
         }

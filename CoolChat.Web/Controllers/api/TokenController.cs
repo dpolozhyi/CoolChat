@@ -48,15 +48,15 @@ namespace CoolChat.Web.Controllers.api
         }
 
         // POST: api/Token
-        public string Post([FromBody]LoginModel creds)
+        public IHttpActionResult Post([FromBody]LoginModel creds)
         {
             try
             {
-                return this.authService.GetToken(new LoginModel() { Login = creds.Login, Password = creds.Password });
+                return Ok(this.authService.GetToken(new LoginModel() { Login = creds.Login, Password = creds.Password }));
             }
             catch(Exception)
             {
-                return "invalid lol";
+                return Unauthorized();
             }
         }
 

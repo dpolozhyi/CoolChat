@@ -31,6 +31,17 @@
             </div>
             <span class="chat-list-ico" id="showChatList" (click)="minModeHiddenChatList = !minModeHiddenChatList"><i class="fa fa-bars" aria-hidden="true"></i></span>
         </div>
+        <div class="settings-bar">
+            <div class="settings-button" (mousemove)="onSettingsButtonMouseMove()">
+                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </div>
+            <div class="settings-expanded" *ngIf="expandedSettings" (mousemove)="onSettingsButtonMouseMove()">
+                <ul>
+                    <li>Profile</li>
+                    <li (click)="onLogout()">Log out</li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div chat-list class="main" (notifyChatListState)="onChatListStateChanged($event)" [minModeHiddenChatList]="minModeHiddenChatList"></div>
 </div>

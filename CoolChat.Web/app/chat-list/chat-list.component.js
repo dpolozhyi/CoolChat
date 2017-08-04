@@ -16,11 +16,14 @@ let ChatListComponent = class ChatListComponent {
         this.chatService = chatService;
         this.notifyChatListState = new core_1.EventEmitter();
         this.selectedRoom = new chatroom_model_1.ChatRoomModel();
-        this.chatService.starting$.subscribe(() => { console.log("signalr service has been started"); }, () => { console.warn("signalr service failed to start!"); });
+        /*this.chatService.starting$.subscribe(
+            () => { console.log("signalr service has been started"); },
+            () => { console.warn("signalr service failed to start!"); }
+        );*/
     }
     ngOnInit() {
-        this.chatService.connect();
-        this.chatService.getChatRoomList().then(data => this.roomList = data);
+        /* this.chatService.connect();
+         this.chatService.getChatRoomList().then(data => this.roomList = data);*/
     }
     selectRoom(room) {
         console.log(this.hiddenChatList);

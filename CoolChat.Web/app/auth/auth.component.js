@@ -38,6 +38,7 @@ let AuthComponent = class AuthComponent {
         this.passStatus = FieldStatus.Undefined;
         this.loginModel = new login_model_1.LoginModel();
         this.registerModel = new register_model_1.RegisterModel();
+        this.failedLogin = false;
         if (route.snapshot.data['isRegistration']) {
             this.state = AuthState.Register;
         }
@@ -54,6 +55,9 @@ let AuthComponent = class AuthComponent {
             console.log(token);
             this.loading = false;
             this.router.navigate(['']);
+        }, err => {
+            this.failedLogin = true;
+            this.loading = false;
         });
     }
     onRegister() {

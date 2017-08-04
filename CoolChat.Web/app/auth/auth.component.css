@@ -252,6 +252,20 @@ div.login-container div.auth-form div.reg-form div.loading-curtain div.colored-c
   height: 100%;
   opacity: 0.4;
 }
+div.login-container div.auth-form div.login-form div.login-failed,
+div.login-container div.auth-form div.reg-form div.login-failed {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  text-align: center;
+}
+div.login-container div.auth-form div.login-form div.login-failed span.login-failed-text,
+div.login-container div.auth-form div.reg-form div.login-failed span.login-failed-text {
+  text-align: center;
+  font-size: 16px;
+  color: #e74c3c;
+}
 div.login-container div.auth-form div.login-form div.login-controls,
 div.login-container div.auth-form div.reg-form div.login-controls {
   display: block;

@@ -12,6 +12,9 @@
             <div class="loading-curtain" [class.displayBlock]="loading">
                 <div class="colored-curtain"></div>
             </div>
+            <div class="login-failed" *ngIf="failedLogin">
+                <span class="login-failed-text">Invalid user login or password</span>
+            </div>
             <div class="login-controls zeroMargin" [class.zeroMargin]="state == authState.Register">
                 <div class="login-field">
                     <span>Login\E-mail:</span>

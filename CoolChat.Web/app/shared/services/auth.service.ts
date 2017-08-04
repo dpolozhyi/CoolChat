@@ -39,4 +39,8 @@ export class AuthService {
         }
         return Promise.resolve(false);
     }
+
+    logOut() {
+        localStorage.removeItem('tokenKey');
+    }
 }

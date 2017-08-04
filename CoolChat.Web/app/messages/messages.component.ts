@@ -41,7 +41,7 @@ export class MessagesComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
+        /*if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
             return;
         }
         if (!this.prevChatRoom) {
@@ -54,7 +54,7 @@ export class MessagesComponent implements OnInit, OnChanges {
             console.log("Subscribed to " + this.chatRoom.Id);
         });
         this.prevChatRoom = this.chatRoom;
-        this.scrollOffset = 0;
+        this.scrollOffset = 0;*/
     }
 
     sendMessage(msgText: string) {

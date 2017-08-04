@@ -27,7 +27,7 @@ let MessagesComponent = class MessagesComponent {
         this.prevChatRoom = this.chatRoom;
     }
     ngOnChanges(changes) {
-        if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
+        /*if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
             return;
         }
         if (!this.prevChatRoom) {
@@ -40,7 +40,7 @@ let MessagesComponent = class MessagesComponent {
             console.log("Subscribed to " + this.chatRoom.Id);
         });
         this.prevChatRoom = this.chatRoom;
-        this.scrollOffset = 0;
+        this.scrollOffset = 0;*/
     }
     sendMessage(msgText) {
         if (!msgText.trim()) {

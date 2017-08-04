@@ -44,6 +44,8 @@ export class AuthComponent {
 
     private name: string;
 
+    private failedLogin: boolean = false;
+
     constructor(private router: Router, route: ActivatedRoute, private authService: AuthService) {
         if (route.snapshot.data['isRegistration']) {
             this.state = AuthState.Register;
@@ -64,7 +66,10 @@ export class AuthComponent {
             console.log(token);
             this.loading = false;
             this.router.navigate(['']);
-        })
+        }, err => {
+            this.failedLogin = true;
+            this.loading = false;
+        });
     }
 
     onRegister() {
