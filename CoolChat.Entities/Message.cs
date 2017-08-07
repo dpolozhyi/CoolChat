@@ -14,6 +14,6 @@ namespace CoolChat.Entities
 
         public Dialog Dialog { get; set; }
 
-        public bool isReaded { get; set; }
+        public bool IsReaded { get; set; }
     }
 }

@@ -380,10 +380,12 @@
     <TypeScriptCompile Include="app\chat-list\chat-list.component.ts" />
     <TypeScriptCompile Include="app\messages\messages.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
-    <TypeScriptCompile Include="app\shared\models\chatroom.model.ts" />
+    <TypeScriptCompile Include="app\shared\models\brief-dialog.model.ts" />
     <TypeScriptCompile Include="app\shared\models\login.model.ts" />
     <TypeScriptCompile Include="app\shared\models\message.model.ts" />
     <TypeScriptCompile Include="app\shared\models\register.model.ts" />
+    <TypeScriptCompile Include="app\shared\models\user-account.model.ts" />
+    <TypeScriptCompile Include="app\shared\models\user.model.ts" />
     <TypeScriptCompile Include="app\shared\services\auth.service.ts" />
     <TypeScriptCompile Include="app\shared\services\chat.service.ts" />
   </ItemGroup>

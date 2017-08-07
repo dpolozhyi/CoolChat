@@ -21,6 +21,9 @@ let ChatComponent = class ChatComponent {
     ngOnInit() {
         this.handleViewPortWidth(window.innerWidth);
     }
+    onSelectedUser(user) {
+        this.selectedUser = user;
+    }
     onLogout() {
         this.authService.logOut();
         this.router.navigate(['login']);

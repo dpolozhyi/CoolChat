@@ -1,5 +1,4 @@
 ﻿using CoolChat.Business.ViewModels;
-using CoolChat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace CoolChat.Business.Interfaces
 {
-    public interface IUserService
+    public interface IDialogService
     {
-        User AddNewUser(User user);
+        bool CheckUserHasDialog(int userId, int dialogId);
 
-        UserViewModel GetUser(int userId);
+        IEnumerable<MessageViewModel> GetMessages(int dialogId);
     }
 }

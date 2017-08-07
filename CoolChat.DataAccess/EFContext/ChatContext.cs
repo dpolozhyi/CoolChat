@@ -1,4 +1,5 @@
 ﻿using CoolChat.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 
 namespace CoolChat.DataAccess.EFContext
@@ -19,6 +20,8 @@ namespace CoolChat.DataAccess.EFContext
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasKey(p => p.Id);
+            modelBuilder.Entity<User>().Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<User>().Property(p => p.Name).HasMaxLength(128);
             modelBuilder.Entity<User>().Property(p => p.AvatarUrl).HasMaxLength(512);
 

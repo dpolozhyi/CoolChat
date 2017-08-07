@@ -6,6 +6,7 @@ import { Headers, Http, Response } from '@angular/http';
 
 import { LoginModel } from '../models/login.model';
 import { RegisterModel } from '../models/register.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +26,19 @@ export class AuthService {
                 localStorage.setItem('tokenKey', token);
                 return token;
             });
+    }
+
+    getLocalToken(): string {
+        return localStorage.getItem("tokenKey");
+    }
+
+    getUser(): Promise<UserModel> {
+        var token = localStorage.getItem("tokenKey");
+        if (token && this.isTokenValid()) {
+            this.headers.delete("Authorization");
+            this.headers.append("Authorization", token);
+            return this.http.get('api/user', { headers: this.headers }).toPromise().then(res => JSON.parse(res.json()) as UserModel);
+        }
     }
 
     isTokenExist(): boolean {

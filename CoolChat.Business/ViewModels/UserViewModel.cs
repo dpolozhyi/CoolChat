@@ -14,6 +14,8 @@ namespace CoolChat.Business.ViewModels
 
         public string AvatarUrl { get; set; }
 
+        public bool IsOnline { get; set; }
+
         public DateTime LastTimeActivity { get; set; }
     }
 }

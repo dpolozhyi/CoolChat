@@ -1,6 +1,8 @@
 ﻿import { Component, ViewEncapsulation, Input, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { UserModel } from '../shared/models/user.model';
+
 import { AuthService } from '../shared/services/auth.service';
 
 @Component({
@@ -15,10 +17,16 @@ export class ChatComponent implements OnInit {
 
     private hideSettingsTimeout: number;
 
+    private selectedUser: UserModel;
+
     constructor(private authService: AuthService, private router: Router) { }
 
     ngOnInit() {
         this.handleViewPortWidth(window.innerWidth);
+    }
+
+    onSelectedUser(user: UserModel) {
+        this.selectedUser = user;
     }
 
     onLogout() {

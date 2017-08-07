@@ -5,14 +5,14 @@
         </div>
         <div class="info-bar">
             <div class="central-bar">
-                <div class="user-info">
+                <div class="user-info" *ngIf="selectedUser">
                     <div class="user-wrapper">
                         <div class="avatar">
                             <div class="avatar-area">
                                 <div class="avatar-image">
-                                    <img src="https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png" />
+                                    <img [src]="selectedUser.avatarUrl" />
                                 </div>
-                                <div class="online-mark">
+                                <div class="online-mark" *ngIf="selectedUser.isOnline">
                                     <div class="online-circle">
                                     </div>
                                 </div>
@@ -20,10 +20,10 @@
                         </div>
                         <div class="user-info-body">
                             <div class="user-name">
-                                Mike
+                                {{selectedUser.name}}
                             </div>
                             <div class="user-status">
-                                Last seen yesterday
+                                Last seen {{selectedUser.lastTimeActivity | date:'mediumDate'}}
                             </div>
                         </div>
                     </div>
@@ -43,5 +43,9 @@
             </div>
         </div>
     </div>
-    <div chat-list class="main" (notifyChatListState)="onChatListStateChanged($event)" [minModeHiddenChatList]="minModeHiddenChatList"></div>
+    <div chat-list class="main" 
+         (notifySelectedUser)="onSelectedUser($event)" 
+         (notifyChatListState)="onChatListStateChanged($event)" 
+         [minModeHiddenChatList]="minModeHiddenChatList">
+    </div>
 </div>

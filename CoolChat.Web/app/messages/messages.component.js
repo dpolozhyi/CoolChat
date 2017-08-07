@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 const chat_service_1 = require('../shared/services/chat.service');
-const chatroom_model_1 = require('../shared/models/chatroom.model');
-const message_model_1 = require('../shared/models/message.model');
+const user_model_1 = require('../shared/models/user.model');
+const brief_dialog_model_1 = require('../shared/models/brief-dialog.model');
 let MessagesComponent = class MessagesComponent {
     constructor(chatService) {
         this.chatService = chatService;
@@ -19,14 +19,16 @@ let MessagesComponent = class MessagesComponent {
         this.messagesLoading = false;
     }
     ngOnInit() {
-        this.chatService.addMessageCallback((message) => {
+        /*this.chatService.addMessageCallback((message: MessageModel) => {
             this.scrollOffset = 0;
             this.messages.push(message);
         });
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
-        this.prevChatRoom = this.chatRoom;
+        this.prevChatRoom = this.chatRoom;*/
+        this.chatService.getMessages(this.briefDialog.id).then((messages) => this.messages = messages);
     }
     ngOnChanges(changes) {
+        this.chatService.getMessages(this.briefDialog.id).then((messages) => this.messages = messages);
         /*if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
             return;
         }
@@ -42,59 +44,7 @@ let MessagesComponent = class MessagesComponent {
         this.prevChatRoom = this.chatRoom;
         this.scrollOffset = 0;*/
     }
-    sendMessage(msgText) {
-        if (!msgText.trim()) {
-            return;
-        }
-        var newMessage = new message_model_1.MessageModel();
-        newMessage.Body = msgText;
-        newMessage.PostedTime = new Date();
-        newMessage.UserName = this.name;
-        newMessage.ChatRoomId = this.chatRoom.Id;
-        this.chatService.sendMessage(newMessage);
-    }
-    onNameSubmit(name) {
-        if (name.trim()) {
-            this.name = name.trim();
-            this.chatService.subscribe(String(this.chatRoom.Id));
-        }
-    }
-    onMessageScroll(event) {
-        const target = event.target;
-        if (target.scrollTop < 100 && !this.messagesLoading) {
-            this.messagesLoading = true;
-            this.chatService
-                .getEarlyMessages(this.chatRoom.Id, this.messages.length)
-                .then((messages) => {
-                this.scrollOffset = target.scrollHeight - target.scrollTop;
-                messages.reverse().forEach((value) => this.messages.unshift(value));
-                this.messagesLoading = false;
-            });
-        }
-        /* Why this isn't working? */
-        /*const target = event.target;
-        console.log(event.srcElement.scrollTop);
-        if (target.scrollTop < 1 && !this.messagesLoading) {
-            console.log("Scroll Height: " + target.scrollHeight);
-            console.log("Scroll Top: " + target.scrollTop);
-            var currentPosition = target.scrollHeight - target.scrollTop;
-            console.log("Triggered, scroll offset " + currentPosition)
-            this.messagesLoading = true;
-            this.chatService
-                .getEarlyMessages(this.chatRoom.Id, this.messages.length)
-                .then((messages) => {
-                    this.scrollOffset = currentPosition;
-                    console.log("Scroll offset is set: " + this.scrollOffset);
-                    messages.reverse().forEach((value) => this.messages.unshift(value));
-                    this.messagesLoading = false;
-                });
-        }*/
-    }
 };
-__decorate([
-    core_1.Input(), 
-    __metadata('design:type', chatroom_model_1.ChatRoomModel)
-], MessagesComponent.prototype, "chatRoom", void 0);
 __decorate([
     core_1.Input(), 
     __metadata('design:type', Boolean)
@@ -103,6 +53,14 @@ __decorate([
     core_1.Input(), 
     __metadata('design:type', Boolean)
 ], MessagesComponent.prototype, "minModeHiddenChatList", void 0);
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', user_model_1.UserModel)
+], MessagesComponent.prototype, "user", void 0);
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', brief_dialog_model_1.BriefDialogModel)
+], MessagesComponent.prototype, "briefDialog", void 0);
 MessagesComponent = __decorate([
     core_1.Component({
         selector: 'div[messages]',

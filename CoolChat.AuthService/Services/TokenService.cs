@@ -20,7 +20,7 @@ namespace CoolChat.AuthService.Services
 
         public string GetToken(LoginModel credentials)
         {
-            if(this.userService.IsValidUser(credentials))
+            if (this.userService.IsValidUser(credentials))
             {
                 User user = this.userService.GetUser(credentials);
                 Header header = new Header() { Algorithm = "HS256", Type = "JWT" };
@@ -37,18 +37,21 @@ namespace CoolChat.AuthService.Services
 
         public bool IsValidToken(string token)
         {
-            string[] tokenParts = token.Split('.');
-            if (tokenParts.Length < 3)
+            if (!String.IsNullOrEmpty(token))
             {
-                return false;
-            }
+                string[] tokenParts = token.Split('.');
+                if (tokenParts.Length < 3)
+                {
+                    return false;
+                }
 
-            Payload payload = JsonConvert.DeserializeObject<Payload>(tokenParts[1].FromBase64Url());
-            DateTime tokenExpires = new DateTime(payload.Expires);
-            string sign = this.Sign(String.Concat(tokenParts[0], ".", tokenParts[1]));
-            if(sign == tokenParts[2] && DateTime.Compare(tokenExpires, DateTime.UtcNow) > 0)
-            {
-                return true;
+                Payload payload = JsonConvert.DeserializeObject<Payload>(tokenParts[1].FromBase64Url());
+                DateTime tokenExpires = new DateTime(payload.Expires);
+                string sign = this.Sign(String.Concat(tokenParts[0], ".", tokenParts[1]));
+                if (sign == tokenParts[2] && DateTime.Compare(tokenExpires, DateTime.UtcNow) > 0)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -61,7 +64,7 @@ namespace CoolChat.AuthService.Services
 
         public int GetUserId(string token)
         {
-            if(this.IsValidToken(token))
+            if (this.IsValidToken(token))
             {
                 string[] tokenParts = token.Split('.');
                 if (tokenParts.Length < 3)

@@ -3,7 +3,6 @@ import { Router, ActivatedRoute }   from '@angular/router';
 import { ChatService } from '../shared/services/chat.service';
 import { AuthService } from '../shared/services/auth.service';
 
-import { ChatRoomModel } from '../shared/models/chatroom.model';
 import { LoginModel } from '../shared/models/login.model';
 import { RegisterModel } from '../shared/models/register.model';
 

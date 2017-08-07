@@ -27,6 +27,17 @@ let AuthService = class AuthService {
             return token;
         });
     }
+    getLocalToken() {
+        return localStorage.getItem("tokenKey");
+    }
+    getUser() {
+        var token = localStorage.getItem("tokenKey");
+        if (token && this.isTokenValid()) {
+            this.headers.delete("Authorization");
+            this.headers.append("Authorization", token);
+            return this.http.get('api/user', { headers: this.headers }).toPromise().then(res => JSON.parse(res.json()));
+        }
+    }
     isTokenExist() {
         return localStorage.getItem('tokenKey');
     }

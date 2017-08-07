@@ -19,161 +19,237 @@
         max-width: unset;
     }
 
-    ul {
-        margin: 0;
-        padding: 0;
-        overflow-y: auto;
+    div.dialog-list-wrapper {
         width: 100%;
         position: absolute;
         top: 40px;
+        overflow-y: auto;
         bottom: 0;
 
         @media (max-height: 736px) and (max-width: 736px) {
             top: 50px;
         }
 
-        li.room-list {
-            padding: 15px 0px 15px 10px;
-            font-size: 22px;
-            font-family: Roboto-Light;
-            border-bottom: 1px solid #ccc;
-            transition: 0.15s;
-            min-height: 50px;
-            display: block;
+        ul.dialog-list {
+            margin: 0;
+            padding: 0;
 
-            div.dialog {
-                min-width: 260px;
-                vertical-align: bottom;
-                position: relative;
+            li.room-list {
+                padding: 15px 0px 15px 10px;
+                font-size: 22px;
+                font-family: Roboto-Light;
+                border-bottom: 1px solid #ccc;
+                transition: 0.15s;
+                min-height: 50px;
+                display: block;
 
-                div.avatar {
-                    height: 50px;
-                    width: 50px;
-                    position: absolute;
+                div.dialog {
+                    min-width: 260px;
+                    vertical-align: bottom;
+                    position: relative;
 
-                    div.avatar-area {
-                        position: relative;
-                        height: 100%;
-                        width: 100%;
+                    div.avatar {
+                        height: 50px;
                         width: 50px;
+                        position: absolute;
 
-                        div.avatar-image {
+                        div.avatar-area {
+                            position: relative;
                             height: 100%;
                             width: 100%;
-                            border-radius: 50%;
+                            width: 50px;
+
+                            div.avatar-image {
+                                height: 100%;
+                                width: 100%;
+                                border-radius: 50%;
+                                overflow: hidden;
+
+                                img {
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            }
+
+                            div.online-mark {
+                                width: 14px;
+                                height: 14px;
+                                position: absolute;
+                                background: #fff;
+                                right: 0px;
+                                bottom: 0px;
+                                padding: 3px;
+                                box-sizing: border-box;
+                                border-radius: 50%;
+
+                                div.online-circle {
+                                    background: #2ecc71;
+                                    width: 8px;
+                                    height: 8px;
+                                    border-radius: 50%;
+                                }
+                            }
+                        }
+                    }
+
+                    div.message {
+                        height: 50px;
+                        margin-left: 50px;
+                        padding: 0 10px;
+                        position: relative;
+
+                        div.message-header {
+                            min-width: 200px;
                             overflow: hidden;
 
-                            img {
-                                width: 100%;
-                                height: 100%;
+                            span.name {
+                                float: left;
+                                font-size: 17px;
+                                font-weight: bold;
+                            }
+
+                            span.time {
+                                font-size: 14px;
+                                float: right;
+                                color: #777;
+                                font-weight: bold;
                             }
                         }
 
-                        div.online-mark {
-                            width: 14px;
-                            height: 14px;
-                            position: absolute;
-                            background: #fff;
-                            right: 0px;
-                            bottom: 0px;
-                            padding: 3px;
-                            box-sizing: border-box;
-                            border-radius: 50%;
+                        div.message-body {
+                            font-size: 16px;
+                            position: relative;
+                            min-width: 200px;
+                            bottom: 5px;
+                            overflow: hidden;
+                            white-space: normal;
+                            margin-top: 10px;
 
-                            div.online-circle {
-                                background: #2ecc71;
-                                width: 8px;
-                                height: 8px;
+                            span.message-text {
+                                padding: 2px 5px 2px 0px;
+                                vertical-align: middle;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                display: block;
+                                margin-right: 28px;
+                                text-overflow: ellipsis;
+                                border-radius: 2px;
+
+                                span.sender {
+                                    color: red;
+                                }
+                            }
+
+
+                            span.message-notification {
+                                min-width: 10px;
+                                float: right;
+                                background: #3498db;
+                                padding: 2px 7px;
                                 border-radius: 50%;
+                                color: white;
+                                position: absolute;
+                                right: 0;
+                                top: 0;
+                                display: block;
                             }
                         }
                     }
                 }
 
-                div.message {
-                    height: 50px;
-                    margin-left: 50px;
-                    padding: 0 10px;
-                    position: relative;
+                &:hover {
+                    cursor: pointer;
+                    background: rgba(0, 0, 0, 0.08);
 
-                    div.message-header {
-                        min-width: 200px;
-                        overflow: hidden;
-
-                        span.name {
-                            float: left;
-                            font-size: 17px;
-                            font-weight: bold;
-                        }
-
-                        span.time {
-                            font-size: 14px;
-                            float: right;
-                            color: #777;
-                            font-weight: bold;
-                        }
-                    }
-
-                    div.message-body {
-                        font-size: 16px;
-                        position: relative;
-                        min-width: 200px;
-                        bottom: 5px;
-                        overflow: hidden;
-                        white-space: normal;
-                        margin-top: 10px;
-
-                        span.message-text {
-                            //background: #ccc;
-                            padding: 2px 0px;
-                            vertical-align: middle;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            display: block;
-                            margin-right: 24px;
-                            text-overflow: ellipsis;  
-
-                            span.sender {
-                                color: red;
-                            }
-                        }
-
-
-                        span.message-notification {
-                            min-width: 10px;
-                            float: right;
-                            background: #3498db;
-                            padding: 2px 7px;
-                            border-radius: 50%;
-                            color: white;
-                            position: absolute;
-                            right: 0;
-                            top: 0;
-                            display: block;
-                        }
+                    div.dialog div.avatar div.avatar-area div.online-mark {
+                        background: #ebebeb;
                     }
                 }
             }
 
-            &:hover {
-                cursor: pointer;
-                background: rgba(0, 0, 0, 0.08);
+            li.dialog-selected {
+                background: rgba(0,0,0,0.14);
 
                 div.dialog div.avatar div.avatar-area div.online-mark {
-                    background: #ebebeb;
+                    background: #dcdcdc;
+                }
+
+                &:hover {
+                    background: rgba(0,0,0,0.14);
                 }
             }
         }
 
-        li.dialog-selected {
-            background: rgba(0,0,0,0.14);
-
-            div.dialog div.avatar div.avatar-area div.online-mark {
-                background: #dcdcdc;
+        div.global-search {
+            div.global-search-title {
+                font-family: Roboto-Light;
+                font-size: 20px;
+                text-align: center;
             }
 
-            &:hover {
-                background: rgba(0,0,0,0.14);
+            ul.global-search-list {
+                margin: 0;
+                padding: 0;
+
+                li {
+                    padding: 15px 0px 15px 10px;
+                    font-size: 22px;
+                    font-family: Roboto-Light;
+                    border-bottom: 1px solid #ccc;
+                    transition: 0.15s;
+                    min-height: 50px;
+                    display: block;
+
+                    &:first-child {
+                        border-top: 1px solid #ccc;
+                    }
+
+
+                    div.contact {
+                        position: relative;
+
+                        div.contact-avatar {
+                            height: 50px;
+                            width: 50px;
+                            overflow: hidden;
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            border-radius: 50%;
+
+                            img {
+                                height: 100%;
+                                width: 100%;
+                            }
+                        }
+
+                        div.contact-options {
+                            height: 50px;
+                            margin-left: 50px;
+                            padding: 0 10px;
+
+                            div.contact-name {
+                                font-size: 19px;
+                                font-weight: bold;
+                            }
+
+                            div.contact-add-button {
+                                font-size: 18px;
+                                background: #fff;
+                                color: #666;
+                                border: 1px solid #ccc;
+                                display: inline;
+                                text-align: center;
+                                padding: 2px 5px;
+
+                                &:hover {
+                                    background: rgba(0,0,0,0.1);
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -271,6 +347,34 @@
 }
 
 
+div.chat-area-intro {
+    height: 100%;
+    background: #fff;
+
+    div.chat-intro-message {
+        font-family: Roboto-Light;
+        font-size: 32px;
+        color: #555;
+        height: 100%;
+        text-align: center;
+
+        &:before {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        &:after {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+    }
+}
+
+
 .hiddenChatList {
     margin-left: -25% !important;
 
@@ -295,6 +399,10 @@
 
 .oneHunMarginLeft {
     margin-left: 100% !important;
+}
+
+.greyBackground {
+    background: #ccc !important;
 }
 
 ::-webkit-scrollbar {

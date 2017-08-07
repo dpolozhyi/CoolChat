@@ -3,7 +3,10 @@ using CoolChat.Business.Services;
 using CoolChat.Business.ViewModels;
 using CoolChat.DataAccess;
 using CoolChat.DataAccess.EFContext;
+using CoolChat.Web.AuthServiceReference;
 using CoolChat.Web.Filters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +16,11 @@ using System.Web.Http;
 
 namespace CoolChat.Web.Controllers.api
 {
-    [CustomAuthorize]
     public class UserAccountController : ApiController
     {
         private IUserAccountService userAccService;
+
+        private AuthServiceClient authService = new AuthServiceClient();
 
         public UserAccountController() : this(new UserAccountService(new EFUnitOfWork(new ChatContext())))
         {
@@ -41,9 +45,16 @@ namespace CoolChat.Web.Controllers.api
         }
 
         // POST: api/UserAccount
-        public UserAccountViewModel Post([FromBody]string userId)
+        public IHttpActionResult Post()
         {
-            return this.userAccService.GetMainUserModel(Int32.Parse(userId));
+            int userId = this.authService.GetUserId(this.GetToken());
+            if (userId > 0)
+            {
+                UserAccountViewModel userAccount = this.userAccService.GetMainUserModel(this.authService.GetUserId(this.GetToken()));
+                string json = JsonConvert.SerializeObject(userAccount, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                return Ok(json);
+            }
+            return BadRequest();
         }
 
         // PUT: api/UserAccount/5
@@ -54,6 +65,18 @@ namespace CoolChat.Web.Controllers.api
         // DELETE: api/UserAccount/5
         public void Delete(int id)
         {
+        }
+
+        private string GetToken()
+        {
+            try
+            {
+                return Request.Headers.GetValues("Authorization").FirstOrDefault();
+            }
+            catch
+            {
+                return String.Empty;
+            }
         }
     }
 }

@@ -1,8 +1,12 @@
 ﻿using CoolChat.Business.Interfaces;
 using CoolChat.Business.Services;
+using CoolChat.Business.ViewModels;
 using CoolChat.DataAccess;
 using CoolChat.DataAccess.EFContext;
 using CoolChat.Web.AuthServiceReference;
+using CoolChat.Web.Filters;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +32,18 @@ namespace CoolChat.Web.Controllers.api
             this.userService = userService;
         }
 
+        [CustomAuthorize]
         // GET: api/User
-        public IEnumerable<string> Get()
+        public IHttpActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            int userId = this.authService.GetUserId(this.GetToken());
+            if(userId > 0)
+            {
+                UserViewModel user = this.userService.GetUser(userId);
+                string json = JsonConvert.SerializeObject(user, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                return Ok(json);
+            }
+            return BadRequest();
         }
 
         // GET: api/User/5
@@ -67,6 +79,18 @@ namespace CoolChat.Web.Controllers.api
         // DELETE: api/User/5
         public void Delete(int id)
         {
+        }
+
+        private string GetToken()
+        {
+            try
+            {
+                return Request.Headers.GetValues("Authorization").FirstOrDefault();
+            }
+            catch
+            {
+                return String.Empty;
+            }
         }
     }
 }

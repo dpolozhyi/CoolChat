@@ -10,12 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 const chat_service_1 = require('../shared/services/chat.service');
-const chatroom_model_1 = require('../shared/models/chatroom.model');
+const auth_service_1 = require('../shared/services/auth.service');
 let ChatListComponent = class ChatListComponent {
-    constructor(chatService) {
+    constructor(chatService, authService) {
         this.chatService = chatService;
+        this.authService = authService;
         this.notifyChatListState = new core_1.EventEmitter();
-        this.selectedRoom = new chatroom_model_1.ChatRoomModel();
+        this.notifySelectedUser = new core_1.EventEmitter();
         /*this.chatService.starting$.subscribe(
             () => { console.log("signalr service has been started"); },
             () => { console.warn("signalr service failed to start!"); }
@@ -24,11 +25,26 @@ let ChatListComponent = class ChatListComponent {
     ngOnInit() {
         /* this.chatService.connect();
          this.chatService.getChatRoomList().then(data => this.roomList = data);*/
+        this.authService.getUser().then((user) => this.user = user);
+        this.chatService.getUserAccount().then((userAccount) => {
+            this.userAccount = userAccount;
+            this.filteredDialogs = userAccount.dialogs;
+            alert("Hi, " + userAccount.name + '!');
+        });
     }
-    selectRoom(room) {
+    onDialogSearch(filter) {
+        if (filter) {
+            this.filteredDialogs = this.userAccount.dialogs.filter((dialog) => dialog.members[0].name.indexOf(filter) >= 0);
+        }
+        else {
+            this.filteredDialogs = this.userAccount.dialogs;
+        }
+    }
+    selectDialog(dialog) {
         console.log(this.hiddenChatList);
-        this.selectedRoom = room;
+        this.selectedDialog = dialog;
         this.notifyChatListState.emit(true);
+        this.notifySelectedUser.emit(dialog.members[0]);
     }
     onMouseMove(event) {
         if (event.clientX < 2) {
@@ -49,6 +65,10 @@ __decorate([
     __metadata('design:type', core_1.EventEmitter)
 ], ChatListComponent.prototype, "notifyChatListState", void 0);
 __decorate([
+    core_1.Output(), 
+    __metadata('design:type', core_1.EventEmitter)
+], ChatListComponent.prototype, "notifySelectedUser", void 0);
+__decorate([
     core_1.HostListener('mousemove', ['$event']), 
     __metadata('design:type', Function), 
     __metadata('design:paramtypes', [Object]), 
@@ -60,7 +80,7 @@ ChatListComponent = __decorate([
         templateUrl: 'app/chat-list/chat-list.component.html',
         styleUrls: ['app/chat-list/chat-list.component.css']
     }), 
-    __metadata('design:paramtypes', [chat_service_1.ChatService])
+    __metadata('design:paramtypes', [chat_service_1.ChatService, auth_service_1.AuthService])
 ], ChatListComponent);
 exports.ChatListComponent = ChatListComponent;
 //# sourceMappingURL=chat-list.component.js.map

@@ -15,18 +15,21 @@ const core_1 = require("@angular/core");
 const Subject_1 = require("rxjs/Subject");
 require('rxjs/add/operator/toPromise');
 const http_1 = require('@angular/http');
+const auth_service_1 = require('./auth.service');
 class SignalrWindow extends Window {
 }
 exports.SignalrWindow = SignalrWindow;
 let ChatService = class ChatService {
-    constructor(window, http) {
+    constructor(window, http, authService) {
         this.window = window;
         this.http = http;
+        this.authService = authService;
         this.startingSubject = new Subject_1.Subject();
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
         }
+        this.authService.getUser().then((user) => this.user = user);
         this.starting$ = this.startingSubject.asObservable();
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
@@ -44,21 +47,36 @@ let ChatService = class ChatService {
     connect() {
         this.hubConnection.start().done(() => this.startingSubject.next()).fail((error) => this.startingSubject.error(error));
     }
-    getChatRoomList() {
-        return this.http.get('/chat/list').toPromise().then(data => data.json());
+    getUserAccount() {
+        var token = this.authService.getLocalToken();
+        if (token && this.authService.isTokenValid()) {
+            this.headers.delete("Authorization");
+            this.headers.append("Authorization", token);
+            return this.http.post('/api/useraccount', '', { headers: this.headers }).toPromise().then(res => JSON.parse(res.json()));
+        }
     }
-    getMessages(chatRoom) {
-        return this.http.get('/messages/' + chatRoom.Id + '?offset=0&limit=20').toPromise().then(data => data.json());
+    getMessages(dialogId) {
+        var token = this.authService.getLocalToken();
+        if (token && this.authService.isTokenValid()) {
+            this.headers.delete("Authorization");
+            this.headers.append("Authorization", token);
+            return this.http.get('api/messages/' + dialogId, { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()));
+        }
     }
-    getEarlyMessages(chatRoomId, offset) {
-        return this.http.get('/messages/' + chatRoomId + '?offset=' + offset + '&limit=10').toPromise().then(data => data.json());
+    /*getMessages(chatRoom: ChatRoomModel): Promise<MessageModel[]> {
+        return this.http.get('/messages/' + chatRoom.Id + '?offset=0&limit=20').toPromise().then(data => data.json() as MessageModel[]);
     }
-    sendMessage(message) {
+
+    getEarlyMessages(chatRoomId: number, offset: number): Promise<MessageModel[]> {
+        return this.http.get('/messages/' + chatRoomId + '?offset=' + offset + '&limit=10').toPromise().then(data => data.json() as MessageModel[]);
+    }
+
+    sendMessage(message: MessageModel): Promise<MessageModel> {
         return this.http
             .post('/chat', JSON.stringify(message), { headers: this.headers })
             .toPromise()
-            .then(res => res.json());
-    }
+            .then(res => res.json() as MessageModel);
+    }*/
     subscribe(chatId) {
         return this.hubProxy.invoke("JoinGroup", chatId);
     }
@@ -69,7 +87,7 @@ let ChatService = class ChatService {
 ChatService = __decorate([
     core_1.Injectable(),
     __param(0, core_1.Inject(SignalrWindow)), 
-    __metadata('design:paramtypes', [SignalrWindow, http_1.Http])
+    __metadata('design:paramtypes', [SignalrWindow, http_1.Http, auth_service_1.AuthService])
 ], ChatService);
 exports.ChatService = ChatService;
 //# sourceMappingURL=chat.service.js.map

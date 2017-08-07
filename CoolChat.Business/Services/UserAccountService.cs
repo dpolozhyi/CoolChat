@@ -29,14 +29,16 @@ namespace CoolChat.Business.Services
                 IEnumerable <Dialog> dialogs = this.unitOfWork.Get<Dialog>().Get(n => n.Members.Select(x => x.Id).Contains(user.Id), includeProperties: "Members");
                 foreach(var dialog in dialogs)
                 {
+                    dialog.Members.Remove(user);
                     dialog.Messages = this.unitOfWork.Get<Message>()
-                        .Get(n => n.Dialog == dialog, orderBy: n => n.OrderByDescending(m => m.PostedTime), offset: 0, limit: 10).ToList();
+                        .Get(n => n.Dialog.Id == dialog.Id, orderBy: n => n.OrderByDescending(m => m.PostedTime), includeProperties: "Dialog", offset: 0, limit: 10).ToList();
                 }
-                dialogsViewModel = Mapper.Map<IEnumerable<Dialog>, IEnumerable<BriefDialogViewModel>>(dialogs);
+                dialogsViewModel = Mapper.Map<List<Dialog>, List<BriefDialogViewModel>>(dialogs.ToList()).OrderByDescending(n => n.LastMessage.PostedTime);
+                UserAccountViewModel userAcc = Mapper.Map<User, UserAccountViewModel>(user);
+                userAcc.Dialogs = dialogsViewModel;
+                return userAcc;
             }
-            UserAccountViewModel userAcc = Mapper.Map<User, UserAccountViewModel>(user);
-            userAcc.Dialogs = dialogsViewModel;
-            return userAcc;
+            return null;
         }
     }
 }

@@ -1,19 +1,20 @@
 ﻿<div class="chat-list" [class.hiddenChatList]="hiddenChatList" [class.fullWidth]="!minModeHiddenChatList" [class.zeroMarginLeft]="!minModeHiddenChatList">
-        <div class="search-dialog">
-            <label for="search-dialog-input">
-                <i class="fa fa-search" aria-hidden="true"></i>
-            </label>
-            <input id="search-dialog-input" type="text" placeholder="Search..." />
-        </div>
-        <ul>
-            <li class="room-list">
+    <div class="search-dialog">
+        <label for="search-dialog-input">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </label>
+        <input id="search-dialog-input" type="text" #searchInput (keyup)="onDialogSearch(searchInput.value)" placeholder="Search..." />
+    </div>
+    <div class="dialog-list-wrapper">
+        <ul *ngIf="userAccount && user" class="dialog-list">
+            <li *ngFor="let dialog of filteredDialogs" (click)="selectDialog(dialog)" class="room-list">
                 <div class="dialog">
                     <div class="avatar">
                         <div class="avatar-area">
                             <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png" />
+                                <img [src]="dialog.members[0].avatarUrl" />
                             </div>
-                            <div class="online-mark">
+                            <div class="online-mark" *ngIf="dialog.members[0].isOnline">
                                 <div class="online-circle">
                                 </div>
                             </div>
@@ -21,302 +22,59 @@
                     </div>
                     <div class="message">
                         <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
+                            <span class="name">{{dialog.members[0].name}}</span>
+                            <span class="time">{{dialog.lastMessage.postedTime | date:'shortTime'}}</span>
                         </div>
                         <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm gonna do smth interesting</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/unr_ehsan_170802_1449_9w55ua.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Rob</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">1</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list dialog-selected">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/20140122_182526_4162_josa.png" />
-                            </div>
-                            <div class="online-mark" style="display: none;">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Josa</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">1</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png" />
-                            </div>
-                            <div class="online-mark"  style="display: none;">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://doc.owncloud.org/server/8.2/user_manual/_images/contact_picture_default.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://apollo2.dl.playstation.net/cdn/UP4293/CUSA06018_00/uMQgyT7HK0CBlLzHBriEODmYwPDOHUHK.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://ae01.alicdn.com/kf/HTB1wMPpRpXXXXb9XFXXq6xXFXXXr/2017-new-arrival-summer-Women-s-Sets-Character-font-b-avatar-b-font-letter-prints-o.jpg" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="http://newsx.tv/upload/avatars/no_avatar.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/myspacedixson5247bbe83039a.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Mike</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="room-list">
-                <div class="dialog">
-                    <div class="avatar">
-                        <div class="avatar-area">
-                            <div class="avatar-image">
-                                <img src="https://pickaface.net/gallery/avatar/20141016_054728_3921_kyla.png" />
-                            </div>
-                            <div class="online-mark">
-                                <div class="online-circle">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="name">Kila</span>
-                            <span class="time">02.08.2017</span>
-                        </div>
-                        <div class="message-body">
-                            <span class="message-text"><span class="sender">You: </span>Hey everyone, i'm...</span>
-                            <span class="message-notification">3</span>
+                            <span class="message-text" [class.greyBackground]="!dialog.lastMessage.isReaded"><span class="sender" *ngIf="dialog.lastMessage.userId==user.id">You: </span>{{dialog.lastMessage.body}}</span>
+                            <span class="message-notification">{{dialog.newMessagesNumber}}</span>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
+        <!--<div class="global-search">
+            <div class="global-search-title">
+                Global search
+            </div>
+            <ul class="global-search-list">
+                <li>
+                    <div class="contact">
+                        <div class="contact-avatar">
+                            <img src="https://pbs.twimg.com/profile_images/831993825635745796/HnVmB0-k.jpg" />
+                        </div>
+                        <div class="contact-options">
+                            <div class="contact-name">
+                                Mike
+                            </div>
+                            <div class="contact-add-button">
+                                <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add contact
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+
+                </li>
+            </ul>
+        </div>-->
+    </div>
     <!--<div class="hide" id="hide-button" [class.hiddenHideButton]="hiddenChatList" (click)="hiddenChatList = !hiddenChatList">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
     </div>-->
 </div>
 
-<div messages class="chat-area" 
-     [minModeHiddenChatList]="minModeHiddenChatList" 
-     [class.fullWidth]="hiddenChatList" 
-     [class.oneHunMarginLeft]="!minModeHiddenChatList" 
-     [chatRoom]="selectedRoom" 
-     [hiddenChatList]="hiddenChatList" 
-     *ngIf="selectedRoom">
+
+
+<div messages class="chat-area"
+     *ngIf="selectedDialog"
+     [minModeHiddenChatList]="minModeHiddenChatList"
+     [briefDialog]="selectedDialog"
+     [user]="user"
+     [class.fullWidth]="hiddenChatList"
+     [class.oneHunMarginLeft]="!minModeHiddenChatList"
+     [hiddenChatList]="hiddenChatList">
+</div>
+<div class="chat-area-intro" *ngIf="!selectedDialog">
+    <div class="chat-intro-message">Please, select chat</div>
 </div>

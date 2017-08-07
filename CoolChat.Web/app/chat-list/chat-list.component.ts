@@ -1,7 +1,11 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { ChatService } from '../shared/services/chat.service';
+import { AuthService } from '../shared/services/auth.service';
 
-import { ChatRoomModel } from '../shared/models/chatroom.model';
+import { UserModel } from '../shared/models/user.model';
+import { UserAccountModel } from '../shared/models/user-account.model';
+import { MessageModel } from '../shared/models/message.model';
+import { BriefDialogModel } from "../shared/models/brief-dialog.model"
 
 @Component({
     selector: 'div[chat-list]',
@@ -16,11 +20,17 @@ export class ChatListComponent implements OnInit{
 
     @Output() notifyChatListState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private roomList: ChatRoomModel[];
+    @Output() notifySelectedUser: EventEmitter<UserModel> = new EventEmitter<UserModel>();
 
-    private selectedRoom: ChatRoomModel = new ChatRoomModel();
+    private userAccount: UserAccountModel;
 
-    constructor(private chatService: ChatService) {
+    private filteredDialogs: BriefDialogModel[];
+
+    private selectedDialog: BriefDialogModel;
+
+    private user: UserModel;
+
+    constructor(private chatService: ChatService, private authService: AuthService) {
         /*this.chatService.starting$.subscribe(
             () => { console.log("signalr service has been started"); },
             () => { console.warn("signalr service failed to start!"); }
@@ -30,13 +40,28 @@ export class ChatListComponent implements OnInit{
     ngOnInit() {
        /* this.chatService.connect();
         this.chatService.getChatRoomList().then(data => this.roomList = data);*/
-
+        this.authService.getUser().then((user: UserModel) => this.user = user);
+        this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
+            this.userAccount = userAccount;
+            this.filteredDialogs = userAccount.dialogs;
+            alert("Hi, " + userAccount.name + '!');
+        });
     }
 
-    selectRoom(room: ChatRoomModel) {
+    onDialogSearch(filter: string) {
+        if (filter) {
+            this.filteredDialogs = this.userAccount.dialogs.filter((dialog) => dialog.members[0].name.indexOf(filter) >= 0);
+        }
+        else {
+            this.filteredDialogs = this.userAccount.dialogs;
+        }
+    }
+
+    selectDialog(dialog: BriefDialogModel) {
         console.log(this.hiddenChatList);
-        this.selectedRoom = room;
+        this.selectedDialog = dialog;
         this.notifyChatListState.emit(true);
+        this.notifySelectedUser.emit(dialog.members[0]);
     }
 
     @HostListener('mousemove', ['$event'])

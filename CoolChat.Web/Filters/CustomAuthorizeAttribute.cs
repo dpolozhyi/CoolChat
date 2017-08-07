@@ -16,12 +16,20 @@ namespace CoolChat.Web.Filters
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             AuthServiceClient authService = new AuthServiceClient();
-            string token = actionContext.Request.Headers.GetValues("Authorization").FirstOrDefault();
-            if(authService.CheckToken(token))
+            string token;
+            try
             {
-                base.OnAuthorization(actionContext);
+                token = actionContext.Request.Headers.GetValues("Authorization").FirstOrDefault();
+                if (authService.CheckToken(token))
+                {
+                    base.OnAuthorization(actionContext);
+                }
+                else
+                {
+                    throw new Exception("Unauthorized");
+                }
             }
-            else
+            catch
             {
                 actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
             }

@@ -1,8 +1,9 @@
 ﻿import { Component, OnInit, OnChanges, SimpleChanges, Input} from '@angular/core';
 import { ChatService } from '../shared/services/chat.service';
 
-import { ChatRoomModel } from '../shared/models/chatroom.model';
+import { UserModel } from '../shared/models/user.model';
 import { MessageModel } from '../shared/models/message.model';
+import { BriefDialogModel } from '../shared/models/brief-dialog.model';
 
 @Component({
     selector: 'div[messages]',
@@ -11,13 +12,17 @@ import { MessageModel } from '../shared/models/message.model';
 })
 export class MessagesComponent implements OnInit, OnChanges {
 
-    @Input() chatRoom: ChatRoomModel;
+   // @Input() chatRoom: ChatRoomModel;
 
     @Input() hiddenChatList: boolean;
 
     @Input() minModeHiddenChatList: boolean;
 
-    private prevChatRoom: ChatRoomModel;
+    @Input() user: UserModel;
+
+    @Input() briefDialog: BriefDialogModel
+
+    //private prevChatRoom: ChatRoomModel;
 
     private authorized: boolean;
 
@@ -32,15 +37,17 @@ export class MessagesComponent implements OnInit, OnChanges {
     constructor(private chatService: ChatService) { }
 
     ngOnInit() {
-        this.chatService.addMessageCallback((message: MessageModel) => {
+        /*this.chatService.addMessageCallback((message: MessageModel) => {
             this.scrollOffset = 0;
             this.messages.push(message);
         });
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
-        this.prevChatRoom = this.chatRoom;
+        this.prevChatRoom = this.chatRoom;*/
+        this.chatService.getMessages(this.briefDialog.id).then((messages) => this.messages = messages);
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.chatService.getMessages(this.briefDialog.id).then((messages) => this.messages = messages);
         /*if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
             return;
         }
@@ -57,7 +64,7 @@ export class MessagesComponent implements OnInit, OnChanges {
         this.scrollOffset = 0;*/
     }
 
-    sendMessage(msgText: string) {
+    /*sendMessage(msgText: string) {
         if (!msgText.trim()) {
             return;
         }
@@ -107,6 +114,6 @@ export class MessagesComponent implements OnInit, OnChanges {
                     messages.reverse().forEach((value) => this.messages.unshift(value));
                     this.messagesLoading = false;
                 });
-        }*/
-    }
+        }
+    }*/
 }

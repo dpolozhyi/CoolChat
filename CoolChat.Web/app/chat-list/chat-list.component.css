@@ -19,21 +19,23 @@ div.chat-list {
     max-width: unset;
   }
 }
-div.chat-list ul {
-  margin: 0;
-  padding: 0;
-  overflow-y: auto;
+div.chat-list div.dialog-list-wrapper {
   width: 100%;
   position: absolute;
   top: 40px;
+  overflow-y: auto;
   bottom: 0;
 }
 @media (max-height: 736px) and (max-width: 736px) {
-  div.chat-list ul {
+  div.chat-list div.dialog-list-wrapper {
     top: 50px;
   }
 }
-div.chat-list ul li.room-list {
+div.chat-list div.dialog-list-wrapper ul.dialog-list {
+  margin: 0;
+  padding: 0;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list {
   padding: 15px 0px 15px 10px;
   font-size: 22px;
   font-family: Roboto-Light;
@@ -42,33 +44,33 @@ div.chat-list ul li.room-list {
   min-height: 50px;
   display: block;
 }
-div.chat-list ul li.room-list div.dialog {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog {
   min-width: 260px;
   vertical-align: bottom;
   position: relative;
 }
-div.chat-list ul li.room-list div.dialog div.avatar {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.avatar {
   height: 50px;
   width: 50px;
   position: absolute;
 }
-div.chat-list ul li.room-list div.dialog div.avatar div.avatar-area {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.avatar div.avatar-area {
   position: relative;
   height: 100%;
   width: 100%;
   width: 50px;
 }
-div.chat-list ul li.room-list div.dialog div.avatar div.avatar-area div.avatar-image {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.avatar div.avatar-area div.avatar-image {
   height: 100%;
   width: 100%;
   border-radius: 50%;
   overflow: hidden;
 }
-div.chat-list ul li.room-list div.dialog div.avatar div.avatar-area div.avatar-image img {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.avatar div.avatar-area div.avatar-image img {
   width: 100%;
   height: 100%;
 }
-div.chat-list ul li.room-list div.dialog div.avatar div.avatar-area div.online-mark {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.avatar div.avatar-area div.online-mark {
   width: 14px;
   height: 14px;
   position: absolute;
@@ -79,34 +81,34 @@ div.chat-list ul li.room-list div.dialog div.avatar div.avatar-area div.online-m
   box-sizing: border-box;
   border-radius: 50%;
 }
-div.chat-list ul li.room-list div.dialog div.avatar div.avatar-area div.online-mark div.online-circle {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.avatar div.avatar-area div.online-mark div.online-circle {
   background: #2ecc71;
   width: 8px;
   height: 8px;
   border-radius: 50%;
 }
-div.chat-list ul li.room-list div.dialog div.message {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message {
   height: 50px;
   margin-left: 50px;
   padding: 0 10px;
   position: relative;
 }
-div.chat-list ul li.room-list div.dialog div.message div.message-header {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-header {
   min-width: 200px;
   overflow: hidden;
 }
-div.chat-list ul li.room-list div.dialog div.message div.message-header span.name {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-header span.name {
   float: left;
   font-size: 17px;
   font-weight: bold;
 }
-div.chat-list ul li.room-list div.dialog div.message div.message-header span.time {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-header span.time {
   font-size: 14px;
   float: right;
   color: #777;
   font-weight: bold;
 }
-div.chat-list ul li.room-list div.dialog div.message div.message-body {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body {
   font-size: 16px;
   position: relative;
   min-width: 200px;
@@ -115,19 +117,20 @@ div.chat-list ul li.room-list div.dialog div.message div.message-body {
   white-space: normal;
   margin-top: 10px;
 }
-div.chat-list ul li.room-list div.dialog div.message div.message-body span.message-text {
-  padding: 2px 0px;
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-text {
+  padding: 2px 5px 2px 0px;
   vertical-align: middle;
   white-space: nowrap;
   overflow: hidden;
   display: block;
-  margin-right: 24px;
+  margin-right: 28px;
   text-overflow: ellipsis;
+  border-radius: 2px;
 }
-div.chat-list ul li.room-list div.dialog div.message div.message-body span.message-text span.sender {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-text span.sender {
   color: red;
 }
-div.chat-list ul li.room-list div.dialog div.message div.message-body span.message-notification {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-notification {
   min-width: 10px;
   float: right;
   background: #3498db;
@@ -139,21 +142,80 @@ div.chat-list ul li.room-list div.dialog div.message div.message-body span.messa
   top: 0;
   display: block;
 }
-div.chat-list ul li.room-list:hover {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list:hover {
   cursor: pointer;
   background: rgba(0, 0, 0, 0.08);
 }
-div.chat-list ul li.room-list:hover div.dialog div.avatar div.avatar-area div.online-mark {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list:hover div.dialog div.avatar div.avatar-area div.online-mark {
   background: #ebebeb;
 }
-div.chat-list ul li.dialog-selected {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.dialog-selected {
   background: rgba(0, 0, 0, 0.14);
 }
-div.chat-list ul li.dialog-selected div.dialog div.avatar div.avatar-area div.online-mark {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.dialog-selected div.dialog div.avatar div.avatar-area div.online-mark {
   background: #dcdcdc;
 }
-div.chat-list ul li.dialog-selected:hover {
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.dialog-selected:hover {
   background: rgba(0, 0, 0, 0.14);
+}
+div.chat-list div.dialog-list-wrapper div.global-search div.global-search-title {
+  font-family: Roboto-Light;
+  font-size: 20px;
+  text-align: center;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list {
+  margin: 0;
+  padding: 0;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li {
+  padding: 15px 0px 15px 10px;
+  font-size: 22px;
+  font-family: Roboto-Light;
+  border-bottom: 1px solid #ccc;
+  transition: 0.15s;
+  min-height: 50px;
+  display: block;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li:first-child {
+  border-top: 1px solid #ccc;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact {
+  position: relative;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-avatar {
+  height: 50px;
+  width: 50px;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-avatar img {
+  height: 100%;
+  width: 100%;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options {
+  height: 50px;
+  margin-left: 50px;
+  padding: 0 10px;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-name {
+  font-size: 19px;
+  font-weight: bold;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button {
+  font-size: 18px;
+  background: #fff;
+  color: #666;
+  border: 1px solid #ccc;
+  display: inline;
+  text-align: center;
+  padding: 2px 5px;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button:hover {
+  background: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 div.chat-list div.search-dialog {
   margin: 0;
@@ -239,6 +301,29 @@ div.chat-list div.hide:hover {
 }
 @media (max-width: 768px) {
 }
+div.chat-area-intro {
+  height: 100%;
+  background: #fff;
+}
+div.chat-area-intro div.chat-intro-message {
+  font-family: Roboto-Light;
+  font-size: 32px;
+  color: #555;
+  height: 100%;
+  text-align: center;
+}
+div.chat-area-intro div.chat-intro-message:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+div.chat-area-intro div.chat-intro-message:after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
 .hiddenChatList {
   margin-left: -25% !important;
 }
@@ -260,6 +345,9 @@ div.chat-list div.hide:hover {
 }
 .oneHunMarginLeft {
   margin-left: 100% !important;
+}
+.greyBackground {
+  background: #ccc !important;
 }
 ::-webkit-scrollbar {
   width: 2px;
