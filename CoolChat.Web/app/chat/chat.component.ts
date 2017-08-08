@@ -39,7 +39,7 @@ export class ChatComponent implements OnInit {
         if (this.hideSettingsTimeout) {
             clearTimeout(this.hideSettingsTimeout);
         }
-        this.hideSettingsTimeout = setTimeout(() => this.expandedSettings = false, 800);
+        this.hideSettingsTimeout = setTimeout(() => this.expandedSettings = false, 8000);
     }
 
     handleViewPortWidth(width) {

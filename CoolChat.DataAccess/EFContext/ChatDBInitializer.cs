@@ -15,28 +15,25 @@ namespace CoolChat.DataAccess.EFContext
 
         protected static string[] Messages = new string[]
         {
-            "Hi",
-            "How are you?",
-            "I'm fine, you?",
-            "Thx, me too",
-            "Good weather today",
-            "Who is on duty today?",
-            "I know",
-            "I don't know",
-            "I don't giva a",
-            "Call me today",
-            "What's going on?"
+            "qq all",
+            "yo, wassup?",
+            "good, chillin",
+            "hey dude, wassup",
+            "cool",
+            "go rb party?",
+            "ok, but i'm gonna play for dd",
+            "ok, deal"
         };
 
         protected override void Seed(ChatContext context)
         {
-            DateTime today = new DateTime(2017, 7, 4);
+            DateTime today = DateTime.UtcNow;
 
             Random rand = new Random();
 
-            User user1 = new User() { Id=2, Name = "wowbot", AvatarUrl = "http://orig06.deviantart.net/7881/f/2008/154/d/d/lineage2_elf_avatar_by_lurker5.jpg", LastTimeActivity = DateTime.UtcNow };
-            User user2 = new User() { Id=1, Name = "volman", AvatarUrl = "http://www.mediafire.com/imgbnc.php/2d81775e41a15740881a682e9c54dd696g.jpg", LastTimeActivity = DateTime.UtcNow };
-            User user3 = new User() { Id=3, Name = "volrajas", AvatarUrl = "http://la2-rus.ru/files/ck/image/quick-folder/glad.jpg", LastTimeActivity = DateTime.UtcNow };
+            User user1 = new User() { Id = 2, Name = "wowbot", AvatarUrl = "http://orig06.deviantart.net/7881/f/2008/154/d/d/lineage2_elf_avatar_by_lurker5.jpg", LastTimeActivity = DateTime.UtcNow };
+            User user2 = new User() { Id = 1, Name = "volman", AvatarUrl = "http://www.mediafire.com/imgbnc.php/2d81775e41a15740881a682e9c54dd696g.jpg", LastTimeActivity = DateTime.UtcNow };
+            User user3 = new User() { Id = 3, Name = "volrajas", AvatarUrl = "http://la2-rus.ru/files/ck/image/quick-folder/glad.jpg", LastTimeActivity = DateTime.UtcNow };
 
             Dialog dial1 = new Dialog() { TimeCreated = DateTime.UtcNow, Members = new List<User>() { user1, user2 } };
             Dialog dial2 = new Dialog() { TimeCreated = DateTime.UtcNow.AddMinutes(64), Members = new List<User>() { user2, user3 } };
@@ -61,27 +58,30 @@ namespace CoolChat.DataAccess.EFContext
             context.Messages.Add(msg1);
             context.Messages.Add(msg2);
             context.Messages.Add(msg3);
-            context.Messages.Add(msg4);
+            /*context.Messages.Add(msg4);
             context.Messages.Add(msg5);
             context.Messages.Add(msg6);
             context.Messages.Add(msg7);
-            context.Messages.Add(msg8);
+            context.Messages.Add(msg8);*/
 
-            context.SaveChanges();
+            User[] users = new User[2] { user2, user3 };
 
-            /*for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 context.Messages.Add(new Message()
                 {
                     PostedTime = today,
-                    UserName = Names[rand.Next(Names.Length)],
-                    ChatRoom = chat1,
+                    Dialog = dial2,
+                    IsReaded = true,
+                    User = users[rand.Next(users.Length)],
                     Body = Messages[rand.Next(Messages.Length)]
                 });
                 today += new TimeSpan(0, 0, rand.Next(5, 60));
             }
 
-            for (int i = 0; i < 300; i++)
+            context.SaveChanges();
+
+            /*for (int i = 0; i < 300; i++)
             {
                 context.Messages.Add(new Message()
                 {

@@ -5,7 +5,7 @@
     min-width: 286px;
     max-width: 360px;
     height: 100%;
-    z-index: 999;
+    z-index: 5;
     left: 0;
     float: left;
     transition: 0.4s;
@@ -24,6 +24,7 @@
         position: absolute;
         top: 40px;
         overflow-y: auto;
+        overflow-x: hidden;
         bottom: 0;
 
         @media (max-height: 736px) and (max-width: 736px) {
@@ -357,18 +358,12 @@ div.chat-area-intro {
         color: #555;
         height: 100%;
         text-align: center;
+        white-space: nowrap;
 
         &:before {
             content: "";
             display: inline-block;
-            height: 100%;
-            vertical-align: middle;
-        }
-
-        &:after {
-            content: "";
-            display: inline-block;
-            height: 100%;
+            height: 70%;
             vertical-align: middle;
         }
     }

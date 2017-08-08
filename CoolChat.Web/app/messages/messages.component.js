@@ -12,11 +12,17 @@ const core_1 = require('@angular/core');
 const chat_service_1 = require('../shared/services/chat.service');
 const user_model_1 = require('../shared/models/user.model');
 const brief_dialog_model_1 = require('../shared/models/brief-dialog.model');
+class MessageDisplayModel {
+    constructor() {
+    }
+}
+exports.MessageDisplayModel = MessageDisplayModel;
 let MessagesComponent = class MessagesComponent {
     constructor(chatService) {
         this.chatService = chatService;
         this.scrollOffset = 0;
-        this.messagesLoading = false;
+        this.messagesLoading = true;
+        this.messagesAvatarsOffset = [];
     }
     ngOnInit() {
         /*this.chatService.addMessageCallback((message: MessageModel) => {
@@ -25,10 +31,58 @@ let MessagesComponent = class MessagesComponent {
         });
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
         this.prevChatRoom = this.chatRoom;*/
-        this.chatService.getMessages(this.briefDialog.id).then((messages) => this.messages = messages);
+        this.chatService.getMessages(this.briefDialog.id).then((messages) => {
+            this.messages = messages;
+            this.messagesLoading = false;
+            this.createOffsets(this.messages, this.messagesAvatarsOffset);
+        });
+    }
+    followingMessage(message) {
+        var index = this.messages.indexOf(message);
+        if (index > 0) {
+            if (this.messages[index - 1].user.id == message.user.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+    onMessageScroll(event) {
+        var offsetTop = event.target.offsetTop;
+    }
+    messageAvatarOffsetTop(message) {
+    }
+    createOffsets(messages, messagesOffset) {
+        if (messages.length < 1) {
+            return;
+        }
+        var prevMsg = messages[0];
+        var scrollableMessage = new MessageDisplayModel();
+        var chainedMessagesNum = 0;
+        for (var i = 1; i < messages.length; i++) {
+            if (messages[i].user.id == messages[i - 1].user.id) {
+                if (chainedMessagesNum == 0) {
+                    scrollableMessage.id = messages[i - 1].user.id;
+                    scrollableMessage.scrollOffsetTopStart = (i - 1) * 93 + 11.5;
+                }
+                chainedMessagesNum++;
+            }
+            else {
+                if (chainedMessagesNum > 0) {
+                    scrollableMessage.scrollOffsetTopFinish = i * 93 - 11.5;
+                    messagesOffset.push(scrollableMessage);
+                    scrollableMessage = new MessageDisplayModel();
+                    chainedMessagesNum = 0;
+                }
+            }
+        }
+        console.log(messagesOffset);
     }
     ngOnChanges(changes) {
-        this.chatService.getMessages(this.briefDialog.id).then((messages) => this.messages = messages);
+        this.messagesLoading = true;
+        this.chatService.getMessages(this.briefDialog.id).then((messages) => {
+            this.messages = messages;
+            this.messagesLoading = false;
+        });
         /*if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
             return;
         }

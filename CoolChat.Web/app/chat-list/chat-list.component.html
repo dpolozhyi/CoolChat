@@ -23,11 +23,11 @@
                     <div class="message">
                         <div class="message-header">
                             <span class="name">{{dialog.members[0].name}}</span>
-                            <span class="time">{{dialog.lastMessage.postedTime | date:'shortTime'}}</span>
+                            <span class="time">{{dialog.lastMessage.postedTime | relativeDate}}</span>
                         </div>
                         <div class="message-body">
                             <span class="message-text" [class.greyBackground]="!dialog.lastMessage.isReaded"><span class="sender" *ngIf="dialog.lastMessage.userId==user.id">You: </span>{{dialog.lastMessage.body}}</span>
-                            <span class="message-notification">{{dialog.newMessagesNumber}}</span>
+                            <span class="message-notification" *ngIf="dialog.newMessagesNumber > 0">{{dialog.newMessagesNumber}}</span>
                         </div>
                     </div>
                 </div>

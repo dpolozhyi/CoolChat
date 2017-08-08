@@ -5,7 +5,7 @@
         </div>
         <div class="info-bar">
             <div class="central-bar">
-                <div class="user-info" *ngIf="selectedUser">
+                <div class="user-info" *ngIf="selectedUser && minModeHiddenChatList">
                     <div class="user-wrapper">
                         <div class="avatar">
                             <div class="avatar-area">
@@ -23,17 +23,24 @@
                                 {{selectedUser.name}}
                             </div>
                             <div class="user-status">
-                                Last seen {{selectedUser.lastTimeActivity | date:'mediumDate'}}
+                                Last seen {{selectedUser.lastTimeActivity | relativeDate}}
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="menu-info" *ngIf="!minModeHiddenChatList">
+                    <span>Chats</span>
+                </div>
             </div>
-            <span class="chat-list-ico" id="showChatList" (click)="minModeHiddenChatList = !minModeHiddenChatList"><i class="fa fa-bars" aria-hidden="true"></i></span>
+            <span class="chat-list-ico" id="showChatList" 
+                  [class.display-none]="!minModeHiddenChatList" 
+                  (click)="minModeHiddenChatList = !minModeHiddenChatList">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </span>
         </div>
         <div class="settings-bar">
-            <div class="settings-button" (mousemove)="onSettingsButtonMouseMove()">
-                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            <div class="settings-button" (click)="expandedSettings = !expandedSettings">
+                <i class="fa fa-bars" aria-hidden="true"></i>
             </div>
             <div class="settings-expanded" *ngIf="expandedSettings" (mousemove)="onSettingsButtonMouseMove()">
                 <ul>

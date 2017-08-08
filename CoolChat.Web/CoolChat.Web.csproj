@@ -386,6 +386,7 @@
     <TypeScriptCompile Include="app\shared\models\register.model.ts" />
     <TypeScriptCompile Include="app\shared\models\user-account.model.ts" />
     <TypeScriptCompile Include="app\shared\models\user.model.ts" />
+    <TypeScriptCompile Include="app\shared\pipes\relative-date.pipe.ts" />
     <TypeScriptCompile Include="app\shared\services\auth.service.ts" />
     <TypeScriptCompile Include="app\shared\services\chat.service.ts" />
   </ItemGroup>

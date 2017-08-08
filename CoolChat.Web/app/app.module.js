@@ -21,6 +21,8 @@ const auth_component_1 = require('./auth/auth.component');
 const load_waiter_component_1 = require('./load-waiter/load-waiter.component');
 const chat_service_1 = require('./shared/services/chat.service');
 const auth_service_1 = require('./shared/services/auth.service');
+const common_1 = require('@angular/common');
+const relative_date_pipe_1 = require("./shared/pipes/relative-date.pipe");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -43,12 +45,14 @@ AppModule = __decorate([
             chat_list_component_1.ChatListComponent,
             chat_component_1.ChatComponent,
             auth_component_1.AuthComponent,
-            load_waiter_component_1.LoadWaiterComponent
+            load_waiter_component_1.LoadWaiterComponent,
+            relative_date_pipe_1.RelativeDatePipe
         ],
         providers: [
             chat_service_1.ChatService,
             { provide: chat_service_1.SignalrWindow, useValue: window },
-            auth_service_1.AuthService
+            auth_service_1.AuthService,
+            common_1.DatePipe
         ],
         bootstrap: [app_component_1.AppComponent]
     }), 

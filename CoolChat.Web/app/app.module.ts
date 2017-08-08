@@ -14,6 +14,8 @@ import { LoadWaiterComponent } from './load-waiter/load-waiter.component';
 import { ChatService, SignalrWindow } from './shared/services/chat.service';
 import { AuthService } from './shared/services/auth.service';
 
+import { DatePipe } from '@angular/common';
+import { RelativeDatePipe} from "./shared/pipes/relative-date.pipe";
 
 @NgModule({
     imports: [
@@ -35,13 +37,15 @@ import { AuthService } from './shared/services/auth.service';
         ChatListComponent,
         ChatComponent,
         AuthComponent,
-        LoadWaiterComponent
+        LoadWaiterComponent,
+        RelativeDatePipe
     ],
     providers:
     [
         ChatService,
         { provide: SignalrWindow, useValue: window },
-        AuthService
+        AuthService,
+        DatePipe
     ],
     bootstrap: [AppComponent]
 })
