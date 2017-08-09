@@ -17,19 +17,25 @@ let ChatListComponent = class ChatListComponent {
         this.authService = authService;
         this.notifyChatListState = new core_1.EventEmitter();
         this.notifySelectedUser = new core_1.EventEmitter();
-        /*this.chatService.starting$.subscribe(
-            () => { console.log("signalr service has been started"); },
-            () => { console.warn("signalr service failed to start!"); }
-        );*/
+        this.chatService.starting$.subscribe(() => { console.log("signalr service has been started"); }, () => { console.warn("signalr service failed to start!"); });
     }
     ngOnInit() {
-        /* this.chatService.connect();
-         this.chatService.getChatRoomList().then(data => this.roomList = data);*/
         this.authService.getUser().then((user) => this.user = user);
         this.chatService.getUserAccount().then((userAccount) => {
             this.userAccount = userAccount;
             this.filteredDialogs = userAccount.dialogs;
+            this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
             alert("Hi, " + userAccount.name + '!');
+        });
+        this.chatService.newMessage$.subscribe((message) => {
+            var msgDialog = this.userAccount.dialogs.filter(dialog => dialog.id == message.dialogId)[0];
+            msgDialog.lastMessage = message;
+            if (!this.selectedDialog || (this.selectedDialog && message.dialogId != this.selectedDialog.id)) {
+                msgDialog.newMessagesNumber += 1;
+            }
+            if (this.selectedDialog && message.dialogId == this.selectedDialog.id && message.user.id != this.user.id) {
+                msgDialog.lastMessage.isReaded = true;
+            }
         });
     }
     onDialogSearch(filter) {
@@ -43,6 +49,11 @@ let ChatListComponent = class ChatListComponent {
     selectDialog(dialog) {
         console.log(this.hiddenChatList);
         this.selectedDialog = dialog;
+        if (this.selectedDialog.newMessagesNumber > 0) {
+            this.chatService.setMessagesAsReaded(this.selectedDialog.id);
+        }
+        this.selectedDialog.newMessagesNumber = 0;
+        this.selectedDialog.lastMessage.isReaded = true;
         this.notifyChatListState.emit(true);
         this.notifySelectedUser.emit(dialog.members[0]);
     }

@@ -35,25 +35,18 @@ namespace CoolChat.Web.Controllers.api
 
         public MessageController(IDialogService dialogService)
         {
+            this.hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
             this.dialogService = dialogService;
         }
 
         // GET: api/Message/5
+        [DialogAuthorize]
         [Route("{dialogId}")]
         public IHttpActionResult Get(int dialogId, int offset = -1, int limit = 0)
         {
-            int userId = this.authService.GetUserId(this.GetToken());
-            if (userId > 0)
-            {
-                if (!this.dialogService.CheckUserHasDialog(userId, dialogId))
-                {
-                    return Unauthorized();
-                }
-                IEnumerable<MessageViewModel> messages = this.dialogService.GetMessages(dialogId);
-                string json = JsonConvert.SerializeObject(messages, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-                return Ok(json);
-            }
-            return BadRequest();
+            IEnumerable<MessageViewModel> messages = this.dialogService.GetMessages(dialogId);
+            string json = JsonConvert.SerializeObject(messages, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            return Ok(json);
 
             /*if(offset != -1)
             {
@@ -66,13 +59,54 @@ namespace CoolChat.Web.Controllers.api
         }
 
         [HttpPost]
-        // POST: api/Message
+        [Route("send")]
+        // POST: api/messages/send
         public IHttpActionResult Post(MessageViewModel message)
         {
-            /*var returned = this.chatService.PostMessage(message);
-            //hubContext.Clients.Group(returned.ChatRoomId.ToString()).AddNewMessageToPage(returned);
-            return returned;*/
-            return null;
+            string token;
+            try
+            {
+                token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+                int userId = authService.GetUserId(token);
+                if (this.dialogService.CheckUserHasDialog(userId, message.DialogId))
+                {
+                    var returnedMessage = this.dialogService.PostMessage(message);
+                    string json = JsonConvert.SerializeObject(returnedMessage, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                    hubContext.Clients.Group(returnedMessage.DialogId.ToString()).AddNewMessage(json);
+                    return Ok(json);
+                }
+                return Unauthorized();
+
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized();
+            }
+        }
+
+        [Route("read")]
+        [HttpPost]
+        // POST: api/messages/read
+        public IHttpActionResult PostReadMessages([FromBody]int dialogId)
+        {
+            string token;
+            try
+            {
+                token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+                int userId = authService.GetUserId(token);
+                if (this.dialogService.CheckUserHasDialog(userId, dialogId))
+                {
+                    this.dialogService.SetDialogMessagesReaded(userId, dialogId);
+                    //hubContext.Clients.Group(returnedMessage.DialogId.ToString()).AddNewMessage(json);
+                    return Ok();
+                }
+                return Unauthorized();
+
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized();
+            }
         }
 
         // PUT: api/Message/5

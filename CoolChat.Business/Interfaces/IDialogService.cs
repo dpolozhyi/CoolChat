@@ -12,5 +12,9 @@ namespace CoolChat.Business.Interfaces
         bool CheckUserHasDialog(int userId, int dialogId);
 
         IEnumerable<MessageViewModel> GetMessages(int dialogId);
+
+        MessageViewModel PostMessage(MessageViewModel message);
+
+        void SetDialogMessagesReaded(int userId, int dialogId);
     }
 }

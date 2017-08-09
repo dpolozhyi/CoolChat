@@ -28,13 +28,6 @@ let ChatComponent = class ChatComponent {
         this.authService.logOut();
         this.router.navigate(['login']);
     }
-    onSettingsButtonMouseMove() {
-        this.expandedSettings = true;
-        if (this.hideSettingsTimeout) {
-            clearTimeout(this.hideSettingsTimeout);
-        }
-        this.hideSettingsTimeout = setTimeout(() => this.expandedSettings = false, 8000);
-    }
     handleViewPortWidth(width) {
         if (width > 767) {
             this.minModeHiddenChatList = true;

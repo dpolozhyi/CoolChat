@@ -20,8 +20,6 @@ export class MessageDisplayModel {
 })
 export class MessagesComponent implements OnInit, OnChanges {
 
-    // @Input() chatRoom: ChatRoomModel;
-
     @Input() hiddenChatList: boolean;
 
     @Input() minModeHiddenChatList: boolean;
@@ -30,7 +28,7 @@ export class MessagesComponent implements OnInit, OnChanges {
 
     @Input() briefDialog: BriefDialogModel
 
-    //private prevChatRoom: ChatRoomModel;
+    private prevBriefDialog: BriefDialogModel;
 
     private authorized: boolean;
 
@@ -51,12 +49,17 @@ export class MessagesComponent implements OnInit, OnChanges {
             this.scrollOffset = 0;
             this.messages.push(message);
         });
-        this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
-        this.prevChatRoom = this.chatRoom;*/
+        this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);*/
+        this.prevBriefDialog = this.briefDialog;
         this.chatService.getMessages(this.briefDialog.id).then((messages) => {
             this.messages = messages;
             this.messagesLoading = false;
             this.createOffsets(this.messages, this.messagesAvatarsOffset);
+        });
+        this.chatService.newMessage$.subscribe((message: MessageModel) => {
+            if (message.dialogId == this.briefDialog.id) {
+                this.messages.push(message);
+            }
         });
     }
 
@@ -72,7 +75,6 @@ export class MessagesComponent implements OnInit, OnChanges {
 
     onMessageScroll(event) {
         var offsetTop = event.target.offsetTop;
-
     }
 
     messageAvatarOffsetTop(message: MessageModel) {
@@ -107,17 +109,16 @@ export class MessagesComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (this.prevBriefDialog && this.prevBriefDialog == this.briefDialog) {
+            return;
+        }
         this.messagesLoading = true;
         this.chatService.getMessages(this.briefDialog.id).then((messages) => {
             this.messages = messages;
             this.messagesLoading = false;
         });
-        /*if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
-            return;
-        }
-        if (!this.prevChatRoom) {
-            this.prevChatRoom = this.chatRoom;
-        }
+        this.prevBriefDialog = this.briefDialog;
+        /*
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
         this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => { 
             console.log("Unsubscribed to " + this.prevChatRoom.Id);
@@ -128,27 +129,27 @@ export class MessagesComponent implements OnInit, OnChanges {
         this.scrollOffset = 0;*/
     }
 
-    /*sendMessage(msgText: string) {
+    sendMessage(msgText: string) {
         if (!msgText.trim()) {
             return;
         }
         var newMessage = new MessageModel();
-        newMessage.Body = msgText;
-        newMessage.PostedTime = new Date();
-        newMessage.UserName = this.name;
-        newMessage.ChatRoomId = this.chatRoom.Id;
+        newMessage.body = msgText;
+        newMessage.postedTime = new Date();
+        newMessage.user = this.user;
+        newMessage.dialogId = this.briefDialog.id;
 
         this.chatService.sendMessage(newMessage);
     }
 
-    onNameSubmit(name: string) {
+    /*onNameSubmit(name: string) {
         if (name.trim()) {
             this.name = name.trim();
             this.chatService.subscribe(String(this.chatRoom.Id));
         }
-    }
+    }*/
 
-    onMessageScroll(event) {
+    /*onMessageScroll(event) {
         const target = event.target;
         if (target.scrollTop < 100 && !this.messagesLoading) {
             this.messagesLoading = true;
@@ -159,7 +160,7 @@ export class MessagesComponent implements OnInit, OnChanges {
                     messages.reverse().forEach((value) => this.messages.unshift(value));
                     this.messagesLoading = false;
                 });
-        }
+        }*/
 
         /* Why this isn't working? */
     /*const target = event.target;

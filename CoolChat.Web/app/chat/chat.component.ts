@@ -15,8 +15,6 @@ export class ChatComponent implements OnInit {
 
     private expandedSettings: boolean = false;
 
-    private hideSettingsTimeout: number;
-
     private selectedUser: UserModel;
 
     constructor(private authService: AuthService, private router: Router) { }
@@ -32,14 +30,6 @@ export class ChatComponent implements OnInit {
     onLogout() {
         this.authService.logOut();
         this.router.navigate(['login']);
-    }
-
-    onSettingsButtonMouseMove() {
-        this.expandedSettings = true;
-        if (this.hideSettingsTimeout) {
-            clearTimeout(this.hideSettingsTimeout);
-        }
-        this.hideSettingsTimeout = setTimeout(() => this.expandedSettings = false, 8000);
     }
 
     handleViewPortWidth(width) {

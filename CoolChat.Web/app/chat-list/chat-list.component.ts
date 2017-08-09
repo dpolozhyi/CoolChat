@@ -12,7 +12,7 @@ import { BriefDialogModel } from "../shared/models/brief-dialog.model"
     templateUrl: 'app/chat-list/chat-list.component.html',
     styleUrls: ['app/chat-list/chat-list.component.css']
 })
-export class ChatListComponent implements OnInit{
+export class ChatListComponent implements OnInit {
 
     @Input() hiddenChatList: boolean;
 
@@ -31,20 +31,29 @@ export class ChatListComponent implements OnInit{
     private user: UserModel;
 
     constructor(private chatService: ChatService, private authService: AuthService) {
-        /*this.chatService.starting$.subscribe(
+        this.chatService.starting$.subscribe(
             () => { console.log("signalr service has been started"); },
             () => { console.warn("signalr service failed to start!"); }
-        );*/
+        );
     }
 
     ngOnInit() {
-       /* this.chatService.connect();
-        this.chatService.getChatRoomList().then(data => this.roomList = data);*/
         this.authService.getUser().then((user: UserModel) => this.user = user);
         this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
             this.userAccount = userAccount;
             this.filteredDialogs = userAccount.dialogs;
+            this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
             alert("Hi, " + userAccount.name + '!');
+        });
+        this.chatService.newMessage$.subscribe((message: MessageModel) => {
+            var msgDialog = this.userAccount.dialogs.filter(dialog => dialog.id == message.dialogId)[0];
+            msgDialog.lastMessage = message;
+            if (!this.selectedDialog || (this.selectedDialog && message.dialogId != this.selectedDialog.id)) {
+                msgDialog.newMessagesNumber += 1;
+            }
+            if (this.selectedDialog && message.dialogId == this.selectedDialog.id && message.user.id != this.user.id) {
+                msgDialog.lastMessage.isReaded = true;
+            }
         });
     }
 
@@ -60,6 +69,11 @@ export class ChatListComponent implements OnInit{
     selectDialog(dialog: BriefDialogModel) {
         console.log(this.hiddenChatList);
         this.selectedDialog = dialog;
+        if (this.selectedDialog.newMessagesNumber > 0) {
+            this.chatService.setMessagesAsReaded(this.selectedDialog.id);
+        }
+        this.selectedDialog.newMessagesNumber = 0;
+        this.selectedDialog.lastMessage.isReaded = true;   
         this.notifyChatListState.emit(true);
         this.notifySelectedUser.emit(dialog.members[0]);
     }

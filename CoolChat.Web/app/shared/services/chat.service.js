@@ -25,27 +25,39 @@ let ChatService = class ChatService {
         this.http = http;
         this.authService = authService;
         this.startingSubject = new Subject_1.Subject();
+        this.newMessageSubject = new Subject_1.Subject();
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
         }
         this.authService.getUser().then((user) => this.user = user);
         this.starting$ = this.startingSubject.asObservable();
+        this.newMessage$ = this.newMessageSubject.asObservable();
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
         this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
-        this.hubProxy.on("AddNewMessageToPage", (message) => {
+        this.hubProxy.on("AddNewMessage", (message) => {
             console.log(this.msgCallback);
+            this.newMessageSubject.next(JSON.parse(message));
             if (this.msgCallback) {
                 this.msgCallback(message);
             }
         });
+        this.hubProxy.on("UserIsOnline", (userId, isOnline) => {
+            console.log(this.msgCallback);
+            if (this.onlineCallback) {
+                this.onlineCallback(userId, isOnline);
+            }
+        });
+        this.hubConnection.start()
+            .done(() => this.startingSubject.next())
+            .fail((error) => this.startingSubject.error(error));
     }
     addMessageCallback(callback) {
         this.msgCallback = callback;
     }
-    connect() {
-        this.hubConnection.start().done(() => this.startingSubject.next()).fail((error) => this.startingSubject.error(error));
+    addOnlineCallback(callback) {
+        this.onlineCallback = callback;
     }
     getUserAccount() {
         var token = this.authService.getLocalToken();
@@ -69,19 +81,32 @@ let ChatService = class ChatService {
 
     getEarlyMessages(chatRoomId: number, offset: number): Promise<MessageModel[]> {
         return this.http.get('/messages/' + chatRoomId + '?offset=' + offset + '&limit=10').toPromise().then(data => data.json() as MessageModel[]);
-    }
-
-    sendMessage(message: MessageModel): Promise<MessageModel> {
-        return this.http
-            .post('/chat', JSON.stringify(message), { headers: this.headers })
-            .toPromise()
-            .then(res => res.json() as MessageModel);
     }*/
-    subscribe(chatId) {
-        return this.hubProxy.invoke("JoinGroup", chatId);
+    sendMessage(message) {
+        var token = this.authService.getLocalToken();
+        if (token && this.authService.isTokenValid()) {
+            this.headers.delete("Authorization");
+            this.headers.append("Authorization", token);
+            return this.http
+                .post('api/messages/send', JSON.stringify(message), { headers: this.headers })
+                .toPromise()
+                .then(res => JSON.parse(res.json()));
+        }
     }
-    unsubscribe(chatId) {
-        return this.hubProxy.invoke("LeaveGroup", chatId);
+    setMessagesAsReaded(dialogId) {
+        var token = this.authService.getLocalToken();
+        if (token) {
+            this.headers.delete("Authorization");
+            this.headers.append("Authorization", token);
+            return this.http
+                .post('api/messages/read', dialogId, { headers: this.headers }).toPromise();
+        }
+    }
+    subscribe(dialogIds) {
+        dialogIds.forEach((dialog) => this.hubProxy.invoke("JoinGroup", dialog));
+    }
+    unsubscribe(dialogIds) {
+        //return this.hubProxy.invoke("LeaveGroup", userId);
     }
 };
 ChatService = __decorate([

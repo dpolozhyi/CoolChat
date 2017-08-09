@@ -20,7 +20,7 @@ namespace CoolChat.Web.App_Start
                     .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.Messages.OrderByDescending(n => n.PostedTime).FirstOrDefault()))
                     .ForMember(dest => dest.Members, opt => opt.MapFrom(src => src.Members))
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                    .ForMember(dest => dest.NewMessagesNumber, opt => opt.MapFrom(src => src.Messages.Count(n => !n.IsReaded)))
+                    .ForMember(dest => dest.NewMessagesNumber, opt => opt.MapFrom(src => src.Messages.Count(n => !n.IsReaded && n.User.Id != src.Id)))
                     .ForMember(dest => dest.TimeCreated, opt => opt.MapFrom(src => src.TimeCreated));
 
                 config.CreateMap<User, UserAccountViewModel>()
@@ -44,6 +44,20 @@ namespace CoolChat.Web.App_Start
                     .ForMember(dest => dest.DialogId, opt => opt.MapFrom(src => src.Dialog.Id))
                     .ForMember(dest => dest.IsReaded, opt => opt.MapFrom(src => src.IsReaded))
                     .ForMember(dest => dest.PostedTime, opt => opt.MapFrom(src => src.PostedTime));
+
+                config.CreateMap<MessageViewModel, Message>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User))
+                    .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
+                    .ForMember(dest => dest.IsReaded, opt => opt.MapFrom(src => src.IsReaded))
+                    .ForMember(dest => dest.PostedTime, opt => opt.MapFrom(src => src.PostedTime));
+
+                config.CreateMap<UserViewModel, User>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.AvatarUrl))
+                    .ForMember(dest => dest.IsOnline, opt => opt.MapFrom(src => src.IsOnline))
+                    .ForMember(dest => dest.LastTimeActivity, opt => opt.MapFrom(src => src.LastTimeActivity));
             });
         }
     }

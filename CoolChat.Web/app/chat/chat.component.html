@@ -39,10 +39,10 @@
             </span>
         </div>
         <div class="settings-bar">
-            <div class="settings-button" (click)="expandedSettings = !expandedSettings">
+            <div class="settings-button" [class.display-none]="minModeHiddenChatList"  (click)="expandedSettings = !expandedSettings">
                 <i class="fa fa-bars" aria-hidden="true"></i>
             </div>
-            <div class="settings-expanded" *ngIf="expandedSettings" (mousemove)="onSettingsButtonMouseMove()">
+            <div class="settings-expanded" *ngIf="expandedSettings">
                 <ul>
                     <li>Profile</li>
                     <li (click)="onLogout()">Log out</li>

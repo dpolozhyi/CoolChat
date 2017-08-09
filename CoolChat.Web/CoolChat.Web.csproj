@@ -233,7 +233,9 @@
     <Compile Include="Controllers\api\UserAccountController.cs" />
     <Compile Include="Controllers\api\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Exceptions\AuthorizeException.cs" />
     <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Filters\DialogAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

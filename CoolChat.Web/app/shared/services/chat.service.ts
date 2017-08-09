@@ -14,6 +14,7 @@ export class SignalrWindow extends Window {
     $: any;
 }
 
+declare type OnlineCallback = (userId: number, isOnline: boolean) => void;
 declare type MessageCallback = (message: MessageModel) => void;
 
 
@@ -27,9 +28,15 @@ export class ChatService {
 
     starting$: Observable<any>;
 
+    newMessage$: Observable<any>;
+
     private startingSubject = new Subject<any>();
 
+    private newMessageSubject = new Subject<MessageModel>();
+
     private msgCallback: MessageCallback;
+
+    private onlineCallback: OnlineCallback;
 
     private user: UserModel;
 
@@ -47,24 +54,35 @@ export class ChatService {
         this.authService.getUser().then((user: UserModel) => this.user = user);
 
         this.starting$ = this.startingSubject.asObservable();
+        this.newMessage$ = this.newMessageSubject.asObservable();
 
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
         this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
-        this.hubProxy.on("AddNewMessageToPage", (message) => {
+        this.hubProxy.on("AddNewMessage", (message) => {
             console.log(this.msgCallback);
+            this.newMessageSubject.next(JSON.parse(message));
             if (this.msgCallback) {
                 this.msgCallback(message);
             }
         });
+        this.hubProxy.on("UserIsOnline", (userId, isOnline) => {
+            console.log(this.msgCallback);
+            if (this.onlineCallback) {
+                this.onlineCallback(userId, isOnline);
+            }
+        });
+        this.hubConnection.start()
+            .done(() => this.startingSubject.next())
+            .fail((error) => this.startingSubject.error(error));
     }
 
     addMessageCallback(callback: MessageCallback) {
         this.msgCallback = callback;
     }
 
-    connect() {
-        this.hubConnection.start().done(() => this.startingSubject.next()).fail((error) => this.startingSubject.error(error));
+    addOnlineCallback(callback: OnlineCallback) {
+        this.onlineCallback = callback;
     }
 
     getUserAccount(): Promise<UserAccountModel> {
@@ -84,27 +102,43 @@ export class ChatService {
             return this.http.get('api/messages/' + dialogId, { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as MessageModel[]);
         }
     }
-    
+
     /*getMessages(chatRoom: ChatRoomModel): Promise<MessageModel[]> {
         return this.http.get('/messages/' + chatRoom.Id + '?offset=0&limit=20').toPromise().then(data => data.json() as MessageModel[]);
     }
 
     getEarlyMessages(chatRoomId: number, offset: number): Promise<MessageModel[]> {
         return this.http.get('/messages/' + chatRoomId + '?offset=' + offset + '&limit=10').toPromise().then(data => data.json() as MessageModel[]);
-    }
-
-    sendMessage(message: MessageModel): Promise<MessageModel> {
-        return this.http
-            .post('/chat', JSON.stringify(message), { headers: this.headers })
-            .toPromise()
-            .then(res => res.json() as MessageModel);
     }*/
 
-    subscribe(chatId: string): Promise<void> {
-        return this.hubProxy.invoke("JoinGroup", chatId);
+    sendMessage(message: MessageModel): Promise<MessageModel> {
+        var token = this.authService.getLocalToken();
+        if (token && this.authService.isTokenValid()) {
+            this.headers.delete("Authorization");
+            this.headers.append("Authorization", token);
+            return this.http
+                .post('api/messages/send', JSON.stringify(message), { headers: this.headers })
+                .toPromise()
+                .then(res => JSON.parse(res.json()) as MessageModel);
+        }
     }
 
-    unsubscribe(chatId: string): Promise<void> {
-        return this.hubProxy.invoke("LeaveGroup", chatId);
+    setMessagesAsReaded(dialogId: number) {
+        var token = this.authService.getLocalToken();
+        if (token) {
+            this.headers.delete("Authorization");
+            this.headers.append("Authorization", token);
+            return this.http
+                .post('api/messages/read', dialogId, { headers: this.headers }).toPromise();
+        }
+
+    }
+
+    subscribe(dialogIds: number[]): void {
+        dialogIds.forEach((dialog) => this.hubProxy.invoke("JoinGroup", dialog));
+    }
+
+    unsubscribe(dialogIds: number[]): void {
+        //return this.hubProxy.invoke("LeaveGroup", userId);
     }
 }

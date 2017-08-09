@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require('@angular/core');
 const chat_service_1 = require('../shared/services/chat.service');
 const user_model_1 = require('../shared/models/user.model');
+const message_model_1 = require('../shared/models/message.model');
 const brief_dialog_model_1 = require('../shared/models/brief-dialog.model');
 class MessageDisplayModel {
     constructor() {
@@ -29,12 +30,17 @@ let MessagesComponent = class MessagesComponent {
             this.scrollOffset = 0;
             this.messages.push(message);
         });
-        this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
-        this.prevChatRoom = this.chatRoom;*/
+        this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);*/
+        this.prevBriefDialog = this.briefDialog;
         this.chatService.getMessages(this.briefDialog.id).then((messages) => {
             this.messages = messages;
             this.messagesLoading = false;
             this.createOffsets(this.messages, this.messagesAvatarsOffset);
+        });
+        this.chatService.newMessage$.subscribe((message) => {
+            if (message.dialogId == this.briefDialog.id) {
+                this.messages.push(message);
+            }
         });
     }
     followingMessage(message) {
@@ -78,17 +84,16 @@ let MessagesComponent = class MessagesComponent {
         console.log(messagesOffset);
     }
     ngOnChanges(changes) {
+        if (this.prevBriefDialog && this.prevBriefDialog == this.briefDialog) {
+            return;
+        }
         this.messagesLoading = true;
         this.chatService.getMessages(this.briefDialog.id).then((messages) => {
             this.messages = messages;
             this.messagesLoading = false;
         });
-        /*if (this.prevChatRoom && this.prevChatRoom == this.chatRoom) {
-            return;
-        }
-        if (!this.prevChatRoom) {
-            this.prevChatRoom = this.chatRoom;
-        }
+        this.prevBriefDialog = this.briefDialog;
+        /*
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
         this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => {
             console.log("Unsubscribed to " + this.prevChatRoom.Id);
@@ -97,6 +102,17 @@ let MessagesComponent = class MessagesComponent {
         });
         this.prevChatRoom = this.chatRoom;
         this.scrollOffset = 0;*/
+    }
+    sendMessage(msgText) {
+        if (!msgText.trim()) {
+            return;
+        }
+        var newMessage = new message_model_1.MessageModel();
+        newMessage.body = msgText;
+        newMessage.postedTime = new Date();
+        newMessage.user = this.user;
+        newMessage.dialogId = this.briefDialog.id;
+        this.chatService.sendMessage(newMessage);
     }
 };
 __decorate([
