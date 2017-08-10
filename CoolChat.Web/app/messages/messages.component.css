@@ -41,7 +41,7 @@ div.enter-form div.enter-text {
   margin-bottom: 10px;
 }
 div.conversation {
-  background: #ecf0f1;
+  background: #fff;
   height: 90%;
   top: 0;
   transition: 0.4s;
@@ -79,7 +79,8 @@ div.conversation div.message-list div.message-wrapper.my-message-wrapper div.mes
   margin: 10px 65px 10px 25px;
 }
 div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message {
-  background: #ddd;
+  background: #fff;
+  border: 1px solid #ccc;
 }
 div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message:before {
   position: absolute;
@@ -93,7 +94,21 @@ div.conversation div.message-list div.message-wrapper.my-message-wrapper div.mes
   border-left-width: 10px;
   border-top-width: 10px;
   border-bottom-width: 10px;
-  border-color: transparent #ddd;
+  border-color: transparent #ccc;
+}
+div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message:after {
+  position: absolute;
+  content: "";
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  border-style: solid;
+  border-color: black;
+  border-left-width: 9px;
+  border-top-width: 9px;
+  border-bottom-width: 9px;
+  border-color: transparent #fff;
 }
 div.conversation div.message-list div.message-wrapper div.user-avatar {
   position: absolute;
@@ -109,7 +124,7 @@ div.conversation div.message-list div.message-wrapper div.user-avatar img {
   height: 100%;
 }
 div.conversation div.message-list div.message-wrapper div.message {
-  background: #fff;
+  background: #f2f2f2;
   color: #333;
   margin: 10px 25px 10px 65px;
   padding: 10px 15px;
@@ -157,7 +172,7 @@ div.conversation div.message-list div.message-wrapper div.message:before {
   border-right-width: 10px;
   border-top-width: 10px;
   border-bottom-width: 10px;
-  border-color: transparent #fff;
+  border-color: transparent #f2f2f2;
 }
 div.conversation div.message-list div.message-separator {
   position: relative;
@@ -195,7 +210,7 @@ div.conversation div.message-list div.message-separator span.separator-text {
 }
 div.conversation-loader {
   position: absolute;
-  background: #ecf0f1;
+  background: #fff;
   width: 100%;
   top: 0;
   bottom: 10%;
@@ -362,6 +377,9 @@ div.new-message div.message-panel div.message-send:hover {
   text-shadow: 1px 1px 5px #3498db;
   cursor: pointer;
 }
-.beforeNone:before {
+.beforeAfterNone:before {
+  display: none !important;
+}
+.beforeAfterNone:after {
   display: none !important;
 }

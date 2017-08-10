@@ -43,11 +43,27 @@
                 transition: 0.15s;
                 min-height: 50px;
                 display: block;
+                border-right: 4px solid transparent;
+
+                &.selected {
+                    border-right-color: #3498db;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    background: rgba(0, 0, 0, 0.08);
+
+                    div.dialog div.avatar div.avatar-area div.online-mark {
+                        background: #ebebeb;
+                    }
+                }
 
                 div.dialog {
                     min-width: 260px;
                     vertical-align: bottom;
                     position: relative;
+
+
 
                     div.avatar {
                         height: 50px;
@@ -157,15 +173,6 @@
                         }
                     }
                 }
-
-                &:hover {
-                    cursor: pointer;
-                    background: rgba(0, 0, 0, 0.08);
-
-                    div.dialog div.avatar div.avatar-area div.online-mark {
-                        background: #ebebeb;
-                    }
-                }
             }
 
             li.dialog-selected {
@@ -199,7 +206,6 @@
                     border-bottom: 1px solid #ccc;
                     transition: 0.15s;
                     min-height: 50px;
-                    display: block;
 
                     &:first-child {
                         border-top: 1px solid #ccc;
@@ -301,7 +307,7 @@
 
             &:focus {
                 outline: 0 !important;
-                box-shadow: 0px 2px 28px -5px rgba(0,0,0,0.75);
+                box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
             }
         }
     }
@@ -355,7 +361,7 @@ div.chat-area-intro {
     div.chat-intro-message {
         font-family: Roboto-Light;
         font-size: 32px;
-        color: #555;
+        color: #666;
         height: 100%;
         text-align: center;
         white-space: nowrap;

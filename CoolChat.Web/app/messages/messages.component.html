@@ -14,7 +14,7 @@
             <div class="user-avatar" *ngIf="!followingMessage(message)">
                 <img [src]="message.user.avatarUrl" />
             </div>
-            <div class="message" [class.my-message]="message.user.id==user.id" [class.beforeNone]="followingMessage(message)">
+            <div class="message" [class.my-message]="message.user.id==user.id" [class.beforeAfterNone]="followingMessage(message)">
                 <span class="message-name">{{message.user.name}}</span><span class="message-time">{{message.postedTime | date:'medium'}}</span>
                 <span class="message-body">{{message.body}}</span>
             </div>

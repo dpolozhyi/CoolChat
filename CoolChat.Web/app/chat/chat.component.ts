@@ -13,6 +13,8 @@ import { AuthService } from '../shared/services/auth.service';
 export class ChatComponent implements OnInit {
     private minModeHiddenChatList: boolean = false;
 
+    private minMode: boolean = false;
+
     private expandedSettings: boolean = false;
 
     private selectedUser: UserModel;
@@ -25,6 +27,7 @@ export class ChatComponent implements OnInit {
 
     onSelectedUser(user: UserModel) {
         this.selectedUser = user;
+        this.expandedSettings = false;
     }
 
     onLogout() {
@@ -35,9 +38,20 @@ export class ChatComponent implements OnInit {
     handleViewPortWidth(width) {
         if (width > 767) {
             this.minModeHiddenChatList = true;
+            this.minMode = false;
         }
         else {
             this.minModeHiddenChatList = false;
+            this.minMode = true;
+        }
+    }
+
+    onNavMenuClick() {
+        if (this.minModeHiddenChatList && this.minMode) {
+            this.minModeHiddenChatList = false;
+        }
+        else {
+            this.expandedSettings = !this.expandedSettings;
         }
     }
 
@@ -50,6 +64,10 @@ export class ChatComponent implements OnInit {
         const target = event.target;
         if (target.innerWidth > 767) {
             this.minModeHiddenChatList = true;
+            this.minMode = false;
+        }
+        else {
+            this.minMode = true;
         }
     }
 }

@@ -52,6 +52,7 @@ namespace CoolChat.Business.Services
             }
             catch (Exception ex)
             {
+                //Todo: need to implement correct excheption handling
                 return null;
             }
         }

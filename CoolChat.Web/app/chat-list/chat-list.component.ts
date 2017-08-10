@@ -54,6 +54,12 @@ export class ChatListComponent implements OnInit {
             if (this.selectedDialog && message.dialogId == this.selectedDialog.id && message.user.id != this.user.id) {
                 msgDialog.lastMessage.isReaded = true;
             }
+            this.userAccount.dialogs.sort((a, b) => {
+                var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
+                var bTicks = new Date(String(b.lastMessage.postedTime)).getTime();
+                return bTicks - aTicks;
+            }
+            );
         });
     }
 

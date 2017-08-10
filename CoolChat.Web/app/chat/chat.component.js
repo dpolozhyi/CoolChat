@@ -16,6 +16,7 @@ let ChatComponent = class ChatComponent {
         this.authService = authService;
         this.router = router;
         this.minModeHiddenChatList = false;
+        this.minMode = false;
         this.expandedSettings = false;
     }
     ngOnInit() {
@@ -23,6 +24,7 @@ let ChatComponent = class ChatComponent {
     }
     onSelectedUser(user) {
         this.selectedUser = user;
+        this.expandedSettings = false;
     }
     onLogout() {
         this.authService.logOut();
@@ -31,9 +33,19 @@ let ChatComponent = class ChatComponent {
     handleViewPortWidth(width) {
         if (width > 767) {
             this.minModeHiddenChatList = true;
+            this.minMode = false;
         }
         else {
             this.minModeHiddenChatList = false;
+            this.minMode = true;
+        }
+    }
+    onNavMenuClick() {
+        if (this.minModeHiddenChatList && this.minMode) {
+            this.minModeHiddenChatList = false;
+        }
+        else {
+            this.expandedSettings = !this.expandedSettings;
         }
     }
     onChatListStateChanged(state) {
@@ -43,6 +55,10 @@ let ChatComponent = class ChatComponent {
         const target = event.target;
         if (target.innerWidth > 767) {
             this.minModeHiddenChatList = true;
+            this.minMode = false;
+        }
+        else {
+            this.minMode = true;
         }
     }
 };

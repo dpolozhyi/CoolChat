@@ -48,7 +48,7 @@ div.enter-form {
 }
 
 div.conversation {
-    background: #ecf0f1;
+    background: #fff;
     height: 90%;
     top: 0;
     transition: 0.4s;
@@ -86,7 +86,8 @@ div.conversation {
                     margin: 10px 65px 10px 25px;
 
                     &.my-message {
-                        background: #ddd;
+                        background: #fff;
+                        border:1px solid #ccc;
                         //margin-left: 60px;
                         &:before {
                             position: absolute;
@@ -100,7 +101,22 @@ div.conversation {
                             border-left-width: 10px;
                             border-top-width: 10px;
                             border-bottom-width: 10px;
-                            border-color: transparent #ddd;
+                            border-color: transparent #ccc;
+                        }
+             
+                        &:after {
+                            position: absolute;
+                            content: "";
+                            left: 100%;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            border: 0;
+                            border-style: solid;
+                            border-color: black;
+                            border-left-width: 9px;
+                            border-top-width: 9px;
+                            border-bottom-width: 9px;
+                            border-color: transparent #fff;
                         }
                     }
                 }
@@ -122,7 +138,7 @@ div.conversation {
             }
 
             div.message {
-                background: #fff;
+                background: #f2f2f2;
                 color: #333;
                 margin: 10px 25px 10px 65px;
                 //margin-right: 60px;
@@ -174,7 +190,7 @@ div.conversation {
                     border-right-width: 10px;
                     border-top-width: 10px;
                     border-bottom-width: 10px;
-                    border-color: transparent #fff;
+                    border-color: transparent #f2f2f2;
                 }
             }
         }
@@ -223,7 +239,7 @@ div.conversation {
 
 div.conversation-loader {
     position: absolute;
-    background: #ecf0f1;
+    background: #fff;
     width: 100%;
     top: 0;
     bottom: 10%;
@@ -405,8 +421,12 @@ div.new-message {
     }
 }
 
-.beforeNone {
+.beforeAfterNone {
     &:before {
+        display: none !important;
+    }
+
+    &:after {
         display: none !important;
     }
 }

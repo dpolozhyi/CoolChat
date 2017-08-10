@@ -44,6 +44,17 @@ div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list {
   transition: 0.15s;
   min-height: 50px;
   display: block;
+  border-right: 4px solid transparent;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list.selected {
+  border-right-color: #3498db;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.08);
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list:hover div.dialog div.avatar div.avatar-area div.online-mark {
+  background: #ebebeb;
 }
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog {
   min-width: 260px;
@@ -143,13 +154,6 @@ div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div
   top: 0;
   display: block;
 }
-div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list:hover {
-  cursor: pointer;
-  background: rgba(0, 0, 0, 0.08);
-}
-div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list:hover div.dialog div.avatar div.avatar-area div.online-mark {
-  background: #ebebeb;
-}
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.dialog-selected {
   background: rgba(0, 0, 0, 0.14);
 }
@@ -175,7 +179,6 @@ div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li
   border-bottom: 1px solid #ccc;
   transition: 0.15s;
   min-height: 50px;
-  display: block;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li:first-child {
   border-top: 1px solid #ccc;
@@ -264,7 +267,7 @@ div.chat-list div.search-dialog input[type="text"] {
 }
 div.chat-list div.search-dialog input[type="text"]:focus {
   outline: 0 !important;
-  box-shadow: 0px 2px 28px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 div.chat-list div.hide {
   z-index: 999;
@@ -309,7 +312,7 @@ div.chat-area-intro {
 div.chat-area-intro div.chat-intro-message {
   font-family: Roboto-Light;
   font-size: 32px;
-  color: #555;
+  color: #666;
   height: 100%;
   text-align: center;
   white-space: nowrap;
