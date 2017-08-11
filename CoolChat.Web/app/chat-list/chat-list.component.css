@@ -12,6 +12,12 @@ div.chat-list {
   position: relative;
   background: #fff;
 }
+div.chat-list.dark {
+  border-right: 1px solid #4b4b4b;
+  box-shadow: none;
+  background: #565656;
+  color: #989898;
+}
 @media (max-width: 768px) {
   div.chat-list {
     margin-left: -200px;
@@ -48,6 +54,13 @@ div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list {
 }
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list.selected {
   border-right-color: #3498db;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list.selected.dark {
+  border-right-color: #2ecc71;
+  background: #474747;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list.dark {
+  border-bottom: 1px solid #4B4B4B;
 }
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list:hover {
   cursor: pointer;
@@ -109,16 +122,26 @@ div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div
   min-width: 200px;
   overflow: hidden;
 }
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-header.dark {
+  color: #fff;
+}
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-header span.name {
   float: left;
   font-size: 17px;
   font-weight: bold;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-header span.name.dark {
+  font-weight: normal;
 }
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-header span.time {
   font-size: 14px;
   float: right;
   color: #777;
   font-weight: bold;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-header span.time.dark {
+  color: #fff;
+  font-weight: normal;
 }
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body {
   font-size: 16px;
@@ -139,6 +162,16 @@ div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div
   text-overflow: ellipsis;
   border-radius: 2px;
 }
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-text.unreaded {
+  background: #ccc;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-text.unreaded.full-length {
+  margin-right: 0px;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-text.unreaded.dark {
+  background: #777;
+  color: #222;
+}
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-text span.sender {
   color: red;
 }
@@ -146,13 +179,19 @@ div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div
   min-width: 10px;
   float: right;
   background: #3498db;
-  padding: 2px 7px;
   border-radius: 50%;
   color: white;
   position: absolute;
   right: 0;
   top: 0;
   display: block;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+}
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-notification.dark {
+  background: #2ecc71;
 }
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.dialog-selected {
   background: rgba(0, 0, 0, 0.14);
@@ -238,9 +277,13 @@ div.chat-list div.search-dialog {
     height: 50px;
   }
 }
+div.chat-list div.search-dialog.dark {
+  border-color: #4b4b4b;
+  color: white;
+}
 div.chat-list div.search-dialog label {
   position: absolute;
-  left: 9px;
+  left: 10px;
   top: 6px;
 }
 div.chat-list div.search-dialog label i.fa-search {
@@ -268,6 +311,15 @@ div.chat-list div.search-dialog input[type="text"] {
 div.chat-list div.search-dialog input[type="text"]:focus {
   outline: 0 !important;
   box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+div.chat-list div.search-dialog input[type="text"].dark {
+  background: #565656;
+  font-weight: normal;
+  color: #fff;
+}
+div.chat-list div.search-dialog input[type="text"].dark:focus {
+  outline: 0 !important;
+  box-shadow: none;
 }
 div.chat-list div.hide {
   z-index: 999;
@@ -308,11 +360,15 @@ div.chat-list div.hide:hover {
 div.chat-area-intro {
   height: 100%;
   background: #fff;
+  color: #666;
+}
+div.chat-area-intro.dark {
+  color: #989898;
+  background: #565656;
 }
 div.chat-area-intro div.chat-intro-message {
   font-family: Roboto-Light;
   font-size: 32px;
-  color: #666;
   height: 100%;
   text-align: center;
   white-space: nowrap;
@@ -344,9 +400,6 @@ div.chat-area-intro div.chat-intro-message:before {
 }
 .oneHunMarginLeft {
   margin-left: 100% !important;
-}
-.greyBackground {
-  background: #ccc !important;
 }
 ::-webkit-scrollbar {
   width: 2px;

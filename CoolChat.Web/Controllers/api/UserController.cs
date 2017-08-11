@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Web.Http;
 
 namespace CoolChat.Web.Controllers.api
@@ -63,7 +65,20 @@ namespace CoolChat.Web.Controllers.api
             if(user != null)
             {
                 Entities.User addedUser = this.userService.AddNewUser(new Entities.User() { Id = user.Id, Name = user.Login, LastTimeActivity=DateTime.UtcNow });
-                return Ok(addedUser);
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:38313");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    LoginModel loginModel = new LoginModel() { Login = user.Login, Password = regModel.Password };
+                    var response = client.PostAsync("api/token", new StringContent(JsonConvert.SerializeObject(loginModel), Encoding.UTF8, "application/json")).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseString = response.Content.ReadAsStringAsync().Result;
+                        return Ok(responseString);
+                    }
+                    return Unauthorized();
+                }
             }
             else
             {

@@ -20,7 +20,7 @@ namespace CoolChat.Web.App_Start
                     .ForMember(dest => dest.LastMessage, opt => opt.MapFrom(src => src.Messages.OrderByDescending(n => n.PostedTime).FirstOrDefault()))
                     .ForMember(dest => dest.Members, opt => opt.MapFrom(src => src.Members))
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                    .ForMember(dest => dest.NewMessagesNumber, opt => opt.MapFrom(src => src.Messages.Count(n => !n.IsReaded && n.User.Id != src.Id)))
+                    .ForMember(dest => dest.NewMessagesNumber, opt => opt.MapFrom(src => src.Messages.Count(n => !n.IsReaded && src.Members.Select(m => m.Id).Contains(n.User.Id))))
                     .ForMember(dest => dest.TimeCreated, opt => opt.MapFrom(src => src.TimeCreated));
 
                 config.CreateMap<User, UserAccountViewModel>()

@@ -17,7 +17,12 @@ let AuthService = class AuthService {
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     registerUser(regModel) {
-        return this.http.post('api/user', JSON.stringify(regModel), { headers: this.headers }).toPromise();
+        return this.http.post('api/user', JSON.stringify(regModel), { headers: this.headers })
+            .toPromise().then(res => {
+            var token = JSON.parse(res.json());
+            localStorage.setItem('tokenKey', token);
+            return token;
+        });
     }
     getToken(loginModel) {
         return this.http.post('api/token', JSON.stringify(loginModel), { headers: this.headers })

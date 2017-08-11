@@ -21,9 +21,9 @@
         </div>
     </div>
 </div>
-<div class="conversation-loader" *ngIf="messagesLoading">
+<div class="conversation-loader" [class.dark]="isDark" *ngIf="messagesLoading">
     <div class="conversation-loader-wrapper">
-        <div class="loader"></div>
+        <div class="loader" [class.dark]="isDark"></div>
     </div>
 </div>
 <div class="new-message" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">

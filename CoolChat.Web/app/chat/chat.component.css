@@ -43,6 +43,11 @@ div.container div.header div.logo-bar {
   color: #3498db;
   text-align: center;
 }
+div.container div.header div.logo-bar.dark {
+  background: #565656;
+  border: 2px solid #2ecc71;
+  color: #2ecc71;
+}
 @media (max-width: 768px) {
   div.container div.header div.logo-bar {
     margin-left: -200px;
@@ -65,6 +70,10 @@ div.container div.header div.info-bar {
   min-width: 308px;
   overflow: hidden;
   background: #fff;
+}
+div.container div.header div.info-bar.dark {
+  background: #565656;
+  color: #98989;
 }
 div.container div.header div.info-bar div.central-bar {
   height: 100%;
@@ -140,17 +149,27 @@ div.container div.header div.info-bar div.central-bar div.user-info div.user-wra
   font-weight: bold;
   color: #555;
 }
+div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-name.dark {
+  color: #fff;
+  font-weight: normal;
+}
 div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status {
   font-size: 16px;
   color: #777;
   margin-top: 5px;
   white-space: nowrap;
 }
+div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status.dark {
+  color: #989898;
+}
 div.container div.header div.info-bar div.central-bar div.menu-info {
   height: 100%;
   text-align: center;
   font-size: 34px;
   color: #3498db;
+}
+div.container div.header div.info-bar div.central-bar div.menu-info.dark {
+  color: #2ecc71;
 }
 div.container div.header div.info-bar div.central-bar div.menu-info span:before {
   content: "";
@@ -207,6 +226,9 @@ div.container div.header div.info-bar div.central-bar div.nav-button div.nav-but
   -moz-transition: 0.25s ease-in-out;
   -o-transition: 0.25s ease-in-out;
   transition: 0.25s ease-in-out;
+}
+div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon span.dark {
+  background: #2ecc71;
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon span:nth-child(1) {
   top: 0px;
@@ -272,6 +294,9 @@ div.container div.header div.info-bar div.central-bar div.search-button {
   right: 20px;
   color: #3498db;
 }
+div.container div.header div.info-bar div.central-bar div.search-button.dark {
+  color: #2ecc71;
+}
 @media (min-width: 768px) {
   div.container div.header div.info-bar div.central-bar div.search-button {
     display: none;
@@ -312,12 +337,27 @@ div.container div.header div.settings-expanded ul li {
   text-decoration: none;
   padding: 11px 25px;
 }
-div.container div.header div.settings-expanded ul li:first-child {
+div.container div.header div.settings-expanded ul li.dark {
+  background: #565656;
+  color: #2ecc71;
+}
+div.container div.header div.settings-expanded ul li.dark:not(:last-child) {
+  border-bottom: 1px solid #4b4b4b;
+}
+div.container div.header div.settings-expanded ul li.dark:hover {
+  background: #474747;
+}
+div.container div.header div.settings-expanded ul li:not(:last-child) {
   border-bottom: 1px solid #eee;
 }
 div.container div.header div.settings-expanded ul li:hover {
   background: rgba(0, 0, 0, 0.08);
   cursor: pointer;
+}
+@media (max-width: 768px) {
+  div.container div.header div.settings-expanded ul li {
+    padding: 15px 25px;
+  }
 }
 div.container .main {
   height: 92%;

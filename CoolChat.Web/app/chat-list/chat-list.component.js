@@ -20,21 +20,24 @@ let ChatListComponent = class ChatListComponent {
         this.chatService.starting$.subscribe(() => { console.log("signalr service has been started"); }, () => { console.warn("signalr service failed to start!"); });
     }
     ngOnInit() {
-        this.authService.getUser().then((user) => this.user = user);
-        this.chatService.getUserAccount().then((userAccount) => {
-            this.userAccount = userAccount;
-            this.filteredDialogs = userAccount.dialogs;
-            this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
-            alert("Hi, " + userAccount.name + '!');
+        this.chatService.starting$.subscribe(() => {
+            this.authService.getUser().then((user) => this.user = user);
+            this.chatService.getUserAccount().then((userAccount) => {
+                this.userAccount = userAccount;
+                this.filteredDialogs = userAccount.dialogs;
+                this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
+                alert("Hi, " + userAccount.name + '!');
+            });
         });
         this.chatService.newMessage$.subscribe((message) => {
             var msgDialog = this.userAccount.dialogs.filter(dialog => dialog.id == message.dialogId)[0];
             msgDialog.lastMessage = message;
-            if (!this.selectedDialog || (this.selectedDialog && message.dialogId != this.selectedDialog.id)) {
+            if (!this.selectedDialog || (this.selectedDialog && message.dialogId != this.selectedDialog.id) || (this.minMode && !this.minModeHiddenChatList)) {
                 msgDialog.newMessagesNumber += 1;
             }
-            if (this.selectedDialog && message.dialogId == this.selectedDialog.id && message.user.id != this.user.id) {
+            if ((this.selectedDialog && message.dialogId == this.selectedDialog.id && message.user.id != this.user.id && ((this.minMode && this.minModeHiddenChatList) || !this.minMode))) {
                 msgDialog.lastMessage.isReaded = true;
+                this.chatService.setMessagesAsReaded(this.selectedDialog.id);
             }
             this.userAccount.dialogs.sort((a, b) => {
                 var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
@@ -42,6 +45,14 @@ let ChatListComponent = class ChatListComponent {
                 return bTicks - aTicks;
             });
         });
+        this.chatService.readedMessages$.subscribe((dialogId) => {
+            this.userAccount.dialogs.find((dialog) => dialog.id == dialogId).lastMessage.isReaded = true;
+        });
+    }
+    ngOnChanges() {
+        if (!this.minMode && this.selectedDialog) {
+            this.selectDialog(this.selectedDialog);
+        }
     }
     onDialogSearch(filter) {
         if (filter) {
@@ -52,30 +63,30 @@ let ChatListComponent = class ChatListComponent {
         }
     }
     selectDialog(dialog) {
-        console.log(this.hiddenChatList);
         this.selectedDialog = dialog;
         if (this.selectedDialog.newMessagesNumber > 0) {
             this.chatService.setMessagesAsReaded(this.selectedDialog.id);
         }
         this.selectedDialog.newMessagesNumber = 0;
-        this.selectedDialog.lastMessage.isReaded = true;
+        if (this.selectedDialog.lastMessage.user.id != this.user.id) {
+            this.selectedDialog.lastMessage.isReaded = true;
+        }
         this.notifyChatListState.emit(true);
         this.notifySelectedUser.emit(dialog.members[0]);
-    }
-    onMouseMove(event) {
-        if (event.clientX < 2) {
-            this.hiddenChatList = false;
-        }
     }
 };
 __decorate([
     core_1.Input(), 
     __metadata('design:type', Boolean)
-], ChatListComponent.prototype, "hiddenChatList", void 0);
+], ChatListComponent.prototype, "minMode", void 0);
 __decorate([
     core_1.Input(), 
     __metadata('design:type', Boolean)
 ], ChatListComponent.prototype, "minModeHiddenChatList", void 0);
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', Boolean)
+], ChatListComponent.prototype, "isDark", void 0);
 __decorate([
     core_1.Output(), 
     __metadata('design:type', core_1.EventEmitter)
@@ -84,12 +95,6 @@ __decorate([
     core_1.Output(), 
     __metadata('design:type', core_1.EventEmitter)
 ], ChatListComponent.prototype, "notifySelectedUser", void 0);
-__decorate([
-    core_1.HostListener('mousemove', ['$event']), 
-    __metadata('design:type', Function), 
-    __metadata('design:paramtypes', [Object]), 
-    __metadata('design:returntype', void 0)
-], ChatListComponent.prototype, "onMouseMove", null);
 ChatListComponent = __decorate([
     core_1.Component({
         selector: 'div[chat-list]',

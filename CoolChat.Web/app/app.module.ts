@@ -14,6 +14,8 @@ import { LoadWaiterComponent } from './load-waiter/load-waiter.component';
 import { ChatService, SignalrWindow } from './shared/services/chat.service';
 import { AuthService } from './shared/services/auth.service';
 
+import { FocusDirective } from './shared/directives/focus.directive';
+
 import { DatePipe } from '@angular/common';
 import { RelativeDatePipe} from "./shared/pipes/relative-date.pipe";
 
@@ -38,7 +40,8 @@ import { RelativeDatePipe} from "./shared/pipes/relative-date.pipe";
         ChatComponent,
         AuthComponent,
         LoadWaiterComponent,
-        RelativeDatePipe
+        RelativeDatePipe,
+        FocusDirective
     ],
     providers:
     [

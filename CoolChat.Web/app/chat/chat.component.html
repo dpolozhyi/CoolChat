@@ -1,9 +1,9 @@
 ﻿<div class="container">
     <div class="header">
-        <div class="logo-bar">
+        <div class="logo-bar" [class.dark]="isDark">
             <span class="logo">CoolChat</span>
         </div>
-        <div class="info-bar">
+        <div class="info-bar" [class.dark]="isDark">
             <div class="central-bar">
                 <div class="user-info" *ngIf="selectedUser && minModeHiddenChatList">
                     <div class="user-wrapper">
@@ -18,30 +18,30 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="user-info-body">
-                            <div class="user-name">
+                        <div class="user-info-body" [class.dark]="isDark">
+                            <div class="user-name"  [class.dark]="isDark">
                                 {{selectedUser.name}}
                             </div>
-                            <div class="user-status">
+                            <div class="user-status" [class.dark]="isDark">
                                 Last seen {{selectedUser.lastTimeActivity | relativeDate}}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="menu-info" *ngIf="!minModeHiddenChatList">
+                <div class="menu-info" *ngIf="!minModeHiddenChatList" [class.dark]="isDark">
                     <span>Chats</span>
                 </div>
                 <div class="nav-button" (click)="onNavMenuClick()">
                     <div class="nav-button-wrapper">
                         <div class="nav-icon" [class.close]="expandedSettings" [class.arrow-left]="minModeHiddenChatList && minMode">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                            <span [class.dark]="isDark"></span>
+                            <span [class.dark]="isDark"></span>
+                            <span [class.dark]="isDark"></span>
                         </div>
 
                     </div>
                 </div>
-                <div class="search-button" *ngIf="minMode && !minModeHiddenChatList">
+                <div class="search-button" *ngIf="minMode && !minModeHiddenChatList" [class.dark]="isDark">
                     <div class="search-button-wrapper">
                         <div class="search-icon">
                             <i class="fa fa-search" aria-hidden="true"></i>
@@ -52,14 +52,18 @@
         </div>
         <div class="settings-expanded" *ngIf="expandedSettings">
             <ul>
-                <li>Profile</li>
-                <li (click)="onLogout()">Log out</li>
+                <li [class.dark]="isDark">Profile</li>
+                <li [class.dark]="isDark" *ngIf="!isDark" (click)="isDark = !isDark">Dark theme</li>
+                <li [class.dark]="isDark" *ngIf="isDark" (click)="isDark = !isDark">Light theme</li>
+                <li [class.dark]="isDark" (click)="onLogout()">Log out</li>
             </ul>
         </div>
     </div>
     <div chat-list class="main"
          (notifySelectedUser)="onSelectedUser($event)"
          (notifyChatListState)="onChatListStateChanged($event)"
-         [minModeHiddenChatList]="minModeHiddenChatList">
+         [minModeHiddenChatList]="minModeHiddenChatList"
+         [minMode]="minMode"
+         [isDark]="isDark">
     </div>
 </div>

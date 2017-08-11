@@ -24,6 +24,8 @@ export class MessagesComponent implements OnInit, OnChanges {
 
     @Input() minModeHiddenChatList: boolean;
 
+    @Input() isDark: boolean;
+
     @Input() user: UserModel;
 
     @Input() briefDialog: BriefDialogModel

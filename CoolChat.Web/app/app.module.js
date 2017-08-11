@@ -21,6 +21,7 @@ const auth_component_1 = require('./auth/auth.component');
 const load_waiter_component_1 = require('./load-waiter/load-waiter.component');
 const chat_service_1 = require('./shared/services/chat.service');
 const auth_service_1 = require('./shared/services/auth.service');
+const focus_directive_1 = require('./shared/directives/focus.directive');
 const common_1 = require('@angular/common');
 const relative_date_pipe_1 = require("./shared/pipes/relative-date.pipe");
 let AppModule = class AppModule {
@@ -46,7 +47,8 @@ AppModule = __decorate([
             chat_component_1.ChatComponent,
             auth_component_1.AuthComponent,
             load_waiter_component_1.LoadWaiterComponent,
-            relative_date_pipe_1.RelativeDatePipe
+            relative_date_pipe_1.RelativeDatePipe,
+            focus_directive_1.FocusDirective
         ],
         providers: [
             chat_service_1.ChatService,

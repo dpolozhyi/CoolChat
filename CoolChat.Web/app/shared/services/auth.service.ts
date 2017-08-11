@@ -15,8 +15,13 @@ export class AuthService {
 
     constructor(private http: Http) { }
 
-    registerUser(regModel: RegisterModel): Promise<Response> {
-        return this.http.post('api/user', JSON.stringify(regModel), { headers: this.headers } ).toPromise();
+    registerUser(regModel: RegisterModel): Promise<string> {
+        return this.http.post('api/user', JSON.stringify(regModel), { headers: this.headers })
+            .toPromise().then(res => {
+                var token = JSON.parse(res.json()) as string;
+                localStorage.setItem('tokenKey', token);
+                return token;
+            });
     }
 
     getToken(loginModel: LoginModel): Promise<string> {

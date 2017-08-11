@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+﻿import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnChanges } from '@angular/core';
 import { ChatService } from '../shared/services/chat.service';
 import { AuthService } from '../shared/services/auth.service';
 
@@ -12,11 +12,13 @@ import { BriefDialogModel } from "../shared/models/brief-dialog.model"
     templateUrl: 'app/chat-list/chat-list.component.html',
     styleUrls: ['app/chat-list/chat-list.component.css']
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent implements OnInit, OnChanges {
 
-    @Input() hiddenChatList: boolean;
+    @Input() minMode: boolean;
 
     @Input() minModeHiddenChatList: boolean;
+
+    @Input() isDark: boolean;
 
     @Output() notifyChatListState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -38,21 +40,24 @@ export class ChatListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.authService.getUser().then((user: UserModel) => this.user = user);
-        this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
-            this.userAccount = userAccount;
-            this.filteredDialogs = userAccount.dialogs;
-            this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
-            alert("Hi, " + userAccount.name + '!');
+        this.chatService.starting$.subscribe(() => {
+            this.authService.getUser().then((user: UserModel) => this.user = user);
+            this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
+                this.userAccount = userAccount;
+                this.filteredDialogs = userAccount.dialogs;
+                this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
+                alert("Hi, " + userAccount.name + '!');
+            });
         });
         this.chatService.newMessage$.subscribe((message: MessageModel) => {
             var msgDialog = this.userAccount.dialogs.filter(dialog => dialog.id == message.dialogId)[0];
             msgDialog.lastMessage = message;
-            if (!this.selectedDialog || (this.selectedDialog && message.dialogId != this.selectedDialog.id)) {
+            if (!this.selectedDialog || (this.selectedDialog && message.dialogId != this.selectedDialog.id) || (this.minMode && !this.minModeHiddenChatList)) {
                 msgDialog.newMessagesNumber += 1;
             }
-            if (this.selectedDialog && message.dialogId == this.selectedDialog.id && message.user.id != this.user.id) {
+            if ((this.selectedDialog && message.dialogId == this.selectedDialog.id && message.user.id != this.user.id && ((this.minMode && this.minModeHiddenChatList) || !this.minMode))) {
                 msgDialog.lastMessage.isReaded = true;
+                this.chatService.setMessagesAsReaded(this.selectedDialog.id);
             }
             this.userAccount.dialogs.sort((a, b) => {
                 var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
@@ -61,6 +66,15 @@ export class ChatListComponent implements OnInit {
             }
             );
         });
+        this.chatService.readedMessages$.subscribe((dialogId) => {
+            this.userAccount.dialogs.find((dialog) => dialog.id == dialogId).lastMessage.isReaded = true;
+        });
+    }
+
+    ngOnChanges() {
+        if (!this.minMode && this.selectedDialog) {
+            this.selectDialog(this.selectedDialog);
+        }
     }
 
     onDialogSearch(filter: string) {
@@ -73,21 +87,15 @@ export class ChatListComponent implements OnInit {
     }
 
     selectDialog(dialog: BriefDialogModel) {
-        console.log(this.hiddenChatList);
         this.selectedDialog = dialog;
         if (this.selectedDialog.newMessagesNumber > 0) {
             this.chatService.setMessagesAsReaded(this.selectedDialog.id);
         }
         this.selectedDialog.newMessagesNumber = 0;
-        this.selectedDialog.lastMessage.isReaded = true;   
+        if (this.selectedDialog.lastMessage.user.id != this.user.id) {
+            this.selectedDialog.lastMessage.isReaded = true;
+        }
         this.notifyChatListState.emit(true);
         this.notifySelectedUser.emit(dialog.members[0]);
-    }
-
-    @HostListener('mousemove', ['$event'])
-    onMouseMove(event) {
-        if (event.clientX < 2) {
-            this.hiddenChatList = false;
-        }
     }
 }

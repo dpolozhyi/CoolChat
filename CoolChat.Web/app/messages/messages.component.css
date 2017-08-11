@@ -215,6 +215,9 @@ div.conversation-loader {
   top: 0;
   bottom: 10%;
 }
+div.conversation-loader.dark {
+  background: #565656;
+}
 div.conversation-loader div.conversation-loader-wrapper {
   text-align: center;
   height: 100%;
@@ -232,6 +235,9 @@ div.conversation-loader div.conversation-loader-wrapper div.loader {
   top: 45%;
   left: 50%;
   margin: -23px 0px 0px -23px;
+}
+div.conversation-loader div.conversation-loader-wrapper div.loader.dark {
+  border-top-color: #2ecc71;
 }
 @-webkit-keyframes spin {
   0% {

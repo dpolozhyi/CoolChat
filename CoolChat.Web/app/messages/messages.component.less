@@ -87,7 +87,7 @@ div.conversation {
 
                     &.my-message {
                         background: #fff;
-                        border:1px solid #ccc;
+                        border: 1px solid #ccc;
                         //margin-left: 60px;
                         &:before {
                             position: absolute;
@@ -103,7 +103,7 @@ div.conversation {
                             border-bottom-width: 10px;
                             border-color: transparent #ccc;
                         }
-             
+
                         &:after {
                             position: absolute;
                             content: "";
@@ -244,6 +244,10 @@ div.conversation-loader {
     top: 0;
     bottom: 10%;
 
+    &.dark {
+        background: #565656;
+    }
+
     div.conversation-loader-wrapper {
         text-align: center;
         height: 100%;
@@ -259,6 +263,10 @@ div.conversation-loader {
             top: 45%;
             left: 50%;
             margin: -23px 0px 0px -23px;
+
+            &.dark {
+                border-top-color: #2ecc71;
+            }
         }
 
         @-webkit-keyframes spin {

@@ -30,9 +30,13 @@ export class ChatService {
 
     newMessage$: Observable<any>;
 
+    readedMessages$: Observable<any>;
+
     private startingSubject = new Subject<any>();
 
     private newMessageSubject = new Subject<MessageModel>();
+
+    private readedMessagesSubject = new Subject<number>();
 
     private msgCallback: MessageCallback;
 
@@ -55,6 +59,7 @@ export class ChatService {
 
         this.starting$ = this.startingSubject.asObservable();
         this.newMessage$ = this.newMessageSubject.asObservable();
+        this.readedMessages$ = this.readedMessagesSubject.asObservable();
 
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
@@ -65,6 +70,10 @@ export class ChatService {
             if (this.msgCallback) {
                 this.msgCallback(message);
             }
+        });
+        this.hubProxy.on("ReadedMessages", (dialogId) => {
+            console.log(dialogId);
+            this.readedMessagesSubject.next(dialogId);
         });
         this.hubProxy.on("UserIsOnline", (userId, isOnline) => {
             console.log(this.msgCallback);

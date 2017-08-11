@@ -382,6 +382,7 @@
     <TypeScriptCompile Include="app\chat-list\chat-list.component.ts" />
     <TypeScriptCompile Include="app\messages\messages.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
+    <TypeScriptCompile Include="app\shared\directives\focus.directive.ts" />
     <TypeScriptCompile Include="app\shared\models\brief-dialog.model.ts" />
     <TypeScriptCompile Include="app\shared\models\login.model.ts" />
     <TypeScriptCompile Include="app\shared\models\message.model.ts" />

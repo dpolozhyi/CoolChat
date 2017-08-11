@@ -17,6 +17,7 @@ let ChatComponent = class ChatComponent {
         this.router = router;
         this.minModeHiddenChatList = false;
         this.minMode = false;
+        this.isDark = false;
         this.expandedSettings = false;
     }
     ngOnInit() {
@@ -51,6 +52,40 @@ let ChatComponent = class ChatComponent {
     onChatListStateChanged(state) {
         this.minModeHiddenChatList = state;
     }
+    handleClick(event) {
+        var hideSettings = true;
+        var path;
+        if (event.path) {
+            path = event.path;
+        }
+        else {
+            path = this.composedPath(event.target);
+        }
+        console.log(path);
+        if (!path) {
+            return;
+        }
+        path.forEach((value) => {
+            if (value.className && (value.className.indexOf("settings-expanded") != -1 || value.className.indexOf("nav-icon") != -1)) {
+                hideSettings = false;
+            }
+        });
+        if (hideSettings) {
+            this.expandedSettings = false;
+        }
+    }
+    composedPath(el) {
+        var path = [];
+        while (el) {
+            path.push(el);
+            if (el.tagName === 'HTML') {
+                path.push(document);
+                path.push(window);
+                return path;
+            }
+            el = el.parentElement;
+        }
+    }
     onResize(event) {
         const target = event.target;
         if (target.innerWidth > 767) {
@@ -62,6 +97,12 @@ let ChatComponent = class ChatComponent {
         }
     }
 };
+__decorate([
+    core_1.HostListener('document:click', ['$event']), 
+    __metadata('design:type', Function), 
+    __metadata('design:paramtypes', [Object]), 
+    __metadata('design:returntype', void 0)
+], ChatComponent.prototype, "handleClick", null);
 __decorate([
     core_1.HostListener('window:resize', ['$event']), 
     __metadata('design:type', Function), 

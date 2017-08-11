@@ -97,7 +97,7 @@ namespace CoolChat.Web.Controllers.api
                 if (this.dialogService.CheckUserHasDialog(userId, dialogId))
                 {
                     this.dialogService.SetDialogMessagesReaded(userId, dialogId);
-                    //hubContext.Clients.Group(returnedMessage.DialogId.ToString()).AddNewMessage(json);
+                    hubContext.Clients.Group(dialogId.ToString()).ReadedMessages(dialogId);
                     return Ok();
                 }
                 return Unauthorized();

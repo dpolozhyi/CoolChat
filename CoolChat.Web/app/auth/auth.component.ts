@@ -73,7 +73,7 @@ export class AuthComponent {
 
     onRegister() {
         console.log(this.registerModel);
-        this.authService.registerUser(this.registerModel).then(res => console.log(res));
+        this.authService.registerUser(this.registerModel).then(res => console.log(res)).then(() => this.router.navigate(['']));
     }
 
     onPasswordEnter(value: string) {

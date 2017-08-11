@@ -13,6 +13,13 @@
     position: relative;
     background: #fff;
 
+    &.dark {
+        border-right: 1px solid #4b4b4b;
+        box-shadow: none;
+        background: #565656;
+        color: #989898;
+    }
+
     @media (max-width: 768px) {
         margin-left: -200px;
         min-width: unset;
@@ -47,6 +54,15 @@
 
                 &.selected {
                     border-right-color: #3498db;
+
+                    &.dark {
+                        border-right-color: #2ecc71;
+                        background: #474747;
+                    }
+                }
+
+                &.dark {
+                    border-bottom: 1px solid #4B4B4B;
                 }
 
                 &:hover {
@@ -119,10 +135,18 @@
                             min-width: 200px;
                             overflow: hidden;
 
+                            &.dark {
+                                color: #fff;
+                            }
+
                             span.name {
                                 float: left;
                                 font-size: 17px;
                                 font-weight: bold;
+
+                                &.dark {
+                                    font-weight: normal;
+                                }
                             }
 
                             span.time {
@@ -130,6 +154,11 @@
                                 float: right;
                                 color: #777;
                                 font-weight: bold;
+
+                                &.dark {
+                                    color: #fff;
+                                    font-weight: normal;
+                                }
                             }
                         }
 
@@ -152,6 +181,19 @@
                                 text-overflow: ellipsis;
                                 border-radius: 2px;
 
+                                &.unreaded {
+                                    background: #ccc;
+
+                                    &.full-length {
+                                        margin-right: 0px;
+                                    }
+
+                                    &.dark {
+                                        background: #777;
+                                        color: #222;
+                                    }
+                                }
+
                                 span.sender {
                                     color: red;
                                 }
@@ -162,13 +204,20 @@
                                 min-width: 10px;
                                 float: right;
                                 background: #3498db;
-                                padding: 2px 7px;
                                 border-radius: 50%;
                                 color: white;
                                 position: absolute;
                                 right: 0;
                                 top: 0;
                                 display: block;
+                                width: 22px;
+                                height: 22px;
+                                line-height: 22px;
+                                text-align: center;
+
+                                &.dark {
+                                    background: #2ecc71;
+                                }
                             }
                         }
                     }
@@ -277,9 +326,14 @@
             height: 50px;
         }
 
+        &.dark {
+            border-color: #4b4b4b;
+            color: white;
+        }
+
         label {
             position: absolute;
-            left: 9px;
+            left: 10px;
             top: 6px;
 
             i.fa-search {
@@ -308,6 +362,17 @@
             &:focus {
                 outline: 0 !important;
                 box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
+            }
+
+            &.dark {
+                background: #565656;
+                font-weight: normal;
+                color: #fff;
+
+                &:focus {
+                    outline: 0 !important;
+                    box-shadow: none;
+                }
             }
         }
     }
@@ -357,11 +422,16 @@
 div.chat-area-intro {
     height: 100%;
     background: #fff;
+    color: #666;
+
+    &.dark {
+        color: #989898;
+        background: #565656;
+    }
 
     div.chat-intro-message {
         font-family: Roboto-Light;
         font-size: 32px;
-        color: #666;
         height: 100%;
         text-align: center;
         white-space: nowrap;
@@ -400,10 +470,6 @@ div.chat-area-intro {
 
 .oneHunMarginLeft {
     margin-left: 100% !important;
-}
-
-.greyBackground {
-    background: #ccc !important;
 }
 
 ::-webkit-scrollbar {

@@ -26,6 +26,7 @@ let ChatService = class ChatService {
         this.authService = authService;
         this.startingSubject = new Subject_1.Subject();
         this.newMessageSubject = new Subject_1.Subject();
+        this.readedMessagesSubject = new Subject_1.Subject();
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
@@ -33,6 +34,7 @@ let ChatService = class ChatService {
         this.authService.getUser().then((user) => this.user = user);
         this.starting$ = this.startingSubject.asObservable();
         this.newMessage$ = this.newMessageSubject.asObservable();
+        this.readedMessages$ = this.readedMessagesSubject.asObservable();
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
         this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
@@ -42,6 +44,10 @@ let ChatService = class ChatService {
             if (this.msgCallback) {
                 this.msgCallback(message);
             }
+        });
+        this.hubProxy.on("ReadedMessages", (dialogId) => {
+            console.log(dialogId);
+            this.readedMessagesSubject.next(dialogId);
         });
         this.hubProxy.on("UserIsOnline", (userId, isOnline) => {
             console.log(this.msgCallback);

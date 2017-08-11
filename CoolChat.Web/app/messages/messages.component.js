@@ -125,6 +125,10 @@ __decorate([
 ], MessagesComponent.prototype, "minModeHiddenChatList", void 0);
 __decorate([
     core_1.Input(), 
+    __metadata('design:type', Boolean)
+], MessagesComponent.prototype, "isDark", void 0);
+__decorate([
+    core_1.Input(), 
     __metadata('design:type', user_model_1.UserModel)
 ], MessagesComponent.prototype, "user", void 0);
 __decorate([

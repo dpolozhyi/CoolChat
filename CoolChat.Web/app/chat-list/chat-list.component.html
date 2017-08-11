@@ -1,13 +1,13 @@
-﻿<div class="chat-list" [class.hiddenChatList]="hiddenChatList" [class.fullWidth]="!minModeHiddenChatList" [class.zeroMarginLeft]="!minModeHiddenChatList">
-    <div class="search-dialog">
+﻿<div class="chat-list" [class.dark]="isDark" [class.fullWidth]="!minModeHiddenChatList" [class.zeroMarginLeft]="!minModeHiddenChatList">
+    <div class="search-dialog" [class.dark]="isDark">
         <label for="search-dialog-input">
             <i class="fa fa-search" aria-hidden="true"></i>
         </label>
-        <input id="search-dialog-input" type="text" #searchInput (keyup)="onDialogSearch(searchInput.value)" placeholder="Search..." />
+        <input id="search-dialog-input" type="text" #searchInput (keyup)="onDialogSearch(searchInput.value)" [class.dark]="isDark" placeholder="Search..." />
     </div>
     <div class="dialog-list-wrapper">
         <ul *ngIf="userAccount && user" class="dialog-list">
-            <li *ngFor="let dialog of filteredDialogs" (click)="selectDialog(dialog)" class="room-list" [class.selected]="this.selectedDialog==dialog">
+            <li *ngFor="let dialog of filteredDialogs" [class.dark]="isDark" (click)="selectDialog(dialog)" class="room-list" [class.selected]="this.selectedDialog==dialog && !minMode">
                 <div class="dialog">
                     <div class="avatar">
                         <div class="avatar-area">
@@ -21,13 +21,13 @@
                         </div>
                     </div>
                     <div class="message">
-                        <div class="message-header">
-                            <span class="name">{{dialog.members[0].name}}</span>
-                            <span class="time">{{dialog.lastMessage.postedTime | relativeDate}}</span>
+                        <div class="message-header" [class.dark]="isDark">
+                            <span class="name" [class.dark]="isDark">{{dialog.members[0].name}}</span>
+                            <span class="time" [class.dark]="isDark">{{dialog.lastMessage.postedTime | relativeDate}}</span>
                         </div>
                         <div class="message-body">
-                            <span class="message-text" [class.greyBackground]="!dialog.lastMessage.isReaded"><span class="sender" *ngIf="dialog.lastMessage.userId==user.id">You: </span>{{dialog.lastMessage.body}}</span>
-                            <span class="message-notification" *ngIf="dialog.newMessagesNumber > 0">{{dialog.newMessagesNumber}}</span>
+                            <span class="message-text" [class.unreaded]="!dialog.lastMessage.isReaded" [class.full-length]="dialog.newMessagesNumber < 1" [class.dark]="isDark"><span class="sender" *ngIf="dialog.lastMessage.userId==user.id">You: </span>{{dialog.lastMessage.body}}</span>
+                            <span class="message-notification" [class.dark]="isDark" *ngIf="dialog.newMessagesNumber > 0">{{dialog.newMessagesNumber}}</span>
                         </div>
                     </div>
                 </div>
@@ -69,12 +69,12 @@
 <div messages class="chat-area"
      *ngIf="selectedDialog"
      [minModeHiddenChatList]="minModeHiddenChatList"
+     [isDark]="isDark"
      [briefDialog]="selectedDialog"
      [user]="user"
      [class.fullWidth]="hiddenChatList"
-     [class.oneHunMarginLeft]="!minModeHiddenChatList"
-     [hiddenChatList]="hiddenChatList">
+     [class.oneHunMarginLeft]="!minModeHiddenChatList">
 </div>
-<div class="chat-area-intro" *ngIf="!selectedDialog">
+<div  [class.dark]="isDark" class="chat-area-intro" *ngIf="!selectedDialog">
     <div class="chat-intro-message">Please, select chat</div>
 </div>

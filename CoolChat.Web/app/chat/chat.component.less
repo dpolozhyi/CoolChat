@@ -46,6 +46,12 @@
             color: #3498db;
             text-align: center;
 
+            &.dark {
+                background: #565656;
+                border: 2px solid #2ecc71;
+                color: #2ecc71;
+            }
+
             @media (max-width: 768px) {
                 margin-left: -200px;
                 min-width: unset;
@@ -72,6 +78,11 @@
             min-width: 308px;
             overflow: hidden;
             background: #fff;
+
+            &.dark {
+                background: #565656;
+                color: #98989;
+            }
 
             div.central-bar {
                 height: 100%;
@@ -151,6 +162,11 @@
                                 font-size: 18px;
                                 font-weight: bold;
                                 color: #555;
+
+                                &.dark {
+                                    color: #fff;
+                                    font-weight: normal;
+                                }
                             }
 
                             div.user-status {
@@ -158,6 +174,10 @@
                                 color: #777;
                                 margin-top: 5px;
                                 white-space: nowrap;
+
+                                &.dark {
+                                    color: #989898;
+                                }
                             }
                         }
                     }
@@ -168,6 +188,10 @@
                     text-align: center;
                     font-size: 34px;
                     color: #3498db;
+
+                    &.dark {
+                        color: #2ecc71;
+                    }
 
                     span {
                         &:before {
@@ -228,6 +252,10 @@
                                 -moz-transition: .25s ease-in-out;
                                 -o-transition: .25s ease-in-out;
                                 transition: .25s ease-in-out;
+
+                                &.dark {
+                                    background: #2ecc71;
+                                }
 
                                 &:nth-child(1) {
                                     top: 0px;
@@ -316,6 +344,10 @@
                     right: 20px;
                     color: #3498db;
 
+                    &.dark {
+                        color: #2ecc71;
+                    }
+
                     @media (min-width: 768px) {
                         display: none;
                     }
@@ -361,13 +393,30 @@
                     text-decoration: none;
                     padding: 11px 25px;
 
-                    &:first-child {
+                    &.dark {
+                        background: #565656;
+                        color: #2ecc71;
+
+                        &:not(:last-child) {
+                            border-bottom: 1px solid #4b4b4b;
+                        }
+
+                        &:hover {
+                            background: #474747;
+                        }
+                    }
+
+                    &:not(:last-child) {
                         border-bottom: 1px solid #eee;
                     }
 
                     &:hover {
                         background: rgba(0, 0, 0, 0.08);
                         cursor: pointer;
+                    }
+
+                    @media (max-width: 768px) {
+                        padding: 15px 25px;
                     }
                 }
             }
