@@ -27,6 +27,7 @@ let ChatService = class ChatService {
         this.startingSubject = new Subject_1.Subject();
         this.newMessageSubject = new Subject_1.Subject();
         this.readedMessagesSubject = new Subject_1.Subject();
+        this.lastActivitySubject = new Subject_1.Subject();
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
@@ -35,6 +36,7 @@ let ChatService = class ChatService {
         this.starting$ = this.startingSubject.asObservable();
         this.newMessage$ = this.newMessageSubject.asObservable();
         this.readedMessages$ = this.readedMessagesSubject.asObservable();
+        this.userLastActivity$ = this.lastActivitySubject.asObservable();
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
         this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
@@ -49,11 +51,8 @@ let ChatService = class ChatService {
             console.log(dialogId);
             this.readedMessagesSubject.next(dialogId);
         });
-        this.hubProxy.on("UserIsOnline", (userId, isOnline) => {
-            console.log(this.msgCallback);
-            if (this.onlineCallback) {
-                this.onlineCallback(userId, isOnline);
-            }
+        this.hubProxy.on("UserIsOnline", (user) => {
+            this.lastActivitySubject.next(JSON.parse(user));
         });
         this.hubConnection.start()
             .done(() => this.startingSubject.next())
@@ -66,18 +65,15 @@ let ChatService = class ChatService {
         this.onlineCallback = callback;
     }
     getUserAccount() {
-        var token = this.authService.getLocalToken();
-        if (token && this.authService.isTokenValid()) {
-            this.headers.delete("Authorization");
-            this.headers.append("Authorization", token);
-            return this.http.post('/api/useraccount', '', { headers: this.headers }).toPromise().then(res => JSON.parse(res.json()));
+        if (this.setAuthHeader()) {
+            return this.http.post('/api/useraccount', '', { headers: this.headers }).toPromise().then(res => {
+                this.setLastTimeActivity();
+                return JSON.parse(res.json());
+            });
         }
     }
     getMessages(dialogId) {
-        var token = this.authService.getLocalToken();
-        if (token && this.authService.isTokenValid()) {
-            this.headers.delete("Authorization");
-            this.headers.append("Authorization", token);
+        if (this.setAuthHeader()) {
             return this.http.get('api/messages/' + dialogId, { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()));
         }
     }
@@ -89,10 +85,7 @@ let ChatService = class ChatService {
         return this.http.get('/messages/' + chatRoomId + '?offset=' + offset + '&limit=10').toPromise().then(data => data.json() as MessageModel[]);
     }*/
     sendMessage(message) {
-        var token = this.authService.getLocalToken();
-        if (token && this.authService.isTokenValid()) {
-            this.headers.delete("Authorization");
-            this.headers.append("Authorization", token);
+        if (this.setAuthHeader()) {
             return this.http
                 .post('api/messages/send', JSON.stringify(message), { headers: this.headers })
                 .toPromise()
@@ -100,13 +93,25 @@ let ChatService = class ChatService {
         }
     }
     setMessagesAsReaded(dialogId) {
+        if (this.setAuthHeader()) {
+            return this.http
+                .post('api/messages/read', dialogId, { headers: this.headers }).toPromise();
+        }
+    }
+    setLastTimeActivity() {
+        if (this.setAuthHeader()) {
+            return this.http
+                .post('api/useraccount/lastactivity', '', { headers: this.headers }).toPromise().then(res => res.json());
+        }
+    }
+    setAuthHeader() {
         var token = this.authService.getLocalToken();
         if (token) {
             this.headers.delete("Authorization");
             this.headers.append("Authorization", token);
-            return this.http
-                .post('api/messages/read', dialogId, { headers: this.headers }).toPromise();
+            return true;
         }
+        return false;
     }
     subscribe(dialogIds) {
         dialogIds.forEach((dialog) => this.hubProxy.invoke("JoinGroup", dialog));

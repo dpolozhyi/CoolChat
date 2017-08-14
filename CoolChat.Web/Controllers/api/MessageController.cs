@@ -28,11 +28,6 @@ namespace CoolChat.Web.Controllers.api
 
         private IDialogService dialogService;
 
-        public MessageController() : this(new DialogService(new EFUnitOfWork(new ChatContext())))
-        {
-
-        }
-
         public MessageController(IDialogService dialogService)
         {
             this.hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();

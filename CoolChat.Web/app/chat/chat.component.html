@@ -7,23 +7,13 @@
             <div class="central-bar">
                 <div class="user-info" *ngIf="selectedUser && minModeHiddenChatList">
                     <div class="user-wrapper">
-                        <div class="avatar">
-                            <div class="avatar-area">
-                                <div class="avatar-image">
-                                    <img [src]="selectedUser.avatarUrl" />
-                                </div>
-                                <div class="online-mark" *ngIf="selectedUser.isOnline">
-                                    <div class="online-circle">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="user-info-body" [class.dark]="isDark">
                             <div class="user-name"  [class.dark]="isDark">
                                 {{selectedUser.name}}
                             </div>
                             <div class="user-status" [class.dark]="isDark">
-                                Last seen {{selectedUser.lastTimeActivity | relativeDate}}
+                                <span class="user-last-seen" *ngIf="!userIsOnline()" [class.dark]="isDark">Last seen {{selectedUser.lastTimeActivity | relativeDate}}</span>
+                                <span class="user-online" *ngIf="userIsOnline()"  [class.dark]="isDark">online</span>
                             </div>
                         </div>
                     </div>
@@ -44,7 +34,7 @@
                 <div class="search-button" *ngIf="minMode && !minModeHiddenChatList" [class.dark]="isDark">
                     <div class="search-button-wrapper">
                         <div class="search-icon">
-                            <i class="fa fa-search" aria-hidden="true"></i>
+                            <i class="ion-ios-search" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>

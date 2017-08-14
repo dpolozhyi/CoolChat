@@ -81,7 +81,7 @@
 
             &.dark {
                 background: #565656;
-                color: #98989;
+                color: #989898;
             }
 
             div.central-bar {
@@ -100,7 +100,8 @@
                     div.user-wrapper {
                         position: absolute;
                         top: 50%;
-                        transform: translateY(-50%);
+                        left: 50%;
+                        transform: translate(-50%, -50%);
 
                         @media (max-width: 768px) {
                             left: 50%;
@@ -108,58 +109,13 @@
                             transform: translate(-50%, -50%);
                         }
 
-                        div.avatar {
-                            background-size: cover;
-                            height: 50px;
-                            width: 50px;
-                            position: absolute;
-
-                            div.avatar-area {
-                                position: relative;
-                                height: 100%;
-                                width: 100%;
-                                width: 50px;
-
-                                div.avatar-image {
-                                    height: 100%;
-                                    width: 100%;
-                                    border-radius: 50%;
-                                    overflow: hidden;
-
-                                    img {
-                                        width: 100%;
-                                        height: 100%;
-                                    }
-                                }
-
-                                div.online-mark {
-                                    width: 14px;
-                                    height: 14px;
-                                    position: absolute;
-                                    background: #3498db;
-                                    right: 0px;
-                                    bottom: 0px;
-                                    padding: 3px;
-                                    box-sizing: border-box;
-                                    border-radius: 50%;
-
-                                    div.online-circle {
-                                        background: #2ecc71;
-                                        width: 8px;
-                                        height: 8px;
-                                        border-radius: 50%;
-                                    }
-                                }
-                            }
-                        }
-
                         div.user-info-body {
-                            margin-left: 50px;
+                            text-align: center;
                             padding: 0 10px;
                             height: 50px;
 
                             div.user-name {
-                                font-size: 18px;
+                                font-size: 21px;
                                 font-weight: bold;
                                 color: #555;
 
@@ -171,9 +127,28 @@
 
                             div.user-status {
                                 font-size: 16px;
-                                color: #777;
-                                margin-top: 5px;
                                 white-space: nowrap;
+
+                                @media (min-width: 768px) {
+                                    margin-top: 5px;
+                                }
+
+                                span.user-last-seen {
+                                    color: #777;
+
+                                    &.dark {
+                                        color: #cacdcf;
+                                    }
+                                }
+
+                                span.user-online {
+                                    color: #27ae60;
+
+                                    &.dark {
+                                        color: #2ecc71;
+                                    }
+                                }
+
 
                                 &.dark {
                                     color: #989898;
@@ -208,10 +183,12 @@
                     top: 0;
                     bottom: 0;
                     left: 20px;
+                    cursor: pointer;
 
                     @media (min-width: 768px) {
                         left: unset;
-                        right: 20px;
+                        right: 0px;
+                        padding: 0 20px;
                     }
 
                     div.nav-button-wrapper {
@@ -221,8 +198,8 @@
 
 
                         div.nav-icon {
-                            width: 40px;
-                            height: 30px;
+                            width: 35px;
+                            height: 24px;
                             position: relative;
                             top: 50%;
                             -webkit-transform: rotate(0deg) translateY(-50%);
@@ -233,12 +210,11 @@
                             -moz-transition: .5s ease-in-out;
                             -o-transition: .5s ease-in-out;
                             transition: .5s ease-in-out;
-                            cursor: pointer;
 
                             span {
                                 display: block;
                                 position: absolute;
-                                height: 4px;
+                                height: 2px;
                                 width: 100%;
                                 background: #3498db;
                                 border-radius: 9px;
@@ -266,7 +242,7 @@
                                 }
 
                                 &:nth-child(2) {
-                                    top: 11px;
+                                    top: 9px;
                                     -webkit-transform-origin: left center;
                                     -moz-transform-origin: left center;
                                     -o-transform-origin: left center;
@@ -274,7 +250,7 @@
                                 }
 
                                 &:nth-child(3) {
-                                    top: 22px;
+                                    top: 18px;
                                     -webkit-transform-origin: left center;
                                     -moz-transform-origin: left center;
                                     -o-transform-origin: left center;
@@ -289,12 +265,13 @@
                                         -moz-transform: rotate(45deg);
                                         -o-transform: rotate(45deg);
                                         transform: rotate(-35deg);
-                                        top: 11px;
-                                        left: 2px;
-                                        width: 70%;
+                                        top: 9px;
+                                        left: 1px;
+                                        width: 60%;
                                     }
 
                                     &:nth-child(2) {
+                                        width: 90%;
                                     }
 
                                     &:nth-child(3) {
@@ -302,9 +279,9 @@
                                         -moz-transform: rotate(-45deg);
                                         -o-transform: rotate(-45deg);
                                         transform: rotate(35deg);
-                                        width: 70%;
-                                        top: 11px;
-                                        left: 2px;
+                                        width: 60%;
+                                        top: 9px;
+                                        left: 1px;
                                     }
                                 }
                             }
@@ -316,7 +293,7 @@
                                         -moz-transform: rotate(45deg);
                                         -o-transform: rotate(45deg);
                                         transform: rotate(45deg);
-                                        left: 2px;
+                                        left: 6px;
                                     }
 
                                     &:nth-child(2) {
@@ -328,8 +305,8 @@
                                         -moz-transform: rotate(-45deg);
                                         -o-transform: rotate(-45deg);
                                         transform: rotate(-45deg);
-                                        top: 28px;
-                                        left: 2px;
+                                        top: 24px;
+                                        left: 6px;
                                     }
                                 }
                             }
@@ -339,7 +316,7 @@
 
                 div.search-button {
                     position: absolute;
-                    top: 45%;
+                    top: 50%;
                     transform: translateY(-50%);
                     right: 20px;
                     color: #3498db;
@@ -358,7 +335,7 @@
                         width: 100%;
 
                         div.search-icon {
-                            font-size: 34px;
+                            font-size: 42px;
                         }
                     }
                 }

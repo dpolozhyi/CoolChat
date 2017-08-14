@@ -76,6 +76,13 @@ div.conversation {
 
         div.message-wrapper {
             position: relative;
+            //clearfix hack for floating children
+            &:after {
+                content: " ";
+                display: block;
+                height: 0;
+                clear: both;
+            }
 
             &.my-message-wrapper {
                 div.user-avatar {
@@ -86,9 +93,13 @@ div.conversation {
                     margin: 10px 65px 10px 25px;
 
                     &.my-message {
-                        background: #fff;
+                        background: #748293;
+                        color: #fff;
                         border: 1px solid #ccc;
-                        //margin-left: 60px;
+                        float: right;
+                        margin-right: 65px;
+
+
                         &:before {
                             position: absolute;
                             content: "";
@@ -101,22 +112,7 @@ div.conversation {
                             border-left-width: 10px;
                             border-top-width: 10px;
                             border-bottom-width: 10px;
-                            border-color: transparent #ccc;
-                        }
-
-                        &:after {
-                            position: absolute;
-                            content: "";
-                            left: 100%;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            border: 0;
-                            border-style: solid;
-                            border-color: black;
-                            border-left-width: 9px;
-                            border-top-width: 9px;
-                            border-bottom-width: 9px;
-                            border-color: transparent #fff;
+                            border-color: transparent #748293;
                         }
                     }
                 }
@@ -138,16 +134,17 @@ div.conversation {
             }
 
             div.message {
-                background: #f2f2f2;
-                color: #333;
+                background: #ebf1f4;
+                color: #4a4a4a;
                 margin: 10px 25px 10px 65px;
                 //margin-right: 60px;
                 padding: 10px 15px;
-                border-radius: 10px;
+                border-radius: 3px;
                 font-size: 20px;
                 font-family: Roboto-Light;
                 position: relative;
                 word-wrap: break-word;
+                display: inline-block;
 
                 @media (max-width: 768px) and (orientation: portrait) {
                     padding: 10px 15px;
@@ -158,6 +155,7 @@ div.conversation {
 
                     &.message-name {
                         margin-bottom: 5px;
+                        margin-right: 20px;
                         font-size: 18px;
                         color: #34495e;
                         display: inline-block;
@@ -165,7 +163,6 @@ div.conversation {
                     }
 
                     &.message-body {
-                        color: #0d3d56;
                     }
 
                     &.message-time {
@@ -295,7 +292,6 @@ div.conversation-loader {
 div.new-message {
     background: #fff;
     border-top: 1px solid #bdc3c7;
-    box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.5);
     height: 10%;
     min-height: 54px;
     bottom: 0;
@@ -338,43 +334,16 @@ div.new-message {
             transform: none;
         }
 
-        div.message-smile {
-            position: absolute;
-            width: 50px;
-            height: 100%;
-            font-size: 34px;
-            text-align: center;
-            vertical-align: middle;
-            line-height: 54px;
-            border-radius: 50%;
-            color: #888;
-
-            &:before {
-                content: "";
-                display: inline-block;
-                height: 100%;
-                vertical-align: middle;
-            }
-
-            &:after {
-                content: "";
-                display: inline-block;
-                height: 100%;
-                vertical-align: middle;
-            }
-
-            &:hover {
-                cursor: pointer;
-                text-shadow: 3px 1px 2px rgba(150, 150, 150, 0.35);
-            }
-        }
-
         div.message-input {
             height: 100%;
             position: absolute;
-            left: 50px;
-            right: 50px;
+            left: 0px;
+            right: 65px;
             top: 0;
+
+            @media (max-width: 768px) {
+                left: 10px;
+            }
 
             textarea {
                 width: 100%;
@@ -384,8 +353,12 @@ div.new-message {
                 border-bottom: 2px solid #ccc;
                 resize: none;
                 transition: 0.3s;
-                font-size: 16px;
-                padding: 10px 0;
+                font-size: 17px;
+                padding: 15px 0;
+
+                @media (max-width: 768px) {
+                    border: none;
+                }
 
                 &:focus {
                     outline: 0 !important;
@@ -396,16 +369,24 @@ div.new-message {
 
         div.message-send {
             position: absolute;
+            background: #3498db;
+            color: #fff;
             width: 50px;
             height: 100%;
             right: 0;
             top: 0;
-            font-size: 26px;
+            font-size: 32px;
             text-align: center;
             vertical-align: middle;
             line-height: 54px;
             border-radius: 50%;
-            color: #444;
+
+            @media (max-width: 768px) {
+                height: 50px;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 10px;
+            }
 
             &:before {
                 content: "";

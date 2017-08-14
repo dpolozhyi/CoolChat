@@ -13,6 +13,8 @@ namespace CoolChat.Business.Interfaces
 
         IEnumerable<MessageViewModel> GetMessages(int dialogId);
 
+        IEnumerable<int> GetDialogsIdsByUserId(int userId);
+
         MessageViewModel PostMessage(MessageViewModel message);
 
         void SetDialogMessagesReaded(int userId, int dialogId);

@@ -14,7 +14,7 @@
                             <div class="avatar-image">
                                 <img [src]="dialog.members[0].avatarUrl" />
                             </div>
-                            <div class="online-mark" *ngIf="dialog.members[0].isOnline">
+                            <div class="online-mark" *ngIf="userIsOnline(dialog.members[0])" [class.dark]="isDark">
                                 <div class="online-circle">
                                 </div>
                             </div>

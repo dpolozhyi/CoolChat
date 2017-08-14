@@ -33,6 +33,11 @@ namespace CoolChat.Business.Services
             return false;
         }
 
+        public IEnumerable<int> GetDialogsIdsByUserId(int userId)
+        {
+            return this.unitOfWork.Get<Dialog>().Get(n => n.Members.Select(m => m.Id).Contains(userId)).Select(d => d.Id);
+        }
+
         public IEnumerable<MessageViewModel> GetMessages(int dialogId)
         {
             IEnumerable<Message> messages = this.unitOfWork.Get<Message>().Get(n => n.Dialog.Id == dialogId, includeProperties: "User", orderBy: n => n.OrderBy(p => p.PostedTime));

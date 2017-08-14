@@ -27,19 +27,16 @@ export class ChatService {
     private hubProxy: any;
 
     starting$: Observable<any>;
-
     newMessage$: Observable<any>;
-
     readedMessages$: Observable<any>;
+    userLastActivity$: Observable<any>;
 
     private startingSubject = new Subject<any>();
-
     private newMessageSubject = new Subject<MessageModel>();
-
     private readedMessagesSubject = new Subject<number>();
+    private lastActivitySubject = new Subject<UserModel>();
 
     private msgCallback: MessageCallback;
-
     private onlineCallback: OnlineCallback;
 
     private user: UserModel;
@@ -60,6 +57,7 @@ export class ChatService {
         this.starting$ = this.startingSubject.asObservable();
         this.newMessage$ = this.newMessageSubject.asObservable();
         this.readedMessages$ = this.readedMessagesSubject.asObservable();
+        this.userLastActivity$ = this.lastActivitySubject.asObservable();
 
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
@@ -75,11 +73,8 @@ export class ChatService {
             console.log(dialogId);
             this.readedMessagesSubject.next(dialogId);
         });
-        this.hubProxy.on("UserIsOnline", (userId, isOnline) => {
-            console.log(this.msgCallback);
-            if (this.onlineCallback) {
-                this.onlineCallback(userId, isOnline);
-            }
+        this.hubProxy.on("UserIsOnline", (user) => {
+            this.lastActivitySubject.next(JSON.parse(user));
         });
         this.hubConnection.start()
             .done(() => this.startingSubject.next())
@@ -95,19 +90,16 @@ export class ChatService {
     }
 
     getUserAccount(): Promise<UserAccountModel> {
-        var token = this.authService.getLocalToken();
-        if (token && this.authService.isTokenValid()) {
-            this.headers.delete("Authorization");
-            this.headers.append("Authorization", token);
-            return this.http.post('/api/useraccount', '', { headers: this.headers }).toPromise().then(res => JSON.parse(res.json()) as UserAccountModel);
+        if (this.setAuthHeader()) {
+            return this.http.post('/api/useraccount', '', { headers: this.headers }).toPromise().then(res => {
+                this.setLastTimeActivity();
+                return JSON.parse(res.json()) as UserAccountModel;
+            });
         }
     }
 
     getMessages(dialogId: number): Promise<MessageModel[]> {
-        var token = this.authService.getLocalToken();
-        if (token && this.authService.isTokenValid()) {
-            this.headers.delete("Authorization");
-            this.headers.append("Authorization", token);
+        if (this.setAuthHeader()) {
             return this.http.get('api/messages/' + dialogId, { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as MessageModel[]);
         }
     }
@@ -121,10 +113,7 @@ export class ChatService {
     }*/
 
     sendMessage(message: MessageModel): Promise<MessageModel> {
-        var token = this.authService.getLocalToken();
-        if (token && this.authService.isTokenValid()) {
-            this.headers.delete("Authorization");
-            this.headers.append("Authorization", token);
+        if (this.setAuthHeader()){
             return this.http
                 .post('api/messages/send', JSON.stringify(message), { headers: this.headers })
                 .toPromise()
@@ -133,14 +122,27 @@ export class ChatService {
     }
 
     setMessagesAsReaded(dialogId: number) {
+        if (this.setAuthHeader()){
+            return this.http
+                .post('api/messages/read', dialogId, { headers: this.headers }).toPromise();
+        }
+    }
+
+    setLastTimeActivity(): Promise<UserModel> {
+        if (this.setAuthHeader()) {
+            return this.http
+                .post('api/useraccount/lastactivity', '', { headers: this.headers }).toPromise().then(res => res.json() as UserModel);
+        }
+    }
+
+    setAuthHeader(): boolean {
         var token = this.authService.getLocalToken();
         if (token) {
             this.headers.delete("Authorization");
             this.headers.append("Authorization", token);
-            return this.http
-                .post('api/messages/read', dialogId, { headers: this.headers }).toPromise();
+            return true;
         }
-
+        return false;
     }
 
     subscribe(dialogIds: number[]): void {

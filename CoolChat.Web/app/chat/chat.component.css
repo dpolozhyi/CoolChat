@@ -73,7 +73,7 @@ div.container div.header div.info-bar {
 }
 div.container div.header div.info-bar.dark {
   background: #565656;
-  color: #98989;
+  color: #989898;
 }
 div.container div.header div.info-bar div.central-bar {
   height: 100%;
@@ -91,7 +91,8 @@ div.container div.header div.info-bar div.central-bar div.user-info {
 div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 @media (max-width: 768px) {
   div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper {
@@ -100,52 +101,13 @@ div.container div.header div.info-bar div.central-bar div.user-info div.user-wra
     transform: translate(-50%, -50%);
   }
 }
-div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.avatar {
-  background-size: cover;
-  height: 50px;
-  width: 50px;
-  position: absolute;
-}
-div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.avatar div.avatar-area {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  width: 50px;
-}
-div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.avatar div.avatar-area div.avatar-image {
-  height: 100%;
-  width: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-}
-div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.avatar div.avatar-area div.avatar-image img {
-  width: 100%;
-  height: 100%;
-}
-div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.avatar div.avatar-area div.online-mark {
-  width: 14px;
-  height: 14px;
-  position: absolute;
-  background: #3498db;
-  right: 0px;
-  bottom: 0px;
-  padding: 3px;
-  box-sizing: border-box;
-  border-radius: 50%;
-}
-div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.avatar div.avatar-area div.online-mark div.online-circle {
-  background: #2ecc71;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
 div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body {
-  margin-left: 50px;
+  text-align: center;
   padding: 0 10px;
   height: 50px;
 }
 div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-name {
-  font-size: 18px;
+  font-size: 21px;
   font-weight: bold;
   color: #555;
 }
@@ -155,9 +117,24 @@ div.container div.header div.info-bar div.central-bar div.user-info div.user-wra
 }
 div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status {
   font-size: 16px;
-  color: #777;
-  margin-top: 5px;
   white-space: nowrap;
+}
+@media (min-width: 768px) {
+  div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status {
+    margin-top: 5px;
+  }
+}
+div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status span.user-last-seen {
+  color: #777;
+}
+div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status span.user-last-seen.dark {
+  color: #cacdcf;
+}
+div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status span.user-online {
+  color: #27ae60;
+}
+div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status span.user-online.dark {
+  color: #2ecc71;
 }
 div.container div.header div.info-bar div.central-bar div.user-info div.user-wrapper div.user-info-body div.user-status.dark {
   color: #989898;
@@ -182,11 +159,13 @@ div.container div.header div.info-bar div.central-bar div.nav-button {
   top: 0;
   bottom: 0;
   left: 20px;
+  cursor: pointer;
 }
 @media (min-width: 768px) {
   div.container div.header div.info-bar div.central-bar div.nav-button {
     left: unset;
-    right: 20px;
+    right: 0px;
+    padding: 0 20px;
   }
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper {
@@ -195,8 +174,8 @@ div.container div.header div.info-bar div.central-bar div.nav-button div.nav-but
   width: 100%;
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon {
-  width: 40px;
-  height: 30px;
+  width: 35px;
+  height: 24px;
   position: relative;
   top: 50%;
   -webkit-transform: rotate(0deg) translateY(-50%);
@@ -207,12 +186,11 @@ div.container div.header div.info-bar div.central-bar div.nav-button div.nav-but
   -moz-transition: 0.5s ease-in-out;
   -o-transition: 0.5s ease-in-out;
   transition: 0.5s ease-in-out;
-  cursor: pointer;
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon span {
   display: block;
   position: absolute;
-  height: 4px;
+  height: 2px;
   width: 100%;
   background: #3498db;
   border-radius: 9px;
@@ -238,14 +216,14 @@ div.container div.header div.info-bar div.central-bar div.nav-button div.nav-but
   transform-origin: left center;
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon span:nth-child(2) {
-  top: 11px;
+  top: 9px;
   -webkit-transform-origin: left center;
   -moz-transform-origin: left center;
   -o-transform-origin: left center;
   transform-origin: left center;
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon span:nth-child(3) {
-  top: 22px;
+  top: 18px;
   -webkit-transform-origin: left center;
   -moz-transform-origin: left center;
   -o-transform-origin: left center;
@@ -256,25 +234,28 @@ div.container div.header div.info-bar div.central-bar div.nav-button div.nav-but
   -moz-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   transform: rotate(-35deg);
-  top: 11px;
-  left: 2px;
-  width: 70%;
+  top: 9px;
+  left: 1px;
+  width: 60%;
+}
+div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon.arrow-left span:nth-child(2) {
+  width: 90%;
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon.arrow-left span:nth-child(3) {
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
   transform: rotate(35deg);
-  width: 70%;
-  top: 11px;
-  left: 2px;
+  width: 60%;
+  top: 9px;
+  left: 1px;
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon.close span:nth-child(1) {
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   transform: rotate(45deg);
-  left: 2px;
+  left: 6px;
 }
 div.container div.header div.info-bar div.central-bar div.nav-button div.nav-button-wrapper div.nav-icon.close span:nth-child(2) {
   width: 0;
@@ -284,12 +265,12 @@ div.container div.header div.info-bar div.central-bar div.nav-button div.nav-but
   -moz-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
-  top: 28px;
-  left: 2px;
+  top: 24px;
+  left: 6px;
 }
 div.container div.header div.info-bar div.central-bar div.search-button {
   position: absolute;
-  top: 45%;
+  top: 50%;
   transform: translateY(-50%);
   right: 20px;
   color: #3498db;
@@ -308,7 +289,7 @@ div.container div.header div.info-bar div.central-bar div.search-button div.sear
   width: 100%;
 }
 div.container div.header div.info-bar div.central-bar div.search-button div.search-button-wrapper div.search-icon {
-  font-size: 34px;
+  font-size: 42px;
 }
 div.container div.header div.settings-expanded {
   position: absolute;

@@ -10,5 +10,7 @@ namespace CoolChat.Business.Interfaces
     public interface IUserAccountService
     {
         UserAccountViewModel GetMainUserModel(int userId);
+
+        UserViewModel SetLastTimeActivity(int userId);
     }
 }

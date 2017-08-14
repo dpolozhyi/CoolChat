@@ -5,6 +5,8 @@ using CoolChat.DataAccess;
 using CoolChat.DataAccess.EFContext;
 using CoolChat.Web.AuthServiceReference;
 using CoolChat.Web.Filters;
+using CoolChat.Web.Hubs;
+using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -16,19 +18,22 @@ using System.Web.Http;
 
 namespace CoolChat.Web.Controllers.api
 {
+    [RoutePrefix("api/userAccount")]
     public class UserAccountController : ApiController
     {
         private IUserAccountService userAccService;
 
+        private IDialogService dialogService;
+
+        private IHubContext hubContext;
+
         private AuthServiceClient authService = new AuthServiceClient();
 
-        public UserAccountController() : this(new UserAccountService(new EFUnitOfWork(new ChatContext())))
-        {
-        }
-
-        public UserAccountController(IUserAccountService userAccService)
+        public UserAccountController(IUserAccountService userAccService, IDialogService dialogService)
         {
             this.userAccService = userAccService;
+            this.dialogService = dialogService;
+            this.hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
         }
 
         // GET: api/UserAccount
@@ -50,8 +55,23 @@ namespace CoolChat.Web.Controllers.api
             int userId = this.authService.GetUserId(this.GetToken());
             if (userId > 0)
             {
-                UserAccountViewModel userAccount = this.userAccService.GetMainUserModel(this.authService.GetUserId(this.GetToken()));
+                UserAccountViewModel userAccount = this.userAccService.GetMainUserModel(userId);
                 string json = JsonConvert.SerializeObject(userAccount, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                return Ok(json);
+            }
+            return BadRequest();
+        }
+
+        [Route("lastActivity")]
+        // POST: api/UserAccount
+        public IHttpActionResult PostLastTimeActivity()
+        {
+            int userId = this.authService.GetUserId(this.GetToken());
+            if (userId > 0)
+            {
+                UserViewModel user = this.userAccService.SetLastTimeActivity(userId);
+                string json = JsonConvert.SerializeObject(user, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                this.hubContext.Clients.Groups(this.dialogService.GetDialogsIdsByUserId(user.Id).Select(n => n.ToString()).ToList()).UserIsOnline(json);
                 return Ok(json);
             }
             return BadRequest();

@@ -25,7 +25,6 @@ let ChatComponent = class ChatComponent {
     }
     onSelectedUser(user) {
         this.selectedUser = user;
-        this.expandedSettings = false;
     }
     onLogout() {
         this.authService.logOut();
@@ -52,6 +51,16 @@ let ChatComponent = class ChatComponent {
     onChatListStateChanged(state) {
         this.minModeHiddenChatList = state;
     }
+    userIsOnline() {
+        var now = Date.now() + new Date().getTimezoneOffset() * 60 * 1000;
+        var lastUserActivity = new Date(String(this.selectedUser.lastTimeActivity).replace('Z', '')).getTime();
+        var secondsPass = (now - lastUserActivity) / 1000;
+        console.log(this.selectedUser.name + " last seen " + secondsPass + " seconds ago");
+        if (now - lastUserActivity > 0 && (now - lastUserActivity) / 1000 < 60) {
+            return true;
+        }
+        return false;
+    }
     handleClick(event) {
         var hideSettings = true;
         var path;
@@ -66,7 +75,10 @@ let ChatComponent = class ChatComponent {
             return;
         }
         path.forEach((value) => {
-            if (value.className && (value.className.indexOf("settings-expanded") != -1 || value.className.indexOf("nav-icon") != -1)) {
+            var className = value.className;
+            var setExp = className ? value.className.indexOf("settings-expanded") != -1 : false;
+            var navBtn = className ? value.className.indexOf("nav-button") != -1 : false;
+            if (className && (setExp || navBtn)) {
                 hideSettings = false;
             }
         });
@@ -94,6 +106,7 @@ let ChatComponent = class ChatComponent {
         }
         else {
             this.minMode = true;
+            this.expandedSettings = false;
         }
     }
 };

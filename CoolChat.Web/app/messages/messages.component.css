@@ -72,6 +72,12 @@ div.conversation div.message-list {
 div.conversation div.message-list div.message-wrapper {
   position: relative;
 }
+div.conversation div.message-list div.message-wrapper:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both;
+}
 div.conversation div.message-list div.message-wrapper.my-message-wrapper div.user-avatar {
   right: 0;
 }
@@ -79,8 +85,11 @@ div.conversation div.message-list div.message-wrapper.my-message-wrapper div.mes
   margin: 10px 65px 10px 25px;
 }
 div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message {
-  background: #fff;
+  background: #748293;
+  color: #fff;
   border: 1px solid #ccc;
+  float: right;
+  margin-right: 65px;
 }
 div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message:before {
   position: absolute;
@@ -94,21 +103,7 @@ div.conversation div.message-list div.message-wrapper.my-message-wrapper div.mes
   border-left-width: 10px;
   border-top-width: 10px;
   border-bottom-width: 10px;
-  border-color: transparent #ccc;
-}
-div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message:after {
-  position: absolute;
-  content: "";
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 0;
-  border-style: solid;
-  border-color: black;
-  border-left-width: 9px;
-  border-top-width: 9px;
-  border-bottom-width: 9px;
-  border-color: transparent #fff;
+  border-color: transparent #748293;
 }
 div.conversation div.message-list div.message-wrapper div.user-avatar {
   position: absolute;
@@ -124,15 +119,16 @@ div.conversation div.message-list div.message-wrapper div.user-avatar img {
   height: 100%;
 }
 div.conversation div.message-list div.message-wrapper div.message {
-  background: #f2f2f2;
-  color: #333;
+  background: #ebf1f4;
+  color: #4a4a4a;
   margin: 10px 25px 10px 65px;
   padding: 10px 15px;
-  border-radius: 10px;
+  border-radius: 3px;
   font-size: 20px;
   font-family: Roboto-Light;
   position: relative;
   word-wrap: break-word;
+  display: inline-block;
 }
 @media (max-width: 768px) and (orientation: portrait) {
   div.conversation div.message-list div.message-wrapper div.message {
@@ -144,13 +140,11 @@ div.conversation div.message-list div.message-wrapper div.message span {
 }
 div.conversation div.message-list div.message-wrapper div.message span.message-name {
   margin-bottom: 5px;
+  margin-right: 20px;
   font-size: 18px;
   color: #34495e;
   display: inline-block;
   font-weight: bold;
-}
-div.conversation div.message-list div.message-wrapper div.message span.message-body {
-  color: #0d3d56;
 }
 div.conversation div.message-list div.message-wrapper div.message span.message-time {
   color: #34495e;
@@ -258,7 +252,6 @@ div.conversation-loader div.conversation-loader-wrapper div.loader.dark {
 div.new-message {
   background: #fff;
   border-top: 1px solid #bdc3c7;
-  box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.5);
   height: 10%;
   min-height: 54px;
   bottom: 0;
@@ -305,39 +298,17 @@ div.new-message div.message-panel {
     transform: none;
   }
 }
-div.new-message div.message-panel div.message-smile {
-  position: absolute;
-  width: 50px;
-  height: 100%;
-  font-size: 34px;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 54px;
-  border-radius: 50%;
-  color: #888;
-}
-div.new-message div.message-panel div.message-smile:before {
-  content: "";
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-}
-div.new-message div.message-panel div.message-smile:after {
-  content: "";
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-}
-div.new-message div.message-panel div.message-smile:hover {
-  cursor: pointer;
-  text-shadow: 3px 1px 2px rgba(150, 150, 150, 0.35);
-}
 div.new-message div.message-panel div.message-input {
   height: 100%;
   position: absolute;
-  left: 50px;
-  right: 50px;
+  left: 0px;
+  right: 65px;
   top: 0;
+}
+@media (max-width: 768px) {
+  div.new-message div.message-panel div.message-input {
+    left: 10px;
+  }
 }
 div.new-message div.message-panel div.message-input textarea {
   width: 100%;
@@ -347,8 +318,13 @@ div.new-message div.message-panel div.message-input textarea {
   border-bottom: 2px solid #ccc;
   resize: none;
   transition: 0.3s;
-  font-size: 16px;
-  padding: 10px 0;
+  font-size: 17px;
+  padding: 15px 0;
+}
+@media (max-width: 768px) {
+  div.new-message div.message-panel div.message-input textarea {
+    border: none;
+  }
 }
 div.new-message div.message-panel div.message-input textarea:focus {
   outline: 0 !important;
@@ -356,16 +332,25 @@ div.new-message div.message-panel div.message-input textarea:focus {
 }
 div.new-message div.message-panel div.message-send {
   position: absolute;
+  background: #3498db;
+  color: #fff;
   width: 50px;
   height: 100%;
   right: 0;
   top: 0;
-  font-size: 26px;
+  font-size: 32px;
   text-align: center;
   vertical-align: middle;
   line-height: 54px;
   border-radius: 50%;
-  color: #444;
+}
+@media (max-width: 768px) {
+  div.new-message div.message-panel div.message-send {
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+  }
 }
 div.new-message div.message-panel div.message-send:before {
   content: "";

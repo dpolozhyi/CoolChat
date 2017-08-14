@@ -24,11 +24,6 @@ namespace CoolChat.Web.Controllers.api
 
         private IUserService userService;
 
-        public UserController() : this(new UserService(new EFUnitOfWork(new ChatContext())))
-        {
-
-        }
-
         public UserController(IUserService userService)
         {
             this.userService = userService;
@@ -39,7 +34,7 @@ namespace CoolChat.Web.Controllers.api
         public IHttpActionResult Get()
         {
             int userId = this.authService.GetUserId(this.GetToken());
-            if(userId > 0)
+            if (userId > 0)
             {
                 UserViewModel user = this.userService.GetUser(userId);
                 string json = JsonConvert.SerializeObject(user, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
@@ -57,14 +52,15 @@ namespace CoolChat.Web.Controllers.api
         // POST: api/User
         public IHttpActionResult Post([FromBody]RegisterModel regModel)
         {
-            User user = this.authService.Register(new RegisterModel(){
+            User user = this.authService.Register(new RegisterModel()
+            {
                 Login = regModel.Login,
                 Password = regModel.Password,
                 RepeatPassword = regModel.RepeatPassword
             });
-            if(user != null)
+            if (user != null)
             {
-                Entities.User addedUser = this.userService.AddNewUser(new Entities.User() { Id = user.Id, Name = user.Login, LastTimeActivity=DateTime.UtcNow });
+                Entities.User addedUser = this.userService.AddNewUser(new Entities.User() { Id = user.Id, Name = user.Login, LastTimeActivity = DateTime.UtcNow });
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("http://localhost:38313");

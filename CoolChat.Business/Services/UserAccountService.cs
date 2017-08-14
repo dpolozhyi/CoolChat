@@ -40,5 +40,16 @@ namespace CoolChat.Business.Services
             }
             return null;
         }
+
+        public UserViewModel SetLastTimeActivity(int userId)
+        {
+            User user = this.unitOfWork.Get<User>().Get(n => n.Id == userId).FirstOrDefault();
+            if (user != null)
+            {
+                user.LastTimeActivity = DateTime.UtcNow;
+                this.unitOfWork.SaveChanges();
+            }
+            return Mapper.Map<User, UserViewModel>(user);
+        }
     }
 }

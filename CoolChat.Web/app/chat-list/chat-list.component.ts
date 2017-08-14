@@ -69,6 +69,18 @@ export class ChatListComponent implements OnInit, OnChanges {
         this.chatService.readedMessages$.subscribe((dialogId) => {
             this.userAccount.dialogs.find((dialog) => dialog.id == dialogId).lastMessage.isReaded = true;
         });
+        this.chatService.userLastActivity$.subscribe((user: UserModel) => {
+            if (user.id != this.user.id) {
+                this.userAccount.dialogs
+                    .filter((dialog) => dialog.members.map(member => member.id).indexOf(user.id) != -1)
+                    .forEach((dialog) => {
+                        console.log(dialog.members.find(member => member.id == user.id).lastTimeActivity);
+                        dialog.members.find(member => member.id == user.id).lastTimeActivity = user.lastTimeActivity;
+                        console.log(dialog.members.find(member => member.id == user.id).lastTimeActivity);
+                    });
+            }
+        });
+
     }
 
     ngOnChanges() {
@@ -97,5 +109,17 @@ export class ChatListComponent implements OnInit, OnChanges {
         }
         this.notifyChatListState.emit(true);
         this.notifySelectedUser.emit(dialog.members[0]);
+    }
+
+
+    userIsOnline(user: UserModel) {
+        var now = Date.now() + new Date().getTimezoneOffset() * 60 * 1000;
+        var lastUserActivity = new Date(String(user.lastTimeActivity).replace('Z', '')).getTime();
+        var secondsPass = (now - lastUserActivity) / 1000;
+        console.log("Chat-list:"+name + " last seen " + secondsPass + " seconds ago");
+        if (now - lastUserActivity > 0 && (now - lastUserActivity) / 1000 < 60) {
+            return true;
+        }
+        return false;
     }
 }
