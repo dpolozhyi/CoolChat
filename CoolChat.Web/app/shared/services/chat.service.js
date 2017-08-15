@@ -28,6 +28,7 @@ let ChatService = class ChatService {
         this.newMessageSubject = new Subject_1.Subject();
         this.readedMessagesSubject = new Subject_1.Subject();
         this.lastActivitySubject = new Subject_1.Subject();
+        this.isTypingSubject = new Subject_1.Subject();
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
@@ -37,6 +38,7 @@ let ChatService = class ChatService {
         this.newMessage$ = this.newMessageSubject.asObservable();
         this.readedMessages$ = this.readedMessagesSubject.asObservable();
         this.userLastActivity$ = this.lastActivitySubject.asObservable();
+        this.isTyping$ = this.isTypingSubject.asObservable();
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
         this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
@@ -53,6 +55,9 @@ let ChatService = class ChatService {
         });
         this.hubProxy.on("UserIsOnline", (user) => {
             this.lastActivitySubject.next(JSON.parse(user));
+        });
+        this.hubProxy.on("IsTyping", (typing) => {
+            this.isTypingSubject.next(typing);
         });
         this.hubConnection.start()
             .done(() => this.startingSubject.next())
@@ -74,6 +79,7 @@ let ChatService = class ChatService {
     }
     getMessages(dialogId) {
         if (this.setAuthHeader()) {
+            this.setLastTimeActivity();
             return this.http.get('api/messages/' + dialogId, { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()));
         }
     }
@@ -86,6 +92,7 @@ let ChatService = class ChatService {
     }*/
     sendMessage(message) {
         if (this.setAuthHeader()) {
+            this.setLastTimeActivity();
             return this.http
                 .post('api/messages/send', JSON.stringify(message), { headers: this.headers })
                 .toPromise()
@@ -94,6 +101,7 @@ let ChatService = class ChatService {
     }
     setMessagesAsReaded(dialogId) {
         if (this.setAuthHeader()) {
+            this.setLastTimeActivity();
             return this.http
                 .post('api/messages/read', dialogId, { headers: this.headers }).toPromise();
         }
@@ -112,6 +120,9 @@ let ChatService = class ChatService {
             return true;
         }
         return false;
+    }
+    isTyping(dialogId, userId) {
+        this.hubProxy.invoke("IsTyping", dialogId, userId);
     }
     subscribe(dialogIds) {
         dialogIds.forEach((dialog) => this.hubProxy.invoke("JoinGroup", dialog));

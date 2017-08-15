@@ -144,6 +144,12 @@ export class MessagesComponent implements OnInit, OnChanges {
         this.chatService.sendMessage(newMessage);
     }
 
+    onMessageKeyUp() {
+        this.chatService.isTyping(this.briefDialog.id, this.user.id);
+    }
+
+    printDate(date: Date) {
+    }
     /*onNameSubmit(name: string) {
         if (name.trim()) {
             this.name = name.trim();

@@ -387,6 +387,7 @@
     <TypeScriptCompile Include="app\shared\models\login.model.ts" />
     <TypeScriptCompile Include="app\shared\models\message.model.ts" />
     <TypeScriptCompile Include="app\shared\models\register.model.ts" />
+    <TypeScriptCompile Include="app\shared\models\typing.model.ts" />
     <TypeScriptCompile Include="app\shared\models\user-account.model.ts" />
     <TypeScriptCompile Include="app\shared\models\user.model.ts" />
     <TypeScriptCompile Include="app\shared\pipes\relative-date.pipe.ts" />

@@ -114,6 +114,9 @@ let MessagesComponent = class MessagesComponent {
         newMessage.dialogId = this.briefDialog.id;
         this.chatService.sendMessage(newMessage);
     }
+    onMessageKeyUp() {
+        this.chatService.isTyping(this.briefDialog.id, this.user.id);
+    }
 };
 __decorate([
     core_1.Input(), 

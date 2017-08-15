@@ -39,6 +39,7 @@ let ChatListComponent = class ChatListComponent {
                 msgDialog.lastMessage.isReaded = true;
                 this.chatService.setMessagesAsReaded(this.selectedDialog.id);
             }
+            msgDialog.isTyping = false;
             this.userAccount.dialogs.sort((a, b) => {
                 var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
                 var bTicks = new Date(String(b.lastMessage.postedTime)).getTime();
@@ -57,6 +58,16 @@ let ChatListComponent = class ChatListComponent {
                     dialog.members.find(member => member.id == user.id).lastTimeActivity = user.lastTimeActivity;
                     console.log(dialog.members.find(member => member.id == user.id).lastTimeActivity);
                 });
+            }
+        });
+        this.chatService.isTyping$.subscribe((typing) => {
+            if (this.user.id == typing.userId) {
+                return;
+            }
+            var dialog = this.userAccount.dialogs.find((dialog) => dialog.id == typing.dialogId);
+            if (!dialog.isTyping) {
+                dialog.isTyping = true;
+                setTimeout(() => { dialog.isTyping = false; console.log("user finished typing"); }, 2000);
             }
         });
     }
@@ -89,7 +100,7 @@ let ChatListComponent = class ChatListComponent {
         var now = Date.now() + new Date().getTimezoneOffset() * 60 * 1000;
         var lastUserActivity = new Date(String(user.lastTimeActivity).replace('Z', '')).getTime();
         var secondsPass = (now - lastUserActivity) / 1000;
-        console.log("Chat-list:" + name + " last seen " + secondsPass + " seconds ago");
+        //console.log("Chat-list:"+name + " last seen " + secondsPass + " seconds ago");
         if (now - lastUserActivity > 0 && (now - lastUserActivity) / 1000 < 60) {
             return true;
         }
@@ -104,6 +115,10 @@ __decorate([
     core_1.Input(), 
     __metadata('design:type', Boolean)
 ], ChatListComponent.prototype, "minModeHiddenChatList", void 0);
+__decorate([
+    core_1.Input(), 
+    __metadata('design:type', Boolean)
+], ChatListComponent.prototype, "showSearch", void 0);
 __decorate([
     core_1.Input(), 
     __metadata('design:type', Boolean)

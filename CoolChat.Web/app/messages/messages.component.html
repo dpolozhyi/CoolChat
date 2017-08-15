@@ -8,14 +8,14 @@
     </div>
 </div>-->
 
-<div class="conversation" #chat (scroll)="onMessageScroll($event)" [scrollTop]="chat.scrollHeight - scrollOffset" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">
+<div class="conversation" [class.dark]="isDark" #chat (scroll)="onMessageScroll($event)" [scrollTop]="chat.scrollHeight - scrollOffset" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">
     <div class="message-list" *ngIf="messages">
         <div class="message-wrapper" *ngFor="let message of messages" [class.my-message-wrapper]="message.user.id==user.id">
             <div class="user-avatar" *ngIf="!followingMessage(message)">
                 <img [src]="message.user.avatarUrl" />
             </div>
-            <div class="message" [class.my-message]="message.user.id==user.id" [class.beforeAfterNone]="followingMessage(message)">
-                <span class="message-name">{{message.user.name}}</span><span class="message-time">{{message.postedTime | date:'medium'}}</span>
+            <div class="message" [class.my-message]="message.user.id==user.id" [class.beforeAfterNone]="followingMessage(message)" [class.dark]="isDark">
+                <span class="message-name">{{message.user.name}}</span><span class="message-time">{{message.postedTime | date:'shortTime'}}</span>
                 <span class="message-body">{{message.body}}</span>
             </div>
         </div>
@@ -26,12 +26,12 @@
         <div class="loader" [class.dark]="isDark"></div>
     </div>
 </div>
-<div class="new-message" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">
+<div class="new-message" [class.fullWidth]="hiddenChatList" [class.dark]="isDark" [class.oneHunMarginLeft]="!minModeHiddenChatList">
     <div class="message-panel">
         <div class="message-input">
-            <textarea placeholder="Type message here..." spellcheck="false" #messageInput (keyup.enter)="sendMessage(messageInput.value); messageInput.value=''"></textarea>
+            <textarea placeholder="Type message here..." spellcheck="false" [class.dark]="isDark" #messageInput (keyup)="onMessageKeyUp()" (keyup.enter)="sendMessage(messageInput.value); messageInput.value=''"></textarea>
         </div>
-        <div class="message-send" (click)="sendMessage(messageInput.value); messageInput.value=''">
+        <div class="message-send" [class.dark]="isDark" (click)="sendMessage(messageInput.value); messageInput.value=''">
             <i class="ion-ios-paperplane-outline" aria-hidden="true"></i>
         </div>
     </div>

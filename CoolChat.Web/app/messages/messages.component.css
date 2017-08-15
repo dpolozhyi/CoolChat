@@ -62,6 +62,9 @@ div.conversation {
     overflow-x: hidden;
   }
 }
+div.conversation.dark {
+  background: #565656;
+}
 div.conversation div.message-list {
   max-width: 768px;
   min-width: 308px;
@@ -87,9 +90,13 @@ div.conversation div.message-list div.message-wrapper.my-message-wrapper div.mes
 div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message {
   background: #748293;
   color: #fff;
-  border: 1px solid #ccc;
   float: right;
   margin-right: 65px;
+}
+@media (max-width: 567px) {
+  div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message {
+    float: none;
+  }
 }
 div.conversation div.message-list div.message-wrapper.my-message-wrapper div.message.my-message:before {
   position: absolute;
@@ -130,10 +137,36 @@ div.conversation div.message-list div.message-wrapper div.message {
   word-wrap: break-word;
   display: inline-block;
 }
+@media (min-width: 860px) {
+  div.conversation div.message-list div.message-wrapper div.message {
+    min-width: 450px;
+  }
+}
+@media (min-width: 768px) and (max-width: 859px) {
+  div.conversation div.message-list div.message-wrapper div.message {
+    min-width: 350px;
+  }
+}
+@media (min-width: 568px) and (max-width: 768px) {
+  div.conversation div.message-list div.message-wrapper div.message {
+    min-width: 350px;
+  }
+}
+@media (max-width: 567px) {
+  div.conversation div.message-list div.message-wrapper div.message {
+    display: block;
+  }
+}
 @media (max-width: 768px) and (orientation: portrait) {
   div.conversation div.message-list div.message-wrapper div.message {
     padding: 10px 15px;
   }
+}
+div.conversation div.message-list div.message-wrapper div.message.dark {
+  background: #b5b5b5;
+}
+div.conversation div.message-list div.message-wrapper div.message.dark:before {
+  border-color: transparent #b5b5b5;
 }
 div.conversation div.message-list div.message-wrapper div.message span {
   display: block;
@@ -278,6 +311,10 @@ div.new-message {
     width: 100%;
   }
 }
+div.new-message.dark {
+  background: #565656;
+  border-top: 1px solid #4b4b4b;
+}
 div.new-message div.message-panel {
   max-width: 748px;
   min-width: 320px;
@@ -326,6 +363,14 @@ div.new-message div.message-panel div.message-input textarea {
     border: none;
   }
 }
+div.new-message div.message-panel div.message-input textarea.dark {
+  background: #565656;
+  color: white;
+  border-bottom: 2px solid #777;
+}
+div.new-message div.message-panel div.message-input textarea.dark:focus {
+  border-color: #2ecc71;
+}
 div.new-message div.message-panel div.message-input textarea:focus {
   outline: 0 !important;
   border-color: #3498db;
@@ -343,6 +388,7 @@ div.new-message div.message-panel div.message-send {
   vertical-align: middle;
   line-height: 54px;
   border-radius: 50%;
+  cursor: pointer;
 }
 @media (max-width: 768px) {
   div.new-message div.message-panel div.message-send {
@@ -351,6 +397,9 @@ div.new-message div.message-panel div.message-send {
     transform: translateY(-50%);
     right: 10px;
   }
+}
+div.new-message div.message-panel div.message-send.dark {
+  background: #2ecc71;
 }
 div.new-message div.message-panel div.message-send:before {
   content: "";
@@ -363,10 +412,6 @@ div.new-message div.message-panel div.message-send:after {
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-}
-div.new-message div.message-panel div.message-send:hover {
-  text-shadow: 1px 1px 5px #3498db;
-  cursor: pointer;
 }
 .beforeAfterNone:before {
   display: none !important;

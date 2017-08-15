@@ -17,6 +17,7 @@ let ChatComponent = class ChatComponent {
         this.router = router;
         this.minModeHiddenChatList = false;
         this.minMode = false;
+        this.showSearch = false;
         this.isDark = false;
         this.expandedSettings = false;
     }
@@ -55,7 +56,7 @@ let ChatComponent = class ChatComponent {
         var now = Date.now() + new Date().getTimezoneOffset() * 60 * 1000;
         var lastUserActivity = new Date(String(this.selectedUser.lastTimeActivity).replace('Z', '')).getTime();
         var secondsPass = (now - lastUserActivity) / 1000;
-        console.log(this.selectedUser.name + " last seen " + secondsPass + " seconds ago");
+        //console.log(this.selectedUser.name + " last seen " + secondsPass + " seconds ago");
         if (now - lastUserActivity > 0 && (now - lastUserActivity) / 1000 < 60) {
             return true;
         }

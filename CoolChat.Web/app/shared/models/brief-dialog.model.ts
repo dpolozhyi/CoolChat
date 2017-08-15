@@ -14,5 +14,7 @@ export class BriefDialogModel {
 
     lastMessage: MessageModel;
 
+    isTyping: boolean;
+
     timeCreated: Date;
 }

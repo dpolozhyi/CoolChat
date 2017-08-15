@@ -67,6 +67,10 @@ div.conversation {
         overflow-x: hidden;
     }
 
+    &.dark {
+        background: #565656;
+    }
+
     div.message-list {
         max-width: 768px;
         min-width: 308px;
@@ -95,10 +99,12 @@ div.conversation {
                     &.my-message {
                         background: #748293;
                         color: #fff;
-                        border: 1px solid #ccc;
                         float: right;
                         margin-right: 65px;
 
+                        @media (max-width: 567px) {
+                            float: none;
+                        }
 
                         &:before {
                             position: absolute;
@@ -146,8 +152,32 @@ div.conversation {
                 word-wrap: break-word;
                 display: inline-block;
 
+                @media (min-width: 860px) {
+                    min-width: 450px;
+                }
+
+                @media (min-width: 768px) and (max-width: 859px) {
+                    min-width: 350px;
+                }
+
+                @media (min-width: 568px) and (max-width: 768px ) {
+                    min-width: 350px;
+                }
+
+                @media (max-width: 567px) {
+                    display: block;
+                }
+
                 @media (max-width: 768px) and (orientation: portrait) {
                     padding: 10px 15px;
+                }
+
+                &.dark{
+                    background: #b5b5b5;
+
+                    &:before{
+                        border-color: transparent #b5b5b5;
+                    }
                 }
 
                 span {
@@ -316,6 +346,11 @@ div.new-message {
         width: 100%;
     }
 
+    &.dark {
+        background: #565656;
+        border-top: 1px solid #4b4b4b;
+    }
+
     div.message-panel {
         max-width: 748px;
         min-width: 320px;
@@ -360,6 +395,16 @@ div.new-message {
                     border: none;
                 }
 
+                &.dark {
+                    background: #565656;
+                    color: white;
+                    border-bottom: 2px solid #777;
+
+                    &:focus {
+                        border-color: #2ecc71;
+                    }
+                }
+
                 &:focus {
                     outline: 0 !important;
                     border-color: #3498db;
@@ -380,12 +425,17 @@ div.new-message {
             vertical-align: middle;
             line-height: 54px;
             border-radius: 50%;
+            cursor: pointer;
 
             @media (max-width: 768px) {
                 height: 50px;
                 top: 50%;
                 transform: translateY(-50%);
                 right: 10px;
+            }
+
+            &.dark {
+                background: #2ecc71;
             }
 
             &:before {
@@ -400,11 +450,6 @@ div.new-message {
                 display: inline-block;
                 height: 100%;
                 vertical-align: middle;
-            }
-
-            &:hover {
-                text-shadow: 1px 1px 5px #3498db;
-                cursor: pointer;
             }
         }
     }

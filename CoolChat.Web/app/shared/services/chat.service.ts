@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 import { UserModel } from '../models/user.model';
 import { UserAccountModel } from '../models/user-account.model';
 import { MessageModel } from '../models/message.model';
+import { TypingModel } from '../models/typing.model';
 
 export class SignalrWindow extends Window {
     $: any;
@@ -30,11 +31,13 @@ export class ChatService {
     newMessage$: Observable<any>;
     readedMessages$: Observable<any>;
     userLastActivity$: Observable<any>;
+    isTyping$: Observable<any>
 
     private startingSubject = new Subject<any>();
     private newMessageSubject = new Subject<MessageModel>();
     private readedMessagesSubject = new Subject<number>();
     private lastActivitySubject = new Subject<UserModel>();
+    private isTypingSubject = new Subject<TypingModel>();
 
     private msgCallback: MessageCallback;
     private onlineCallback: OnlineCallback;
@@ -58,6 +61,7 @@ export class ChatService {
         this.newMessage$ = this.newMessageSubject.asObservable();
         this.readedMessages$ = this.readedMessagesSubject.asObservable();
         this.userLastActivity$ = this.lastActivitySubject.asObservable();
+        this.isTyping$ = this.isTypingSubject.asObservable();
 
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
@@ -75,6 +79,9 @@ export class ChatService {
         });
         this.hubProxy.on("UserIsOnline", (user) => {
             this.lastActivitySubject.next(JSON.parse(user));
+        });
+        this.hubProxy.on("IsTyping", (typing) => {
+            this.isTypingSubject.next(typing);
         });
         this.hubConnection.start()
             .done(() => this.startingSubject.next())
@@ -100,6 +107,7 @@ export class ChatService {
 
     getMessages(dialogId: number): Promise<MessageModel[]> {
         if (this.setAuthHeader()) {
+            this.setLastTimeActivity();
             return this.http.get('api/messages/' + dialogId, { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as MessageModel[]);
         }
     }
@@ -113,7 +121,8 @@ export class ChatService {
     }*/
 
     sendMessage(message: MessageModel): Promise<MessageModel> {
-        if (this.setAuthHeader()){
+        if (this.setAuthHeader()) {
+            this.setLastTimeActivity();
             return this.http
                 .post('api/messages/send', JSON.stringify(message), { headers: this.headers })
                 .toPromise()
@@ -122,7 +131,8 @@ export class ChatService {
     }
 
     setMessagesAsReaded(dialogId: number) {
-        if (this.setAuthHeader()){
+        if (this.setAuthHeader()) {
+            this.setLastTimeActivity();
             return this.http
                 .post('api/messages/read', dialogId, { headers: this.headers }).toPromise();
         }
@@ -143,6 +153,10 @@ export class ChatService {
             return true;
         }
         return false;
+    }
+
+    isTyping(dialogId, userId) {
+        this.hubProxy.invoke("IsTyping", dialogId, userId);
     }
 
     subscribe(dialogIds: number[]): void {

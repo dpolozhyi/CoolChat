@@ -17,6 +17,8 @@ export class ChatComponent implements OnInit {
 
     private minMode: boolean = false;
 
+    private showSearch: boolean = false;
+
     private isDark: boolean = false;
 
     private expandedSettings: boolean = false;
@@ -66,7 +68,7 @@ export class ChatComponent implements OnInit {
         var now = Date.now() + new Date().getTimezoneOffset() * 60 * 1000;
         var lastUserActivity = new Date(String(this.selectedUser.lastTimeActivity).replace('Z', '')).getTime();
         var secondsPass = (now - lastUserActivity) / 1000;
-        console.log(this.selectedUser.name + " last seen " + secondsPass + " seconds ago");
+        //console.log(this.selectedUser.name + " last seen " + secondsPass + " seconds ago");
         if (now - lastUserActivity > 0 && (now - lastUserActivity) / 1000 < 60) {
             return true;
         }

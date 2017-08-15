@@ -5,7 +5,8 @@ import { AuthService } from '../shared/services/auth.service';
 import { UserModel } from '../shared/models/user.model';
 import { UserAccountModel } from '../shared/models/user-account.model';
 import { MessageModel } from '../shared/models/message.model';
-import { BriefDialogModel } from "../shared/models/brief-dialog.model"
+import { BriefDialogModel } from "../shared/models/brief-dialog.model";
+import { TypingModel } from '../shared/models/typing.model';
 
 @Component({
     selector: 'div[chat-list]',
@@ -17,6 +18,8 @@ export class ChatListComponent implements OnInit, OnChanges {
     @Input() minMode: boolean;
 
     @Input() minModeHiddenChatList: boolean;
+
+    @Input() showSearch: boolean;
 
     @Input() isDark: boolean;
 
@@ -59,6 +62,7 @@ export class ChatListComponent implements OnInit, OnChanges {
                 msgDialog.lastMessage.isReaded = true;
                 this.chatService.setMessagesAsReaded(this.selectedDialog.id);
             }
+            msgDialog.isTyping = false;
             this.userAccount.dialogs.sort((a, b) => {
                 var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
                 var bTicks = new Date(String(b.lastMessage.postedTime)).getTime();
@@ -80,7 +84,16 @@ export class ChatListComponent implements OnInit, OnChanges {
                     });
             }
         });
-
+        this.chatService.isTyping$.subscribe((typing: TypingModel) => {
+            if (this.user.id == typing.userId) {
+                return;
+            }
+            var dialog = this.userAccount.dialogs.find((dialog) => dialog.id == typing.dialogId);
+            if (!dialog.isTyping) {
+                dialog.isTyping = true;
+                setTimeout(() => { dialog.isTyping = false; console.log("user finished typing"); }, 2000);
+            }
+        });
     }
 
     ngOnChanges() {
@@ -116,7 +129,7 @@ export class ChatListComponent implements OnInit, OnChanges {
         var now = Date.now() + new Date().getTimezoneOffset() * 60 * 1000;
         var lastUserActivity = new Date(String(user.lastTimeActivity).replace('Z', '')).getTime();
         var secondsPass = (now - lastUserActivity) / 1000;
-        console.log("Chat-list:"+name + " last seen " + secondsPass + " seconds ago");
+        //console.log("Chat-list:"+name + " last seen " + secondsPass + " seconds ago");
         if (now - lastUserActivity > 0 && (now - lastUserActivity) / 1000 < 60) {
             return true;
         }

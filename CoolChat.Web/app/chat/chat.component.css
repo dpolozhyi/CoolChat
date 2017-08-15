@@ -274,6 +274,7 @@ div.container div.header div.info-bar div.central-bar div.search-button {
   transform: translateY(-50%);
   right: 20px;
   color: #3498db;
+  cursor: pointer;
 }
 div.container div.header div.info-bar div.central-bar div.search-button.dark {
   color: #2ecc71;

@@ -31,7 +31,7 @@
 
                     </div>
                 </div>
-                <div class="search-button" *ngIf="minMode && !minModeHiddenChatList" [class.dark]="isDark">
+                <div class="search-button" (click)="showSearch = !showSearch" *ngIf="minMode && !minModeHiddenChatList" [class.dark]="isDark">
                     <div class="search-button-wrapper">
                         <div class="search-icon">
                             <i class="ion-ios-search" aria-hidden="true"></i>
@@ -54,6 +54,7 @@
          (notifyChatListState)="onChatListStateChanged($event)"
          [minModeHiddenChatList]="minModeHiddenChatList"
          [minMode]="minMode"
+         [showSearch]="showSearch"
          [isDark]="isDark">
     </div>
 </div>
