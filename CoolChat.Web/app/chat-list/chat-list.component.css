@@ -200,6 +200,10 @@ div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-body span.message-notification.dark {
   background: #2ecc71;
 }
+div.chat-list div.dialog-list-wrapper ul.dialog-list li.room-list div.dialog div.message div.message-no-messages {
+  font-size: 16px;
+  margin-top: 5px;
+}
 div.chat-list div.dialog-list-wrapper ul.dialog-list li.dialog-selected {
   background: rgba(0, 0, 0, 0.14);
 }
@@ -225,6 +229,7 @@ div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li
   border-bottom: 1px solid #ccc;
   transition: 0.15s;
   min-height: 50px;
+  display: block;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li:first-child {
   border-top: 1px solid #ccc;
@@ -257,15 +262,59 @@ div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button {
   font-size: 18px;
   background: #fff;
-  color: #666;
-  border: 1px solid #ccc;
+  color: #2ecc71;
+  border: 1px solid #2ecc71;
   display: inline;
   text-align: center;
   padding: 2px 5px;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   cursor: pointer;
+}
+div.chat-list div.dialog-list-wrapper div.add-contact {
+  width: 100%;
+  position: absolute;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-bottom: 1px solid #ccc;
+  height: 70px;
+  text-align: center;
+  border: 1px solid #2ecc71;
+  box-sizing: border-box;
+}
+div.chat-list div.dialog-list-wrapper div.add-contact:hover {
+  cursor: pointer;
+}
+div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper {
+  position: relative;
+  height: 100%;
+  display: inline-block;
+}
+div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper span.add-contact-icon {
+  display: inline-block;
+  font-size: 30px;
+  border-radius: 50%;
+  border: 2px dashed #2ecc71;
+  text-align: center;
+  vertical-align: middle;
+  color: #2ecc71;
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0px;
+}
+div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper div.add-contact-text {
+  margin-left: 65px;
+  height: 100%;
+  box-sizing: border-box;
+  color: #2ecc71;
+  font-family: Roboto-Light;
+  font-size: 24px;
+  line-height: 70px;
 }
 div.chat-list div.search-dialog {
   margin: 0;
@@ -327,33 +376,6 @@ div.chat-list div.search-dialog input[type="text"].dark {
 div.chat-list div.search-dialog input[type="text"].dark:focus {
   outline: 0 !important;
   box-shadow: none;
-}
-div.chat-list div.hide {
-  z-index: 999;
-  display: inline-block;
-  left: 100%;
-  margin-left: -48px;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 28px;
-  padding: 5px 10px;
-  border: 4px solid #3498db;
-  border-right: none;
-  border-radius: 50px 0 0 50px;
-  transition: 0.4s;
-  background: white;
-  opacity: 0.5;
-}
-@media (max-width: 768px) {
-  div.chat-list div.hide {
-    display: none;
-  }
-}
-div.chat-list div.hide:hover {
-  cursor: pointer;
-  transform: translateY(-50%);
-  opacity: 1 !important;
 }
 .chat-area {
   transition: 0.4s;

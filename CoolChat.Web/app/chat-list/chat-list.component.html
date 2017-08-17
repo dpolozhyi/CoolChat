@@ -5,8 +5,15 @@
         </label>
         <input id="search-dialog-input" type="text" #searchInput (keyup)="onDialogSearch(searchInput.value)" [class.dark]="isDark" placeholder="Search..." />
     </div>
+
     <div class="dialog-list-wrapper" [class.stick-to-top]="minMode && !showSearch">
-        <ul *ngIf="userAccount && user" class="dialog-list">
+        <div class="add-contact" *ngIf="userAccount && userAccount.dialogs.length == 0 && !globalSearchEnabled" (click)="onSearchContacts()">
+            <div class="add-contact-wrapper">
+                <span class="add-contact-icon ion-plus"></span>
+                <div class="add-contact-text">Add new contact</div>
+            </div>
+        </div>
+        <ul *ngIf="userAccount && user && userAccount.dialogs.length > 0" class="dialog-list"> 
             <li *ngFor="let dialog of filteredDialogs" [class.dark]="isDark" (click)="selectDialog(dialog)" class="room-list" [class.selected]="this.selectedDialog==dialog && !minMode">
                 <div class="dialog">
                     <div class="avatar">
@@ -23,46 +30,41 @@
                     <div class="message">
                         <div class="message-header" [class.dark]="isDark">
                             <span class="name" [class.dark]="isDark">{{dialog.members[0].name}}</span>
-                            <span class="time" [class.dark]="isDark">{{dialog.lastMessage.postedTime | relativeDate}}</span>
+                            <span class="time" [class.dark]="isDark" *ngIf="dialog.lastMessage">{{dialog.lastMessage.postedTime | relativeDate}}</span>
                         </div>
-                        <div class="message-body">
+                        <div class="message-body" *ngIf="dialog.lastMessage">
                             <span class="message-text" *ngIf="!dialog.isTyping" [class.unreaded]="!dialog.lastMessage.isReaded" [class.full-length]="dialog.newMessagesNumber < 1" [class.dark]="isDark"><span class="sender" *ngIf="dialog.lastMessage.userId==user.id">You: </span>{{dialog.lastMessage.body}}</span>
                             <span class="message-text" *ngIf="dialog.isTyping" [class.unreaded]="!dialog.lastMessage.isReaded" [class.dark]="isDark">user is typing...</span>
                             <span class="message-notification" [class.dark]="isDark" *ngIf="dialog.newMessagesNumber > 0">{{dialog.newMessagesNumber}}</span>
                         </div>
+                        <div class="message-no-messages" *ngIf="!dialog.lastMessage">No messages yet</div>
                     </div>
                 </div>
             </li>
         </ul>
-        <!--<div class="global-search">
+        <div class="global-search" *ngIf="globalSearchEnabled && contactsList">
             <div class="global-search-title">
                 Global search
             </div>
             <ul class="global-search-list">
-                <li>
+                <li *ngFor="let contact of contactsList">
                     <div class="contact">
                         <div class="contact-avatar">
-                            <img src="https://pbs.twimg.com/profile_images/831993825635745796/HnVmB0-k.jpg" />
+                            <img [src]="contact.avatarUrl" />
                         </div>
                         <div class="contact-options">
                             <div class="contact-name">
-                                Mike
+                                {{contact.name}}
                             </div>
-                            <div class="contact-add-button">
+                            <div class="contact-add-button" (click)="onAddcontact(contact.id)">
                                 <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add contact
                             </div>
                         </div>
                     </div>
                 </li>
-                <li>
-
-                </li>
             </ul>
-        </div>-->
+        </div>
     </div>
-    <!--<div class="hide" id="hide-button" [class.hiddenHideButton]="hiddenChatList" (click)="hiddenChatList = !hiddenChatList">
-        <i class="fa fa-arrow-left" aria-hidden="true"></i>
-    </div>-->
 </div>
 
 

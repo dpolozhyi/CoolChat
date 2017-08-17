@@ -8,18 +8,22 @@
     </div>
 </div>-->
 
-<div class="conversation" [class.dark]="isDark" #chat (scroll)="onMessageScroll($event)" [scrollTop]="chat.scrollHeight - scrollOffset" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">
+<div class="conversation" [class.dark]="isDark" #chat (change)="onResize()" (scroll)="onMessageScroll($event)" [scrollTop]="chat.scrollHeight - scrollOffset" [class.fullWidth]="hiddenChatList" [class.oneHunMarginLeft]="!minModeHiddenChatList">
+    <div class="message-lazy-loader" *ngIf="messagesAfterLoading">
+        <div class="loader" [class.dark]="isDark"></div>
+    </div>
     <div class="message-list" *ngIf="messages">
         <div class="message-wrapper" *ngFor="let message of messages" [class.my-message-wrapper]="message.user.id==user.id">
             <div class="user-avatar" *ngIf="!followingMessage(message)">
-                <img [src]="message.user.avatarUrl" />
+                <img *ngIf="message.user.avatarUrl" [src]="message.user.avatarUrl" />
             </div>
             <div class="message" [class.my-message]="message.user.id==user.id" [class.beforeAfterNone]="followingMessage(message)" [class.dark]="isDark">
-                <span class="message-name">{{message.user.name}}</span><span class="message-time">{{message.postedTime | date:'shortTime'}}</span>
+                <span class="message-name">{{message.user.name}}</span><span class="message-time">{{message.postedTime | date:'medium'}}</span>
                 <span class="message-body">{{message.body}}</span>
             </div>
         </div>
     </div>
+    <div class="message-empty" *ngIf="messages && messages.length == 0">Write something to this user</div>
 </div>
 <div class="conversation-loader" [class.dark]="isDark" *ngIf="messagesLoading">
     <div class="conversation-loader-wrapper">

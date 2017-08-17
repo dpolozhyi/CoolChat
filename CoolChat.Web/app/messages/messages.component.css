@@ -47,6 +47,8 @@ div.conversation {
   transition: 0.4s;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-top: 30px;
+  box-sizing: border-box;
 }
 @media (max-width: 768px) and (orientation: portrait) {
   div.conversation {
@@ -64,6 +66,83 @@ div.conversation {
 }
 div.conversation.dark {
   background: #565656;
+}
+div.conversation div.message-lazy-loader {
+  height: 30px;
+  overflow: hidden;
+  margin-top: -30px;
+}
+div.conversation div.message-lazy-loader div.loader {
+  font-size: 10px;
+  margin: 6px auto 0;
+  text-indent: -9999em;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  background: linear-gradient(to right, #ddd 10%, rgba(224, 224, 224, 0.3) 42%);
+  position: relative;
+  animation: load 1.4s infinite linear;
+  transform: translateZ(0);
+  transition: 0.3s;
+}
+div.conversation div.message-lazy-loader div.loader.dark:after {
+  background: #565656;
+}
+div.conversation div.message-lazy-loader div.loader:before {
+  width: 50%;
+  height: 50%;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+div.conversation div.message-lazy-loader div.loader:after {
+  background: #fff;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+div.conversation div.message-empty {
+  height: 100%;
+  font-family: Roboto-Light;
+  text-align: center;
+  font-size: 24px;
+  color: #999;
+}
+div.conversation div.message-empty:before {
+  content: "";
+  display: inline-block;
+  height: 70%;
+  vertical-align: middle;
 }
 div.conversation div.message-list {
   max-width: 768px;
@@ -417,5 +496,8 @@ div.new-message div.message-panel div.message-send:after {
   display: none !important;
 }
 .beforeAfterNone:after {
+  display: none !important;
+}
+.display-none {
   display: none !important;
 }

@@ -17,6 +17,7 @@ let ChatListComponent = class ChatListComponent {
         this.authService = authService;
         this.notifyChatListState = new core_1.EventEmitter();
         this.notifySelectedUser = new core_1.EventEmitter();
+        this.globalSearchEnabled = false;
         this.chatService.starting$.subscribe(() => { console.log("signalr service has been started"); }, () => { console.warn("signalr service failed to start!"); });
     }
     ngOnInit() {
@@ -41,7 +42,8 @@ let ChatListComponent = class ChatListComponent {
             }
             msgDialog.isTyping = false;
             this.userAccount.dialogs.sort((a, b) => {
-                var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
+                if (!b.lastMessage)
+                    var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
                 var bTicks = new Date(String(b.lastMessage.postedTime)).getTime();
                 return bTicks - aTicks;
             });
@@ -77,6 +79,7 @@ let ChatListComponent = class ChatListComponent {
         }
     }
     onDialogSearch(filter) {
+        filter = filter.trim();
         if (filter) {
             this.filteredDialogs = this.userAccount.dialogs.filter((dialog) => dialog.members[0].name.indexOf(filter) >= 0);
         }
@@ -84,13 +87,26 @@ let ChatListComponent = class ChatListComponent {
             this.filteredDialogs = this.userAccount.dialogs;
         }
     }
+    onSearchContacts() {
+        this.globalSearchEnabled = true;
+        this.chatService.getContactsList().then((contacts) => this.contactsList = contacts);
+    }
+    onAddcontact(userId) {
+        this.chatService.addNewContact(userId);
+        this.chatService.getUserAccount().then((userAccount) => {
+            this.userAccount = userAccount;
+            this.filteredDialogs = userAccount.dialogs;
+            this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
+            alert("New contacts were addded");
+        });
+    }
     selectDialog(dialog) {
         this.selectedDialog = dialog;
         if (this.selectedDialog.newMessagesNumber > 0) {
             this.chatService.setMessagesAsReaded(this.selectedDialog.id);
         }
         this.selectedDialog.newMessagesNumber = 0;
-        if (this.selectedDialog.lastMessage.user.id != this.user.id) {
+        if (this.selectedDialog.lastMessage && this.selectedDialog.lastMessage.user.id != this.user.id) {
             this.selectedDialog.lastMessage.isReaded = true;
         }
         this.notifyChatListState.emit(true);

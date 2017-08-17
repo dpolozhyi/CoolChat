@@ -58,7 +58,7 @@
                 </div>
                 <div class="login-field">
                     <span>Repeat Pass:</span>
-                    <input type="password" [(ngModel)]="registerModel.repeatPassword">
+                    <input type="password" [(ngModel)]="registerModel.repeatPassword" (keydown.enter)="onRegister()">
                 </div>
                 <div class="login-field login-button-field">
                     <div class="login-button back-button">

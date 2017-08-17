@@ -60,7 +60,7 @@ namespace CoolChat.Web.Controllers.api
             });
             if (user != null)
             {
-                Entities.User addedUser = this.userService.AddNewUser(new Entities.User() { Id = user.Id, Name = user.Login, LastTimeActivity = DateTime.UtcNow });
+                Entities.User addedUser = this.userService.AddNewUser(new Entities.User() { Id = user.Id, Name = user.Login, LastTimeActivity = DateTime.UtcNow, AvatarUrl = "https://pickaface.net/gallery/avatar/88429335_170816_1938_2r4va86.png" });
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("http://localhost:38313");

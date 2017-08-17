@@ -96,6 +96,15 @@ export class ChatService {
         this.onlineCallback = callback;
     }
 
+    addNewContact(userId: number): Promise<number> {
+        if (this.setAuthHeader()) {
+            return this.http.put('/api/contacts/add', userId, { headers: this.headers }).toPromise().then(res => {
+                this.setLastTimeActivity();
+                return res.json() as number;
+            });
+        }
+    }
+
     getUserAccount(): Promise<UserAccountModel> {
         if (this.setAuthHeader()) {
             return this.http.post('/api/useraccount', '', { headers: this.headers }).toPromise().then(res => {
@@ -108,7 +117,21 @@ export class ChatService {
     getMessages(dialogId: number): Promise<MessageModel[]> {
         if (this.setAuthHeader()) {
             this.setLastTimeActivity();
-            return this.http.get('api/messages/' + dialogId, { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as MessageModel[]);
+            return this.http.get('api/messages/' + dialogId + '?offset=0&limit=20', { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as MessageModel[]);
+        }
+    }
+
+    getEarlyMessages(dialogId: number, offset: number): Promise<MessageModel[]> {
+        if (this.setAuthHeader()) {
+            this.setLastTimeActivity();
+            return this.http.get('api/messages/' + dialogId + '?offset=' + offset + '&limit=10', { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as MessageModel[]);
+        }
+    }
+
+    getContactsList(): Promise<UserModel[]> {
+        if (this.setAuthHeader()) {
+            this.setLastTimeActivity();
+            return this.http.get('api/contacts', { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as UserModel[]);
         }
     }
 

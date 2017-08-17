@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, OnChanges, SimpleChanges, Input} from '@angular/core';
+﻿import { Component, OnInit, OnChanges, SimpleChanges, Input, ElementRef, ViewChild} from '@angular/core';
 import { ChatService } from '../shared/services/chat.service';
 
 import { UserModel } from '../shared/models/user.model';
@@ -28,7 +28,7 @@ export class MessagesComponent implements OnInit, OnChanges {
 
     @Input() user: UserModel;
 
-    @Input() briefDialog: BriefDialogModel
+    @Input() briefDialog: BriefDialogModel;
 
     private prevBriefDialog: BriefDialogModel;
 
@@ -36,13 +36,21 @@ export class MessagesComponent implements OnInit, OnChanges {
 
     private name: string;
 
+    private needTriggerScrollPosition: boolean;
+
+    private scrollHeight: number = 0;
+
     private scrollOffset: number = 0;
 
     private messagesLoading: boolean = true;
 
+    private messagesAfterLoading: boolean = false;
+
     private messages: MessageModel[];
 
     private messagesAvatarsOffset: MessageDisplayModel[] = [];
+
+    @ViewChild('chat') chatDiv: ElementRef;
 
     constructor(private chatService: ChatService) { }
 
@@ -65,6 +73,21 @@ export class MessagesComponent implements OnInit, OnChanges {
         });
     }
 
+    ngDoCheck() {
+        console.log(this.chatDiv.nativeElement.scrollHeight);
+        if (this.scrollHeight == 0) {
+            this.scrollHeight = this.chatDiv.nativeElement.scrollHeight;
+            return;
+        }
+        if (this.chatDiv.nativeElement.scrollHeight != this.scrollHeight) {
+            if (this.needTriggerScrollPosition) {
+                this.scrollOffset = this.scrollHeight;
+                this.needTriggerScrollPosition = false;
+            }
+            this.scrollHeight = this.chatDiv.nativeElement.scrollHeight;
+        }
+    }
+
     followingMessage(message: MessageModel): boolean {
         var index = this.messages.indexOf(message);
         if (index > 0) {
@@ -73,10 +96,6 @@ export class MessagesComponent implements OnInit, OnChanges {
             }
         }
         return false;
-    }
-
-    onMessageScroll(event) {
-        var offsetTop = event.target.offsetTop;
     }
 
     messageAvatarOffsetTop(message: MessageModel) {
@@ -120,6 +139,9 @@ export class MessagesComponent implements OnInit, OnChanges {
             this.messagesLoading = false;
         });
         this.prevBriefDialog = this.briefDialog;
+
+        this.scrollHeight = 0;
+        this.scrollOffset = 0;
         /*
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
         this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => { 
@@ -142,6 +164,7 @@ export class MessagesComponent implements OnInit, OnChanges {
         newMessage.dialogId = this.briefDialog.id;
 
         this.chatService.sendMessage(newMessage);
+        this.scrollOffset = 0;
     }
 
     onMessageKeyUp() {
@@ -150,6 +173,23 @@ export class MessagesComponent implements OnInit, OnChanges {
 
     printDate(date: Date) {
     }
+
+    onMessageScroll(event) {
+        const target = event.target;
+        console.log("ScrollTop: " + target.scrollTop + " ScrollHeight: " + target.scrollHeight);
+        if (target.scrollTop < 1 && !this.messagesAfterLoading) {
+            this.messagesAfterLoading = true;
+            this.chatService
+                .getEarlyMessages(this.briefDialog.id, this.messages.length)
+                .then((messages) => {
+                    //this.scrollOffset = target.scrollHeight;
+                    this.needTriggerScrollPosition = true;
+                    messages.reverse().forEach((value) => this.messages.unshift(value));
+                    this.messagesAfterLoading = false;
+                });
+        }
+    }
+
     /*onNameSubmit(name: string) {
         if (name.trim()) {
             this.name = name.trim();
@@ -170,7 +210,7 @@ export class MessagesComponent implements OnInit, OnChanges {
                 });
         }*/
 
-        /* Why this isn't working? */
+    /* Why this isn't working? */
     /*const target = event.target;
     console.log(event.srcElement.scrollTop);
     if (target.scrollTop < 1 && !this.messagesLoading) {

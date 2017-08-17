@@ -83,6 +83,7 @@ namespace CoolChat.Web.App_Start
             kernel.Bind<IDialogService>().To<DialogService>();
             kernel.Bind<IUserAccountService>().To<UserAccountService>();
             kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IContactService>().To<ContactService>();
         }
     }
 }

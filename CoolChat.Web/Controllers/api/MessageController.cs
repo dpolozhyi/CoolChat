@@ -39,18 +39,19 @@ namespace CoolChat.Web.Controllers.api
         [Route("{dialogId}")]
         public IHttpActionResult Get(int dialogId, int offset = -1, int limit = 0)
         {
-            IEnumerable<MessageViewModel> messages = this.dialogService.GetMessages(dialogId);
-            string json = JsonConvert.SerializeObject(messages, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-            return Ok(json);
+            IEnumerable<MessageViewModel> messages;
 
-            /*if(offset != -1)
+            if(offset != -1)
             {
-                return this.chatService.GetMessages(chatRoomId, offset, limit);
+                messages = this.dialogService.GetMessages(dialogId, offset, limit);
             }
             else
             {
-                return this.chatService.GetMessages(chatRoomId);
-            }*/
+                messages = this.dialogService.GetMessages(dialogId);
+            }
+
+            string json = JsonConvert.SerializeObject(messages, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            return Ok(json);
         }
 
         [HttpPost]

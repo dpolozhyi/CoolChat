@@ -33,7 +33,7 @@ namespace CoolChat.Business.Services
                     dialog.Messages = this.unitOfWork.Get<Message>()
                         .Get(n => n.Dialog.Id == dialog.Id, orderBy: n => n.OrderByDescending(m => m.PostedTime), includeProperties: "Dialog", offset: 0, limit: 10).ToList();
                 }
-                dialogsViewModel = Mapper.Map<List<Dialog>, List<BriefDialogViewModel>>(dialogs.ToList()).OrderByDescending(n => n.LastMessage.PostedTime);
+                dialogsViewModel = Mapper.Map<List<Dialog>, List<BriefDialogViewModel>>(dialogs.ToList()).OrderByDescending(n => n.LastMessage?.PostedTime);
                 UserAccountViewModel userAcc = Mapper.Map<User, UserAccountViewModel>(user);
                 userAcc.Dialogs = dialogsViewModel;
                 return userAcc;

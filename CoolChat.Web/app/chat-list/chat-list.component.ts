@@ -2,6 +2,8 @@
 import { ChatService } from '../shared/services/chat.service';
 import { AuthService } from '../shared/services/auth.service';
 
+import { LetterAvatarDirective } from '../shared/directives/letter-avatar.directive';
+
 import { UserModel } from '../shared/models/user.model';
 import { UserAccountModel } from '../shared/models/user-account.model';
 import { MessageModel } from '../shared/models/message.model';
@@ -26,6 +28,10 @@ export class ChatListComponent implements OnInit, OnChanges {
     @Output() notifyChatListState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @Output() notifySelectedUser: EventEmitter<UserModel> = new EventEmitter<UserModel>();
+
+    private globalSearchEnabled: boolean = false;
+
+    private contactsList: UserModel[];
 
     private userAccount: UserAccountModel;
 
@@ -64,6 +70,7 @@ export class ChatListComponent implements OnInit, OnChanges {
             }
             msgDialog.isTyping = false;
             this.userAccount.dialogs.sort((a, b) => {
+                if (!b.lastMessage)
                 var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
                 var bTicks = new Date(String(b.lastMessage.postedTime)).getTime();
                 return bTicks - aTicks;
@@ -103,6 +110,7 @@ export class ChatListComponent implements OnInit, OnChanges {
     }
 
     onDialogSearch(filter: string) {
+        filter = filter.trim();
         if (filter) {
             this.filteredDialogs = this.userAccount.dialogs.filter((dialog) => dialog.members[0].name.indexOf(filter) >= 0);
         }
@@ -111,13 +119,28 @@ export class ChatListComponent implements OnInit, OnChanges {
         }
     }
 
+    onSearchContacts() {
+        this.globalSearchEnabled = true;
+        this.chatService.getContactsList().then((contacts: UserModel[]) => this.contactsList = contacts);
+    }
+
+    onAddcontact(userId: number) {
+        this.chatService.addNewContact(userId);
+        this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
+            this.userAccount = userAccount;
+            this.filteredDialogs = userAccount.dialogs;
+            this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
+            alert("New contacts were addded");
+        });
+    }
+
     selectDialog(dialog: BriefDialogModel) {
         this.selectedDialog = dialog;
         if (this.selectedDialog.newMessagesNumber > 0) {
             this.chatService.setMessagesAsReaded(this.selectedDialog.id);
         }
         this.selectedDialog.newMessagesNumber = 0;
-        if (this.selectedDialog.lastMessage.user.id != this.user.id) {
+        if (this.selectedDialog.lastMessage && this.selectedDialog.lastMessage.user.id != this.user.id) {
             this.selectedDialog.lastMessage.isReaded = true;
         }
         this.notifyChatListState.emit(true);

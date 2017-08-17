@@ -20,6 +20,14 @@ namespace CoolChat.Business.Services
             this.unitOfWork = uow;
         }
 
+        public int CreateNewDialog(IEnumerable<int> userIds)
+        {
+            ICollection<User> members = this.unitOfWork.Get<User>().Get(n => userIds.Contains(n.Id)).ToList();
+            var addedDialog = this.unitOfWork.Get<Dialog>().Insert(new Dialog() { Members = members, TimeCreated = DateTime.UtcNow });
+            this.unitOfWork.SaveChanges();
+            return addedDialog.Id;
+        }
+
         public bool CheckUserHasDialog(int userId, int dialogId)
         {
             User user = this.unitOfWork.Get<User>().Get(n => n.Id == userId, includeProperties: "Dialogs").FirstOrDefault();
@@ -41,6 +49,12 @@ namespace CoolChat.Business.Services
         public IEnumerable<MessageViewModel> GetMessages(int dialogId)
         {
             IEnumerable<Message> messages = this.unitOfWork.Get<Message>().Get(n => n.Dialog.Id == dialogId, includeProperties: "User", orderBy: n => n.OrderBy(p => p.PostedTime));
+            return Mapper.Map<IEnumerable<Message>, IEnumerable<MessageViewModel>>(messages);
+        }
+
+        public IEnumerable<MessageViewModel> GetMessages(int dialogId, int offset, int limit)
+        {
+            IEnumerable<Message> messages = this.unitOfWork.Get<Message>().Get(n => n.Dialog.Id == dialogId, includeProperties: "User", orderBy: n => n.OrderByDescending(p => p.PostedTime), offset: offset, limit: limit, postOrderBy: n => n.OrderBy(p => p.PostedTime));
             return Mapper.Map<IEnumerable<Message>, IEnumerable<MessageViewModel>>(messages);
         }
 

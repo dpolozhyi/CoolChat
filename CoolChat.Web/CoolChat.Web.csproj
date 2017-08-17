@@ -227,7 +227,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\api\ChatController.cs" />
+    <Compile Include="Controllers\api\ContactController.cs" />
     <Compile Include="Controllers\api\MessageController.cs" />
     <Compile Include="Controllers\api\TokenController.cs" />
     <Compile Include="Controllers\api\UserAccountController.cs" />
@@ -383,6 +383,7 @@
     <TypeScriptCompile Include="app\messages\messages.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\shared\directives\focus.directive.ts" />
+    <TypeScriptCompile Include="app\shared\directives\letter-avatar.directive.ts" />
     <TypeScriptCompile Include="app\shared\models\brief-dialog.model.ts" />
     <TypeScriptCompile Include="app\shared\models\login.model.ts" />
     <TypeScriptCompile Include="app\shared\models\message.model.ts" />

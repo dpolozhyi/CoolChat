@@ -21,8 +21,10 @@ exports.MessageDisplayModel = MessageDisplayModel;
 let MessagesComponent = class MessagesComponent {
     constructor(chatService) {
         this.chatService = chatService;
+        this.scrollHeight = 0;
         this.scrollOffset = 0;
         this.messagesLoading = true;
+        this.messagesAfterLoading = false;
         this.messagesAvatarsOffset = [];
     }
     ngOnInit() {
@@ -43,6 +45,20 @@ let MessagesComponent = class MessagesComponent {
             }
         });
     }
+    ngDoCheck() {
+        console.log(this.chatDiv.nativeElement.scrollHeight);
+        if (this.scrollHeight == 0) {
+            this.scrollHeight = this.chatDiv.nativeElement.scrollHeight;
+            return;
+        }
+        if (this.chatDiv.nativeElement.scrollHeight != this.scrollHeight) {
+            if (this.needTriggerScrollPosition) {
+                this.scrollOffset = this.scrollHeight;
+                this.needTriggerScrollPosition = false;
+            }
+            this.scrollHeight = this.chatDiv.nativeElement.scrollHeight;
+        }
+    }
     followingMessage(message) {
         var index = this.messages.indexOf(message);
         if (index > 0) {
@@ -51,9 +67,6 @@ let MessagesComponent = class MessagesComponent {
             }
         }
         return false;
-    }
-    onMessageScroll(event) {
-        var offsetTop = event.target.offsetTop;
     }
     messageAvatarOffsetTop(message) {
     }
@@ -93,6 +106,8 @@ let MessagesComponent = class MessagesComponent {
             this.messagesLoading = false;
         });
         this.prevBriefDialog = this.briefDialog;
+        this.scrollHeight = 0;
+        this.scrollOffset = 0;
         /*
         this.chatService.getMessages(this.chatRoom).then((messages) => this.messages = messages);
         this.chatService.unsubscribe(String(this.prevChatRoom.Id)).then(() => {
@@ -113,9 +128,27 @@ let MessagesComponent = class MessagesComponent {
         newMessage.user = this.user;
         newMessage.dialogId = this.briefDialog.id;
         this.chatService.sendMessage(newMessage);
+        this.scrollOffset = 0;
     }
     onMessageKeyUp() {
         this.chatService.isTyping(this.briefDialog.id, this.user.id);
+    }
+    printDate(date) {
+    }
+    onMessageScroll(event) {
+        const target = event.target;
+        console.log("ScrollTop: " + target.scrollTop + " ScrollHeight: " + target.scrollHeight);
+        if (target.scrollTop < 1 && !this.messagesAfterLoading) {
+            this.messagesAfterLoading = true;
+            this.chatService
+                .getEarlyMessages(this.briefDialog.id, this.messages.length)
+                .then((messages) => {
+                //this.scrollOffset = target.scrollHeight;
+                this.needTriggerScrollPosition = true;
+                messages.reverse().forEach((value) => this.messages.unshift(value));
+                this.messagesAfterLoading = false;
+            });
+        }
     }
 };
 __decorate([
@@ -138,6 +171,10 @@ __decorate([
     core_1.Input(), 
     __metadata('design:type', brief_dialog_model_1.BriefDialogModel)
 ], MessagesComponent.prototype, "briefDialog", void 0);
+__decorate([
+    core_1.ViewChild('chat'), 
+    __metadata('design:type', core_1.ElementRef)
+], MessagesComponent.prototype, "chatDiv", void 0);
 MessagesComponent = __decorate([
     core_1.Component({
         selector: 'div[messages]',
