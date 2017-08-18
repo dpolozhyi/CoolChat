@@ -20,7 +20,7 @@ namespace CoolChat.Business.Services
             this.unitOfWork = uow;
         }
 
-        public IEnumerable<UserViewModel> GetContactsList(string filter = "", int offset = -1, int limit = 0)
+        public IEnumerable<ContactViewModel> GetContactsList(string filter = "", int offset = -1, int limit = 0)
         {
             IEnumerable<User> contacts;
             if (String.IsNullOrEmpty(filter))
@@ -31,7 +31,7 @@ namespace CoolChat.Business.Services
             {
                 contacts = this.unitOfWork.Get<User>().Get(n => n.Name.Contains(filter));
             }
-            return Mapper.Map<IEnumerable<User>, IEnumerable<UserViewModel>>(contacts);
+            return Mapper.Map<IEnumerable<User>, IEnumerable<ContactViewModel>>(contacts);
         }
     }
 }

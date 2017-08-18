@@ -22,10 +22,15 @@ namespace CoolChat.Business.Services
 
         public int CreateNewDialog(IEnumerable<int> userIds)
         {
-            ICollection<User> members = this.unitOfWork.Get<User>().Get(n => userIds.Contains(n.Id)).ToList();
-            var addedDialog = this.unitOfWork.Get<Dialog>().Insert(new Dialog() { Members = members, TimeCreated = DateTime.UtcNow });
-            this.unitOfWork.SaveChanges();
-            return addedDialog.Id;
+            bool dialogNotExist = this.unitOfWork.Get<Dialog>().Get(n => n.Members.Select(u => u.Id).AsQueryable().All(userIds.Contains) && n.Members.Count == userIds.Count()).Count() == 0;
+            if (dialogNotExist)
+            {
+                ICollection<User> members = this.unitOfWork.Get<User>().Get(n => userIds.Contains(n.Id)).ToList();
+                var addedDialog = this.unitOfWork.Get<Dialog>().Insert(new Dialog() { Members = members, TimeCreated = DateTime.UtcNow });
+                this.unitOfWork.SaveChanges();
+                return addedDialog.Id;
+            }
+            return -1;
         }
 
         public bool CheckUserHasDialog(int userId, int dialogId)
@@ -56,6 +61,12 @@ namespace CoolChat.Business.Services
         {
             IEnumerable<Message> messages = this.unitOfWork.Get<Message>().Get(n => n.Dialog.Id == dialogId, includeProperties: "User", orderBy: n => n.OrderByDescending(p => p.PostedTime), offset: offset, limit: limit, postOrderBy: n => n.OrderBy(p => p.PostedTime));
             return Mapper.Map<IEnumerable<Message>, IEnumerable<MessageViewModel>>(messages);
+        }
+
+        public BriefDialogViewModel GetDialogById(int dialogId)
+        {
+            Dialog dialog = this.unitOfWork.Get<Dialog>().Get(n => n.Id == dialogId).FirstOrDefault();
+            return Mapper.Map<Dialog, BriefDialogViewModel>(dialog);
         }
 
         public MessageViewModel PostMessage(MessageViewModel message)

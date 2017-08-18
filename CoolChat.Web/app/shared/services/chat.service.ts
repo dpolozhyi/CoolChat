@@ -10,6 +10,7 @@ import { UserModel } from '../models/user.model';
 import { UserAccountModel } from '../models/user-account.model';
 import { MessageModel } from '../models/message.model';
 import { TypingModel } from '../models/typing.model';
+import { ContactModel } from '../models/contact.model';
 
 export class SignalrWindow extends Window {
     $: any;
@@ -31,13 +32,15 @@ export class ChatService {
     newMessage$: Observable<any>;
     readedMessages$: Observable<any>;
     userLastActivity$: Observable<any>;
-    isTyping$: Observable<any>
+    isTyping$: Observable<any>;
+    newDialog$: Observable<any>;
 
     private startingSubject = new Subject<any>();
     private newMessageSubject = new Subject<MessageModel>();
     private readedMessagesSubject = new Subject<number>();
     private lastActivitySubject = new Subject<UserModel>();
     private isTypingSubject = new Subject<TypingModel>();
+    private newDialogSubject = new Subject<TypingModel>();
 
     private msgCallback: MessageCallback;
     private onlineCallback: OnlineCallback;
@@ -62,6 +65,7 @@ export class ChatService {
         this.readedMessages$ = this.readedMessagesSubject.asObservable();
         this.userLastActivity$ = this.lastActivitySubject.asObservable();
         this.isTyping$ = this.isTypingSubject.asObservable();
+        this.newDialog$ = this.newDialogSubject.asObservable();
 
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
@@ -82,6 +86,9 @@ export class ChatService {
         });
         this.hubProxy.on("IsTyping", (typing) => {
             this.isTypingSubject.next(typing);
+        });
+        this.hubProxy.on("NewDialog", (dialog) => {
+            this.newDialogSubject.next(JSON.parse(dialog));
         });
         this.hubConnection.start()
             .done(() => this.startingSubject.next())
@@ -128,10 +135,10 @@ export class ChatService {
         }
     }
 
-    getContactsList(): Promise<UserModel[]> {
+    getContactsList(): Promise<ContactModel[]> {
         if (this.setAuthHeader()) {
             this.setLastTimeActivity();
-            return this.http.get('api/contacts', { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as UserModel[]);
+            return this.http.get('api/contacts', { headers: this.headers }).toPromise().then(data => JSON.parse(data.json()) as ContactModel[]);
         }
     }
 
@@ -184,6 +191,10 @@ export class ChatService {
 
     subscribe(dialogIds: number[]): void {
         dialogIds.forEach((dialog) => this.hubProxy.invoke("JoinGroup", dialog));
+    }
+
+    subscribeAccount(userId: number, userName: string): void {
+        this.hubProxy.invoke("JoinGroup", userId+userName);
     }
 
     unsubscribe(dialogIds: number[]): void {

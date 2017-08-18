@@ -9,6 +9,6 @@ namespace CoolChat.Business.Interfaces
 {
     public interface IContactService
     {
-        IEnumerable<UserViewModel> GetContactsList(string filter = "", int offset = -1, int limit = 0);
+        IEnumerable<ContactViewModel> GetContactsList(string filter = "", int offset = -1, int limit = 0);
     }
 }

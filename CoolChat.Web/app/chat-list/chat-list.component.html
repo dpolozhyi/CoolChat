@@ -13,7 +13,7 @@
                 <div class="add-contact-text">Add new contact</div>
             </div>
         </div>
-        <ul *ngIf="userAccount && user && userAccount.dialogs.length > 0" class="dialog-list"> 
+        <ul *ngIf="userAccount && user && userAccount.dialogs.length > 0" class="dialog-list">
             <li *ngFor="let dialog of filteredDialogs" [class.dark]="isDark" (click)="selectDialog(dialog)" class="room-list" [class.selected]="this.selectedDialog==dialog && !minMode">
                 <div class="dialog">
                     <div class="avatar">
@@ -42,12 +42,13 @@
                 </div>
             </li>
         </ul>
-        <div class="global-search" *ngIf="globalSearchEnabled && contactsList">
-            <div class="global-search-title">
-                Global search
+        <div class="global-search" *ngIf="globalSearchEnabled && contactsListFiltered">
+            <div class="global-search-title" [class.dark]="isDark">
+                Global search<span class="ion-android-close" (click)="globalSearchEnabled = false"></span>
             </div>
+            <div class="global-search-no-results" *ngIf="contactsListFiltered.length == 0">No results found</div>
             <ul class="global-search-list">
-                <li *ngFor="let contact of contactsList">
+                <li *ngFor="let contact of contactsListFiltered" [class.dark]="isDark">
                     <div class="contact">
                         <div class="contact-avatar">
                             <img [src]="contact.avatarUrl" />
@@ -56,8 +57,11 @@
                             <div class="contact-name">
                                 {{contact.name}}
                             </div>
-                            <div class="contact-add-button" (click)="onAddcontact(contact.id)">
+                            <div class="contact-add-button" *ngIf="!contact.isAdded" (click)="onAddcontact(contact)" [class.dark]="isDark">
                                 <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add contact
+                            </div>
+                            <div class="contact-added-mark" *ngIf="contact.isAdded" [class.dark]="isDark">
+                                <i class="ion-checkmark" aria-hidden="true"></i>&nbsp;Added
                             </div>
                         </div>
                     </div>
@@ -78,6 +82,6 @@
      [class.fullWidth]="hiddenChatList"
      [class.oneHunMarginLeft]="!minModeHiddenChatList">
 </div>
-<div  [class.dark]="isDark" class="chat-area-intro" *ngIf="!selectedDialog">
+<div [class.dark]="isDark" class="chat-area-intro" *ngIf="!selectedDialog">
     <div class="chat-intro-message">Please, select chat</div>
 </div>

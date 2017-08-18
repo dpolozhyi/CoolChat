@@ -385,6 +385,7 @@
     <TypeScriptCompile Include="app\shared\directives\focus.directive.ts" />
     <TypeScriptCompile Include="app\shared\directives\letter-avatar.directive.ts" />
     <TypeScriptCompile Include="app\shared\models\brief-dialog.model.ts" />
+    <TypeScriptCompile Include="app\shared\models\contact.model.ts" />
     <TypeScriptCompile Include="app\shared\models\login.model.ts" />
     <TypeScriptCompile Include="app\shared\models\message.model.ts" />
     <TypeScriptCompile Include="app\shared\models\register.model.ts" />

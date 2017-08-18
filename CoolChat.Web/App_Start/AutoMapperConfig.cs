@@ -37,6 +37,11 @@ namespace CoolChat.Web.App_Start
                     .ForMember(dest => dest.IsOnline, opt => opt.MapFrom(src => src.IsOnline))
                     .ForMember(dest => dest.LastTimeActivity, opt => opt.MapFrom(src => src.LastTimeActivity));
 
+                config.CreateMap<User, ContactViewModel>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.AvatarUrl));
+
                 config.CreateMap<Message, MessageViewModel>()
                     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User))

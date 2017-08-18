@@ -9,6 +9,7 @@ import { UserAccountModel } from '../shared/models/user-account.model';
 import { MessageModel } from '../shared/models/message.model';
 import { BriefDialogModel } from "../shared/models/brief-dialog.model";
 import { TypingModel } from '../shared/models/typing.model';
+import { ContactModel } from '../shared/models/contact.model';
 
 @Component({
     selector: 'div[chat-list]',
@@ -31,7 +32,9 @@ export class ChatListComponent implements OnInit, OnChanges {
 
     private globalSearchEnabled: boolean = false;
 
-    private contactsList: UserModel[];
+    private contactsList: ContactModel[];
+
+    private contactsListFiltered: ContactModel[];
 
     private userAccount: UserAccountModel;
 
@@ -50,7 +53,10 @@ export class ChatListComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.chatService.starting$.subscribe(() => {
-            this.authService.getUser().then((user: UserModel) => this.user = user);
+            this.authService.getUser().then((user: UserModel) => {
+                this.user = user;
+                this.chatService.subscribeAccount(user.id, user.name);
+            });
             this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
                 this.userAccount = userAccount;
                 this.filteredDialogs = userAccount.dialogs;
@@ -70,7 +76,12 @@ export class ChatListComponent implements OnInit, OnChanges {
             }
             msgDialog.isTyping = false;
             this.userAccount.dialogs.sort((a, b) => {
-                if (!b.lastMessage)
+                if (!a.lastMessage) {
+                    return 1;
+                }
+                if (!b.lastMessage) {
+                    return -1;
+                }
                 var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
                 var bTicks = new Date(String(b.lastMessage.postedTime)).getTime();
                 return bTicks - aTicks;
@@ -101,6 +112,11 @@ export class ChatListComponent implements OnInit, OnChanges {
                 setTimeout(() => { dialog.isTyping = false; console.log("user finished typing"); }, 2000);
             }
         });
+        this.chatService.newDialog$.subscribe((dialog: BriefDialogModel) => {
+            this.userAccount.dialogs.push(dialog);
+            this.chatService.subscribe([dialog.id]);
+            this.contactsList.find(contact => contact.id == dialog.members[0].id).isAdded = true;
+        });
     }
 
     ngOnChanges() {
@@ -110,28 +126,40 @@ export class ChatListComponent implements OnInit, OnChanges {
     }
 
     onDialogSearch(filter: string) {
-        filter = filter.trim();
+        filter = filter.trim().toLowerCase();
         if (filter) {
-            this.filteredDialogs = this.userAccount.dialogs.filter((dialog) => dialog.members[0].name.indexOf(filter) >= 0);
+            if (this.globalSearchEnabled) {
+                this.contactsListFiltered = this.contactsList.filter((contact) => contact.name.toLowerCase().indexOf(filter) >= 0);
+            }
+            else {
+                this.filteredDialogs = this.userAccount.dialogs.filter((dialog) => dialog.members[0].name.toLowerCase().indexOf(filter) >= 0);
+            }
         }
         else {
-            this.filteredDialogs = this.userAccount.dialogs;
+            if (this.globalSearchEnabled) {
+                this.contactsListFiltered = this.contactsList;
+            }
+            else {
+                this.filteredDialogs = this.userAccount.dialogs;
+            }
         }
     }
 
     onSearchContacts() {
         this.globalSearchEnabled = true;
-        this.chatService.getContactsList().then((contacts: UserModel[]) => this.contactsList = contacts);
+        this.chatService.getContactsList().then((contacts: ContactModel[]) => {
+            this.contactsList = contacts;
+            this.contactsListFiltered = this.contactsList;
+        });
     }
 
-    onAddcontact(userId: number) {
-        this.chatService.addNewContact(userId);
-        this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
+    onAddcontact(contact: ContactModel) {
+        this.chatService.addNewContact(contact.id);
+        /*this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
             this.userAccount = userAccount;
             this.filteredDialogs = userAccount.dialogs;
             this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
-            alert("New contacts were addded");
-        });
+        });*/
     }
 
     selectDialog(dialog: BriefDialogModel) {

@@ -22,7 +22,10 @@ let ChatListComponent = class ChatListComponent {
     }
     ngOnInit() {
         this.chatService.starting$.subscribe(() => {
-            this.authService.getUser().then((user) => this.user = user);
+            this.authService.getUser().then((user) => {
+                this.user = user;
+                this.chatService.subscribeAccount(user.id, user.name);
+            });
             this.chatService.getUserAccount().then((userAccount) => {
                 this.userAccount = userAccount;
                 this.filteredDialogs = userAccount.dialogs;
@@ -42,8 +45,13 @@ let ChatListComponent = class ChatListComponent {
             }
             msgDialog.isTyping = false;
             this.userAccount.dialogs.sort((a, b) => {
-                if (!b.lastMessage)
-                    var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
+                if (!a.lastMessage) {
+                    return 1;
+                }
+                if (!b.lastMessage) {
+                    return -1;
+                }
+                var aTicks = new Date(String(a.lastMessage.postedTime)).getTime();
                 var bTicks = new Date(String(b.lastMessage.postedTime)).getTime();
                 return bTicks - aTicks;
             });
@@ -72,6 +80,11 @@ let ChatListComponent = class ChatListComponent {
                 setTimeout(() => { dialog.isTyping = false; console.log("user finished typing"); }, 2000);
             }
         });
+        this.chatService.newDialog$.subscribe((dialog) => {
+            this.userAccount.dialogs.push(dialog);
+            this.chatService.subscribe([dialog.id]);
+            this.contactsList.find(contact => contact.id == dialog.members[0].id).isAdded = true;
+        });
     }
     ngOnChanges() {
         if (!this.minMode && this.selectedDialog) {
@@ -79,26 +92,38 @@ let ChatListComponent = class ChatListComponent {
         }
     }
     onDialogSearch(filter) {
-        filter = filter.trim();
+        filter = filter.trim().toLowerCase();
         if (filter) {
-            this.filteredDialogs = this.userAccount.dialogs.filter((dialog) => dialog.members[0].name.indexOf(filter) >= 0);
+            if (this.globalSearchEnabled) {
+                this.contactsListFiltered = this.contactsList.filter((contact) => contact.name.toLowerCase().indexOf(filter) >= 0);
+            }
+            else {
+                this.filteredDialogs = this.userAccount.dialogs.filter((dialog) => dialog.members[0].name.toLowerCase().indexOf(filter) >= 0);
+            }
         }
         else {
-            this.filteredDialogs = this.userAccount.dialogs;
+            if (this.globalSearchEnabled) {
+                this.contactsListFiltered = this.contactsList;
+            }
+            else {
+                this.filteredDialogs = this.userAccount.dialogs;
+            }
         }
     }
     onSearchContacts() {
         this.globalSearchEnabled = true;
-        this.chatService.getContactsList().then((contacts) => this.contactsList = contacts);
+        this.chatService.getContactsList().then((contacts) => {
+            this.contactsList = contacts;
+            this.contactsListFiltered = this.contactsList;
+        });
     }
-    onAddcontact(userId) {
-        this.chatService.addNewContact(userId);
-        this.chatService.getUserAccount().then((userAccount) => {
+    onAddcontact(contact) {
+        this.chatService.addNewContact(contact.id);
+        /*this.chatService.getUserAccount().then((userAccount: UserAccountModel) => {
             this.userAccount = userAccount;
             this.filteredDialogs = userAccount.dialogs;
             this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
-            alert("New contacts were addded");
-        });
+        });*/
     }
     selectDialog(dialog) {
         this.selectedDialog = dialog;

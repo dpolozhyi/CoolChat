@@ -2,6 +2,8 @@
 using CoolChat.Business.ViewModels;
 using CoolChat.Web.AuthServiceReference;
 using CoolChat.Web.Filters;
+using CoolChat.Web.Hubs;
+using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -23,19 +25,35 @@ namespace CoolChat.Web.Controllers.api
 
         private AuthServiceClient authService = new AuthServiceClient();
 
-        public ContactController(IContactService contactService, IDialogService dialogService)
+        private IHubContext hubContext;
+
+        private IUserService userService;
+
+        public ContactController(IContactService contactService, IDialogService dialogService, IUserService userService)
         {
             this.contactService = contactService;
             this.dialogService = dialogService;
+            this.userService = userService;
+            this.hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
         }
 
         [Route("")]
         // GET: api/contacts
         public IHttpActionResult Get()
         {
-            IEnumerable<UserViewModel> contacts = this.contactService.GetContactsList();
-            string json = JsonConvert.SerializeObject(contacts, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
-            return Ok(json);
+            try
+            {
+                IEnumerable<ContactViewModel> contacts = this.contactService.GetContactsList();
+                string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+                int currentUserId = authService.GetUserId(token);
+                contacts = contacts.Where(n => n.Id != currentUserId);
+                string json = JsonConvert.SerializeObject(contacts, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                return Ok(json);
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized();
+            }
         }
 
         // GET: api/Contact/5
@@ -59,6 +77,21 @@ namespace CoolChat.Web.Controllers.api
                 token = Request.Headers.GetValues("Authorization").FirstOrDefault();
                 int currentUserId = authService.GetUserId(token);
                 int dialogId = this.dialogService.CreateNewDialog(new List<int>() { currentUserId, userId });
+                if(dialogId == -1)
+                {
+                    return BadRequest();
+                }
+                UserViewModel currentUser = this.userService.GetUser(currentUserId);
+                UserViewModel user = this.userService.GetUser(userId);
+                BriefDialogViewModel newDialog = this.dialogService.GetDialogById(dialogId);
+                newDialog.Members = newDialog.Members.Where(n => n.Id != currentUserId);
+                foreach(var member in newDialog.Members)
+                {
+                    var dialog = newDialog;
+                    dialog.Members = dialog.Members.Where(n => n.Id != member.Id);
+                    string json = JsonConvert.SerializeObject(newDialog, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                    hubContext.Clients.Group(String.Concat(member.Id, member.Name)).NewDialog(json);
+                }
                 return Ok(dialogId);
             }
             catch (Exception ex)

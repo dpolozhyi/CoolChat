@@ -19,6 +19,8 @@ namespace CoolChat.Business.Interfaces
 
         IEnumerable<int> GetDialogsIdsByUserId(int userId);
 
+        BriefDialogViewModel GetDialogById(int dialogId);
+
         MessageViewModel PostMessage(MessageViewModel message);
 
         void SetDialogMessagesReaded(int userId, int dialogId);

@@ -217,6 +217,28 @@ div.chat-list div.dialog-list-wrapper div.global-search div.global-search-title 
   font-family: Roboto-Light;
   font-size: 20px;
   text-align: center;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+div.chat-list div.dialog-list-wrapper div.global-search div.global-search-title.dark {
+  border-bottom: 1px solid #4b4b4b;
+}
+div.chat-list div.dialog-list-wrapper div.global-search div.global-search-title span {
+  font-size: 20px;
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0 5px;
+}
+div.chat-list div.dialog-list-wrapper div.global-search div.global-search-title span:hover {
+  opacity: 1;
+}
+div.chat-list div.dialog-list-wrapper div.global-search div.global-search-no-results {
+  font-size: 16px;
+  font-family: Roboto-Light;
+  padding: 10px;
+  text-align: center;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list {
   margin: 0;
@@ -231,8 +253,8 @@ div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li
   min-height: 50px;
   display: block;
 }
-div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li:first-child {
-  border-top: 1px solid #ccc;
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li.dark {
+  border-bottom: 1px solid #4b4b4b;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact {
   position: relative;
@@ -268,9 +290,20 @@ div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li
   text-align: center;
   padding: 2px 5px;
 }
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button.dark {
+  background: #565656;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button.dark:hover {
+  background: #4b4b4b;
+}
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button:hover {
   background: rgba(0, 0, 0, 0.05);
   cursor: pointer;
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-added-mark {
+  font-size: 18px;
+  color: #2ecc71;
+  margin-top: 3px;
 }
 div.chat-list div.dialog-list-wrapper div.add-contact {
   width: 100%;
@@ -366,16 +399,11 @@ div.chat-list div.search-dialog input[type="text"] {
 }
 div.chat-list div.search-dialog input[type="text"]:focus {
   outline: 0 !important;
-  box-shadow: -1px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 div.chat-list div.search-dialog input[type="text"].dark {
   background: #565656;
   font-weight: normal;
   color: #fff;
-}
-div.chat-list div.search-dialog input[type="text"].dark:focus {
-  outline: 0 !important;
-  box-shadow: none;
 }
 .chat-area {
   transition: 0.4s;

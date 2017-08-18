@@ -29,6 +29,7 @@ let ChatService = class ChatService {
         this.readedMessagesSubject = new Subject_1.Subject();
         this.lastActivitySubject = new Subject_1.Subject();
         this.isTypingSubject = new Subject_1.Subject();
+        this.newDialogSubject = new Subject_1.Subject();
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         if (this.window.$ === undefined || this.window.$.hubConnection === undefined) {
             throw new Error("The variable '$' or the .hubConnection() function are not defined...please check the SignalR scripts have been loaded properly");
@@ -39,6 +40,7 @@ let ChatService = class ChatService {
         this.readedMessages$ = this.readedMessagesSubject.asObservable();
         this.userLastActivity$ = this.lastActivitySubject.asObservable();
         this.isTyping$ = this.isTypingSubject.asObservable();
+        this.newDialog$ = this.newDialogSubject.asObservable();
         this.hubConnection = this.window.$.hubConnection();
         this.hubConnection.url = this.window['hubConfig'].url;
         this.hubProxy = this.hubConnection.createHubProxy(this.window['hubConfig'].hubName);
@@ -58,6 +60,9 @@ let ChatService = class ChatService {
         });
         this.hubProxy.on("IsTyping", (typing) => {
             this.isTypingSubject.next(typing);
+        });
+        this.hubProxy.on("NewDialog", (dialog) => {
+            this.newDialogSubject.next(JSON.parse(dialog));
         });
         this.hubConnection.start()
             .done(() => this.startingSubject.next())
@@ -146,6 +151,9 @@ let ChatService = class ChatService {
     }
     subscribe(dialogIds) {
         dialogIds.forEach((dialog) => this.hubProxy.invoke("JoinGroup", dialog));
+    }
+    subscribeAccount(userId, userName) {
+        this.hubProxy.invoke("JoinGroup", userId + userName);
     }
     unsubscribe(dialogIds) {
         //return this.hubProxy.invoke("LeaveGroup", userId);

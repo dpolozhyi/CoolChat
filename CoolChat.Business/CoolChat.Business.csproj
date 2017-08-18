@@ -55,6 +55,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\BriefDialogViewModel.cs" />
     <Compile Include="ViewModels\ChatRoomViewModel.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="ViewModels\DialogViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\UserAccountViewModel.cs" />
