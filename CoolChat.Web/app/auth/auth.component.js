@@ -26,6 +26,12 @@ var FieldStatus;
     FieldStatus[FieldStatus["Satisfied"] = 2] = "Satisfied";
     FieldStatus[FieldStatus["Good"] = 3] = "Good";
 })(FieldStatus || (FieldStatus = {}));
+var LoginErrorType;
+(function (LoginErrorType) {
+    LoginErrorType[LoginErrorType["InvalidCreds"] = 0] = "InvalidCreds";
+    LoginErrorType[LoginErrorType["TimeoutExceed"] = 1] = "TimeoutExceed";
+    LoginErrorType[LoginErrorType["None"] = 2] = "None";
+})(LoginErrorType || (LoginErrorType = {}));
 let AuthComponent = class AuthComponent {
     constructor(router, route, authService) {
         this.router = router;
@@ -33,12 +39,13 @@ let AuthComponent = class AuthComponent {
         this.logged = false;
         this.authState = AuthState;
         this.fieldType = FieldStatus;
+        this.loginErrorType = LoginErrorType;
         this.loading = false;
         this.state = AuthState.Login;
         this.passStatus = FieldStatus.Undefined;
         this.loginModel = new login_model_1.LoginModel();
         this.registerModel = new register_model_1.RegisterModel();
-        this.failedLogin = false;
+        this.loginErrorStatus = LoginErrorType.None;
         if (route.snapshot.data['isRegistration']) {
             this.state = AuthState.Register;
         }
@@ -51,12 +58,18 @@ let AuthComponent = class AuthComponent {
     }
     onLogin() {
         this.loading = true;
+        this.loginErrorStatus = LoginErrorType.None;
         this.authService.getToken(this.loginModel).then(token => {
             console.log(token);
             this.loading = false;
             this.router.navigate(['']);
         }, err => {
-            this.failedLogin = true;
+            if (err.message == "timeout") {
+                this.loginErrorStatus = LoginErrorType.TimeoutExceed;
+            }
+            else {
+                this.loginErrorStatus = LoginErrorType.InvalidCreds;
+            }
             this.loading = false;
         });
     }

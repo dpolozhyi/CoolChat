@@ -16,6 +16,13 @@ export class SignalrWindow extends Window {
     $: any;
 }
 
+export enum HubConnectionStatus {
+    Disconnected = 0,
+    Connecting = 1,
+    Connected = 2,
+    ConnectingError = 3
+}
+
 declare type OnlineCallback = (userId: number, isOnline: boolean) => void;
 declare type MessageCallback = (message: MessageModel) => void;
 
@@ -27,6 +34,7 @@ export class ChatService {
     //
     private hubConnection: any;
     private hubProxy: any;
+    private hubConnectionStatus: HubConnectionStatus = HubConnectionStatus.Disconnected;
 
     starting$: Observable<any>;
     newMessage$: Observable<any>;
@@ -90,9 +98,26 @@ export class ChatService {
         this.hubProxy.on("NewDialog", (dialog) => {
             this.newDialogSubject.next(JSON.parse(dialog));
         });
-        this.hubConnection.start()
-            .done(() => this.startingSubject.next())
-            .fail((error) => this.startingSubject.error(error));
+        this.connectToHub();
+    }
+
+    connectToHub() {
+        if (this.hubConnectionStatus == HubConnectionStatus.Connected) {
+            this.startingSubject.next();
+            return;
+        }
+        if (this.hubConnectionStatus != HubConnectionStatus.Connecting) {
+            this.hubConnection.start()
+                .done(() => {
+                    this.startingSubject.next();
+                    this.hubConnectionStatus = HubConnectionStatus.Connected;
+                })
+                .fail((error) => {
+                    this.startingSubject.error(error);
+                    this.hubConnectionStatus = HubConnectionStatus.ConnectingError;
+                });
+            this.hubConnectionStatus = HubConnectionStatus.Connecting;
+        }
     }
 
     addMessageCallback(callback: MessageCallback) {
@@ -194,7 +219,7 @@ export class ChatService {
     }
 
     subscribeAccount(userId: number, userName: string): void {
-        this.hubProxy.invoke("JoinGroup", userId+userName);
+        this.hubProxy.invoke("JoinGroup", userId + userName);
     }
 
     unsubscribe(dialogIds: number[]): void {

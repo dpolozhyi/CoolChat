@@ -19,9 +19,10 @@ namespace CoolChat.ConsoleTest
     {
         static void Main(string[] args)
         {
-            AuthServiceClient authClient = new AuthServiceClient();
-            //User user = authClient.Register(new RegisterModel() { Login = "wowbot", Password = "adgjmp", RepeatPassword = "adgjmp" });
-            string token = authClient.GetToken(new LoginModel() { Login = "wowbot", Password = "adgjmp" });
+            /*AuthServiceClient authClient = new AuthServiceClient();
+            User user = authClient.Register(new RegisterModel() { Login = "volrajas", Password = "adgjmp99", RepeatPassword = "adgjmp99" });
+            Console.WriteLine(user.Id);*/
+            /*string token = authClient.GetToken(new LoginModel() { Login = "wowbot", Password = "adgjmp" });
             Console.WriteLine(token);
 
             string[] tokenParts = token.Split('.');
@@ -35,7 +36,7 @@ namespace CoolChat.ConsoleTest
                 bool isValid = authClient.CheckToken(token);
                 Console.WriteLine("{0}\tToken is {1}", DateTime.Now.ToShortTimeString(), isValid ? "VALID" : "INvalid");
                 Thread.Sleep(3000);
-            }
+            }*/
 
         }
     }

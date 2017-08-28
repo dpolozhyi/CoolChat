@@ -32,5 +32,15 @@ namespace CoolChat.Business.Services
             User user = this.unitOfWork.Get<User>().Get(n => n.Id == userId).FirstOrDefault();
             return Mapper.Map<User, UserViewModel>(user);
         }
+
+        public bool UserExist(string userName)
+        {
+            int userCount = this.unitOfWork.Get<User>().Get(n => n.Name == userName).Count();
+            if(userCount > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

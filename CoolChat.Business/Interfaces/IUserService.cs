@@ -13,5 +13,7 @@ namespace CoolChat.Business.Interfaces
         User AddNewUser(User user);
 
         UserViewModel GetUser(int userId);
+
+        bool UserExist(string userName);
     }
 }

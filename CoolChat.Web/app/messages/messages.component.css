@@ -50,9 +50,12 @@ div.conversation {
   padding-top: 30px;
   box-sizing: border-box;
 }
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px) {
   div.conversation {
-    height: 90%;
+    position: absolute;
+    bottom: 54px;
+    width: 100%;
+    height: unset;
   }
 }
 @media (max-height: 625px) {
@@ -375,12 +378,8 @@ div.new-message {
   div.new-message {
     width: 100%;
     padding: 0;
-  }
-}
-@media (max-width: 768px) and (orientation: portrait) {
-  div.new-message {
-    height: 10%;
-    padding: 0;
+    height: 50px;
+    position: absolute;
   }
 }
 @media (max-height: 625px) {
@@ -418,12 +417,12 @@ div.new-message div.message-panel div.message-input {
   height: 100%;
   position: absolute;
   left: 0px;
-  right: 65px;
+  right: 55px;
   top: 0;
 }
 @media (max-width: 768px) {
   div.new-message div.message-panel div.message-input {
-    left: 10px;
+    right: 55px;
   }
 }
 div.new-message div.message-panel div.message-input textarea {
@@ -440,6 +439,7 @@ div.new-message div.message-panel div.message-input textarea {
 @media (max-width: 768px) {
   div.new-message div.message-panel div.message-input textarea {
     border: none;
+    padding: 15px 15px;
   }
 }
 div.new-message div.message-panel div.message-input textarea.dark {
@@ -458,23 +458,21 @@ div.new-message div.message-panel div.message-send {
   position: absolute;
   background: #3498db;
   color: #fff;
-  width: 50px;
-  height: 100%;
+  width: 55px;
   right: 0;
   top: 0;
   font-size: 32px;
   text-align: center;
   vertical-align: middle;
-  line-height: 54px;
-  border-radius: 50%;
+  line-height: 52px;
   cursor: pointer;
 }
 @media (max-width: 768px) {
   div.new-message div.message-panel div.message-send {
-    height: 50px;
     top: 50%;
     transform: translateY(-50%);
-    right: 10px;
+    width: 55px;
+    border-radius: 0;
   }
 }
 div.new-message div.message-panel div.message-send.dark {

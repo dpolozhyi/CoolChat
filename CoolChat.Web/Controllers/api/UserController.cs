@@ -52,6 +52,10 @@ namespace CoolChat.Web.Controllers.api
         // POST: api/User
         public IHttpActionResult Post([FromBody]RegisterModel regModel)
         {
+            if (this.userService.UserExist(regModel.Login))
+            {
+                return BadRequest();
+            }
             User user = this.authService.Register(new RegisterModel()
             {
                 Login = regModel.Login,

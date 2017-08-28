@@ -84,12 +84,19 @@ namespace CoolChat.Web.Controllers.api
                 UserViewModel currentUser = this.userService.GetUser(currentUserId);
                 UserViewModel user = this.userService.GetUser(userId);
                 BriefDialogViewModel newDialog = this.dialogService.GetDialogById(dialogId);
-                newDialog.Members = newDialog.Members.Where(n => n.Id != currentUserId);
                 foreach(var member in newDialog.Members)
                 {
-                    var dialog = newDialog;
-                    dialog.Members = dialog.Members.Where(n => n.Id != member.Id);
-                    string json = JsonConvert.SerializeObject(newDialog, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                    var dialogWithoutUser = new BriefDialogViewModel()
+                    {
+                        Id = newDialog.Id,
+                        LastMessage = newDialog.LastMessage,
+                        Members = newDialog.Members,
+                        Name = newDialog.Name,
+                        NewMessagesNumber = newDialog.NewMessagesNumber,
+                        TimeCreated = newDialog.TimeCreated
+                    };
+                    dialogWithoutUser.Members = dialogWithoutUser.Members.Where(n => n.Id != member.Id);
+                    string json = JsonConvert.SerializeObject(dialogWithoutUser, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
                     hubContext.Clients.Group(String.Concat(member.Id, member.Name)).NewDialog(json);
                 }
                 return Ok(dialogId);

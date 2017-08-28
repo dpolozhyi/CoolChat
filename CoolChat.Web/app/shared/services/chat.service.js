@@ -19,11 +19,19 @@ const auth_service_1 = require('./auth.service');
 class SignalrWindow extends Window {
 }
 exports.SignalrWindow = SignalrWindow;
+(function (HubConnectionStatus) {
+    HubConnectionStatus[HubConnectionStatus["Disconnected"] = 0] = "Disconnected";
+    HubConnectionStatus[HubConnectionStatus["Connecting"] = 1] = "Connecting";
+    HubConnectionStatus[HubConnectionStatus["Connected"] = 2] = "Connected";
+    HubConnectionStatus[HubConnectionStatus["ConnectingError"] = 3] = "ConnectingError";
+})(exports.HubConnectionStatus || (exports.HubConnectionStatus = {}));
+var HubConnectionStatus = exports.HubConnectionStatus;
 let ChatService = class ChatService {
     constructor(window, http, authService) {
         this.window = window;
         this.http = http;
         this.authService = authService;
+        this.hubConnectionStatus = HubConnectionStatus.Disconnected;
         this.startingSubject = new Subject_1.Subject();
         this.newMessageSubject = new Subject_1.Subject();
         this.readedMessagesSubject = new Subject_1.Subject();
@@ -64,9 +72,25 @@ let ChatService = class ChatService {
         this.hubProxy.on("NewDialog", (dialog) => {
             this.newDialogSubject.next(JSON.parse(dialog));
         });
-        this.hubConnection.start()
-            .done(() => this.startingSubject.next())
-            .fail((error) => this.startingSubject.error(error));
+        this.connectToHub();
+    }
+    connectToHub() {
+        if (this.hubConnectionStatus == HubConnectionStatus.Connected) {
+            this.startingSubject.next();
+            return;
+        }
+        if (this.hubConnectionStatus != HubConnectionStatus.Connecting) {
+            this.hubConnection.start()
+                .done(() => {
+                this.startingSubject.next();
+                this.hubConnectionStatus = HubConnectionStatus.Connected;
+            })
+                .fail((error) => {
+                this.startingSubject.error(error);
+                this.hubConnectionStatus = HubConnectionStatus.ConnectingError;
+            });
+            this.hubConnectionStatus = HubConnectionStatus.Connecting;
+        }
     }
     addMessageCallback(callback) {
         this.msgCallback = callback;

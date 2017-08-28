@@ -1,6 +1,7 @@
 ﻿import {Injectable, Inject} from "@angular/core";
 import {Subject} from "rxjs/Subject";
 import {Observable} from "rxjs/Rx";
+import "rxjs/add/operator/timeout";
 import 'rxjs/add/operator/toPromise';
 import { Headers, Http, Response } from '@angular/http';
 
@@ -26,6 +27,7 @@ export class AuthService {
 
     getToken(loginModel: LoginModel): Promise<string> {
         return this.http.post('api/token', JSON.stringify(loginModel), { headers: this.headers })
+            .timeout(10000)
             .toPromise().then(res => {
                 var token = res.json() as string;
                 localStorage.setItem('tokenKey', token);

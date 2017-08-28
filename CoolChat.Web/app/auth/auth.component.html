@@ -12,8 +12,9 @@
             <div class="loading-curtain" [class.displayBlock]="loading">
                 <div class="colored-curtain"></div>
             </div>
-            <div class="login-failed" *ngIf="failedLogin">
-                <span class="login-failed-text">Invalid user login or password</span>
+            <div class="login-failed" *ngIf="loginErrorStatus != loginErrorType.None">
+                <span class="login-failed-text" *ngIf="loginErrorStatus == loginErrorType.InvalidCreds">Invalid user login or password</span>
+                <span class="login-failed-text" *ngIf="loginErrorStatus == loginErrorType.TimeoutExceed">Sorry, service is currently unavailable</span>
             </div>
             <div class="login-controls zeroMargin" [class.zeroMargin]="state == authState.Register">
                 <div class="login-field">

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnChanges } from '@angular/core';
+﻿import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnChanges, OnDestroy } from '@angular/core';
 import { ChatService } from '../shared/services/chat.service';
 import { AuthService } from '../shared/services/auth.service';
 
@@ -11,12 +11,14 @@ import { BriefDialogModel } from "../shared/models/brief-dialog.model";
 import { TypingModel } from '../shared/models/typing.model';
 import { ContactModel } from '../shared/models/contact.model';
 
+import {Subscription} from "rxjs/Rx";
+
 @Component({
     selector: 'div[chat-list]',
     templateUrl: 'app/chat-list/chat-list.component.html',
     styleUrls: ['app/chat-list/chat-list.component.css']
 })
-export class ChatListComponent implements OnInit, OnChanges {
+export class ChatListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() minMode: boolean;
 
@@ -44,6 +46,8 @@ export class ChatListComponent implements OnInit, OnChanges {
 
     private user: UserModel;
 
+    private chatSubscriptions: Subscription[] = [];
+
     constructor(private chatService: ChatService, private authService: AuthService) {
         this.chatService.starting$.subscribe(
             () => { console.log("signalr service has been started"); },
@@ -52,7 +56,7 @@ export class ChatListComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.chatService.starting$.subscribe(() => {
+        this.chatSubscriptions.push(this.chatService.starting$.subscribe(() => {
             this.authService.getUser().then((user: UserModel) => {
                 this.user = user;
                 this.chatService.subscribeAccount(user.id, user.name);
@@ -63,8 +67,8 @@ export class ChatListComponent implements OnInit, OnChanges {
                 this.chatService.subscribe(userAccount.dialogs.map(dialog => dialog.id));
                 alert("Hi, " + userAccount.name + '!');
             });
-        });
-        this.chatService.newMessage$.subscribe((message: MessageModel) => {
+        }));
+        this.chatSubscriptions.push(this.chatService.newMessage$.subscribe((message: MessageModel) => {
             var msgDialog = this.userAccount.dialogs.filter(dialog => dialog.id == message.dialogId)[0];
             msgDialog.lastMessage = message;
             if (!this.selectedDialog || (this.selectedDialog && message.dialogId != this.selectedDialog.id) || (this.minMode && !this.minModeHiddenChatList)) {
@@ -87,11 +91,11 @@ export class ChatListComponent implements OnInit, OnChanges {
                 return bTicks - aTicks;
             }
             );
-        });
-        this.chatService.readedMessages$.subscribe((dialogId) => {
+        }));
+        this.chatSubscriptions.push(this.chatService.readedMessages$.subscribe((dialogId) => {
             this.userAccount.dialogs.find((dialog) => dialog.id == dialogId).lastMessage.isReaded = true;
-        });
-        this.chatService.userLastActivity$.subscribe((user: UserModel) => {
+        }));
+        this.chatSubscriptions.push(this.chatService.userLastActivity$.subscribe((user: UserModel) => {
             if (user.id != this.user.id) {
                 this.userAccount.dialogs
                     .filter((dialog) => dialog.members.map(member => member.id).indexOf(user.id) != -1)
@@ -101,8 +105,8 @@ export class ChatListComponent implements OnInit, OnChanges {
                         console.log(dialog.members.find(member => member.id == user.id).lastTimeActivity);
                     });
             }
-        });
-        this.chatService.isTyping$.subscribe((typing: TypingModel) => {
+        }));
+        this.chatSubscriptions.push(this.chatService.isTyping$.subscribe((typing: TypingModel) => {
             if (this.user.id == typing.userId) {
                 return;
             }
@@ -111,18 +115,25 @@ export class ChatListComponent implements OnInit, OnChanges {
                 dialog.isTyping = true;
                 setTimeout(() => { dialog.isTyping = false; console.log("user finished typing"); }, 2000);
             }
-        });
-        this.chatService.newDialog$.subscribe((dialog: BriefDialogModel) => {
+        }));
+        this.chatSubscriptions.push(this.chatService.newDialog$.subscribe((dialog: BriefDialogModel) => {
             this.userAccount.dialogs.push(dialog);
             this.chatService.subscribe([dialog.id]);
-            this.contactsList.find(contact => contact.id == dialog.members[0].id).isAdded = true;
-        });
+            if (this.contactsList) {
+                this.contactsList.find(contact => contact.id == dialog.members[0].id).isAdded = true;
+            }
+        }));
+        this.chatService.connectToHub();
     }
 
     ngOnChanges() {
         if (!this.minMode && this.selectedDialog) {
             this.selectDialog(this.selectedDialog);
         }
+    }
+
+    ngOnDestroy() {
+        this.chatSubscriptions.forEach((sub) => sub.unsubscribe());
     }
 
     onDialogSearch(filter: string) {
@@ -149,7 +160,13 @@ export class ChatListComponent implements OnInit, OnChanges {
         this.globalSearchEnabled = true;
         this.chatService.getContactsList().then((contacts: ContactModel[]) => {
             this.contactsList = contacts;
-            this.contactsListFiltered = this.contactsList;
+            var addedContacts = this.userAccount.dialogs.map((dialog) => dialog.members[0].id);
+            this.contactsListFiltered = this.contactsList.map((contact) => {
+                if (addedContacts.indexOf(contact.id) != -1) {
+                    contact.isAdded = true;
+                }
+                return contact;
+            });
         });
     }
 

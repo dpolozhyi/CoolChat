@@ -219,6 +219,7 @@ div.chat-list div.dialog-list-wrapper div.global-search div.global-search-title 
   text-align: center;
   border-bottom: 1px solid #ccc;
   position: relative;
+  min-width: 300px;
 }
 div.chat-list div.dialog-list-wrapper div.global-search div.global-search-title.dark {
   border-bottom: 1px solid #4b4b4b;
@@ -243,6 +244,7 @@ div.chat-list div.dialog-list-wrapper div.global-search div.global-search-no-res
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list {
   margin: 0;
   padding: 0;
+  min-width: 300px;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li {
   padding: 15px 0px 15px 10px;
@@ -277,43 +279,60 @@ div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li
   margin-left: 50px;
   padding: 0 10px;
 }
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options:before {
+  content: "";
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-name {
   font-size: 19px;
   font-weight: bold;
+  display: inline-block;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button {
   font-size: 18px;
-  background: #fff;
-  color: #2ecc71;
-  border: 1px solid #2ecc71;
+  background: #3498db;
+  color: #fff;
+  border: 1px solid #2e88c5;
   display: inline;
   text-align: center;
-  padding: 2px 5px;
+  padding: 7px 15px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button.dark {
-  background: #565656;
+  background: #29b765;
+  border-color: #24a35a;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button.dark:hover {
-  background: #4b4b4b;
+  background: #24a35a;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-add-button:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: #2e88c5;
   cursor: pointer;
 }
 div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-added-mark {
   font-size: 18px;
+  color: #3498db;
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+div.chat-list div.dialog-list-wrapper div.global-search ul.global-search-list li div.contact div.contact-options div.contact-added-mark.dark {
   color: #2ecc71;
-  margin-top: 3px;
 }
 div.chat-list div.dialog-list-wrapper div.add-contact {
   width: 100%;
   position: absolute;
   overflow-y: auto;
   overflow-x: hidden;
-  border-bottom: 1px solid #ccc;
   height: 70px;
   text-align: center;
-  border: 1px solid #2ecc71;
   box-sizing: border-box;
 }
 div.chat-list div.dialog-list-wrapper div.add-contact:hover {
@@ -324,30 +343,32 @@ div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper {
   height: 100%;
   display: inline-block;
 }
+div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
 div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper span.add-contact-icon {
   display: inline-block;
   font-size: 30px;
   border-radius: 50%;
-  border: 2px dashed #2ecc71;
   text-align: center;
   vertical-align: middle;
-  color: #2ecc71;
-  position: absolute;
+  background: #3498db;
+  color: #fff;
   height: 50px;
   width: 50px;
   line-height: 50px;
-  top: 50%;
-  transform: translateY(-50%);
   left: 0px;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  transition: 0.3s;
 }
-div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper div.add-contact-text {
-  margin-left: 65px;
-  height: 100%;
-  box-sizing: border-box;
-  color: #2ecc71;
-  font-family: Roboto-Light;
-  font-size: 24px;
-  line-height: 70px;
+div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper span.add-contact-icon:hover {
+  box-shadow: 0px 0px 15px -3px rgba(0, 0, 0, 0.75);
+}
+div.chat-list div.dialog-list-wrapper div.add-contact div.add-contact-wrapper span.add-contact-icon.dark {
+  background: #29b765;
 }
 div.chat-list div.search-dialog {
   margin: 0;
@@ -404,6 +425,28 @@ div.chat-list div.search-dialog input[type="text"].dark {
   background: #565656;
   font-weight: normal;
   color: #fff;
+}
+div.chat-list div.search-dialog span.search-new-contacts {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  font-size: 28px;
+  color: rgba(0, 0, 0, 0.4);
+}
+@media (max-height: 736px) and (max-width: 736px) {
+  div.chat-list div.search-dialog span.search-new-contacts {
+    top: 10px;
+  }
+}
+div.chat-list div.search-dialog span.search-new-contacts.dark {
+  color: #888;
+}
+div.chat-list div.search-dialog span.search-new-contacts.dark:hover {
+  color: #ccc;
+}
+div.chat-list div.search-dialog span.search-new-contacts:hover {
+  color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
 }
 .chat-area {
   transition: 0.4s;

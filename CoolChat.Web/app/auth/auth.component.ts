@@ -19,6 +19,12 @@ enum FieldStatus {
     Good = 3
 }
 
+enum LoginErrorType {
+    InvalidCreds,
+    TimeoutExceed,
+    None
+}
+
 @Component({
     selector: 'div[auth]',
     templateUrl: 'app/auth/auth.component.html',
@@ -30,6 +36,8 @@ export class AuthComponent {
     authState: any = AuthState;
 
     fieldType: any = FieldStatus;
+
+    loginErrorType: any = LoginErrorType;
 
     private loading: boolean = false;
 
@@ -43,7 +51,7 @@ export class AuthComponent {
 
     private name: string;
 
-    private failedLogin: boolean = false;
+    private loginErrorStatus: LoginErrorType = LoginErrorType.None;
 
     constructor(private router: Router, route: ActivatedRoute, private authService: AuthService) {
         if (route.snapshot.data['isRegistration']) {
@@ -61,12 +69,18 @@ export class AuthComponent {
 
     onLogin() {
         this.loading = true;
+        this.loginErrorStatus = LoginErrorType.None;
         this.authService.getToken(this.loginModel).then(token => {
             console.log(token);
             this.loading = false;
             this.router.navigate(['']);
         }, err => {
-            this.failedLogin = true;
+            if (err.message == "timeout") {
+                this.loginErrorStatus = LoginErrorType.TimeoutExceed;
+            }
+            else {
+                this.loginErrorStatus = LoginErrorType.InvalidCreds;
+            }
             this.loading = false;
         });
     }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
+using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -19,13 +20,10 @@ namespace CoolChat.Web.Filters
     {
         private IDialogService dialogService;
 
-        public DialogAuthorizeAttribute(): this(new DialogService(new EFUnitOfWork(new ChatContext())))
+        public DialogAuthorizeAttribute()
         {
-        }
-
-        public DialogAuthorizeAttribute(IDialogService dialogService)
-        {
-            this.dialogService = dialogService;
+            //this.dialogService = (IDialogService)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IDialogService));
+            this.dialogService = new DialogService(new EFUnitOfWork(new ChatContext()));
         }
 
         public override void OnAuthorization(HttpActionContext actionContext)

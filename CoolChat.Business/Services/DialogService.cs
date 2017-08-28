@@ -22,7 +22,7 @@ namespace CoolChat.Business.Services
 
         public int CreateNewDialog(IEnumerable<int> userIds)
         {
-            bool dialogNotExist = this.unitOfWork.Get<Dialog>().Get(n => n.Members.Select(u => u.Id).AsQueryable().All(userIds.Contains) && n.Members.Count == userIds.Count()).Count() == 0;
+            bool dialogNotExist = this.unitOfWork.Get<Dialog>().Get(n => n.Members.Select(u => u.Id).All(m => userIds.Contains(m)) && n.Members.Count == userIds.Count(), includeProperties: "Members").Count() == 0;
             if (dialogNotExist)
             {
                 ICollection<User> members = this.unitOfWork.Get<User>().Get(n => userIds.Contains(n.Id)).ToList();

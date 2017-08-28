@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require("@angular/core");
+require("rxjs/add/operator/timeout");
 require('rxjs/add/operator/toPromise');
 const http_1 = require('@angular/http');
 let AuthService = class AuthService {
@@ -26,6 +27,7 @@ let AuthService = class AuthService {
     }
     getToken(loginModel) {
         return this.http.post('api/token', JSON.stringify(loginModel), { headers: this.headers })
+            .timeout(10000)
             .toPromise().then(res => {
             var token = res.json();
             localStorage.setItem('tokenKey', token);
